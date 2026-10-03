@@ -92,14 +92,14 @@
       z-index: 0;
     }
 
-    /* Bright Tosca-White Card Theme with Vivid Islamic Accents */
+    /* Bright Tosca-White Card Theme with High Contrast Typography */
     .card-light-theme {
       background: linear-gradient(145deg, #ffffff 0%, #f0fdfa 42%, #ccfbf1 100%);
       border: 2px solid rgba(20, 184, 166, 0.5);
       box-shadow: 0 25px 50px -12px rgba(13, 148, 136, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.95) inset;
     }
 
-    /* Emerald & Gold Islamic Glass Themes */
+    /* Emerald & Obsidian Glass Background */
     .glass-panel {
       background: rgba(3, 20, 14, 0.88);
       backdrop-filter: blur(20px);
@@ -144,6 +144,11 @@
     body.is-idle {
       cursor: none;
     }
+
+    /* Sembunyikan Seluruh Menu Pengeditan secara Default (Kunci Kiosk) */
+    body:not(.is-admin) .admin-control {
+      display: none !important;
+    }
   </style>
 </head>
 
@@ -171,16 +176,28 @@
         <div class="flex items-center gap-2">
           <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
           <span class="text-emerald-300 font-semibold uppercase tracking-wider">Transisi Struktur:</span>
-          <span id="allocationStatusText" class="text-white font-medium">Aparatur 1 dari 5 (5.0s)</span>
+          <span id="allocationStatusText" class="text-white font-medium">Memuat data aparatur...</span>
         </div>
         
-        <!-- Pilihan Durasi Rotasi Transisi (3s, 5s, 8s) -->
+        <!-- Pilihan Durasi Rotasi Transisi (3s, 5s, 8s & Kustom) -->
         <div class="flex items-center gap-1.5">
           <span class="text-slate-400 hidden sm:inline text-[10px]">Durasi Display:</span>
-          <div class="flex items-center bg-black/60 border border-emerald-500/25 rounded-lg p-0.5" id="allocationDurationPicker">
-            <button data-duration="3000" class="px-2 py-0.5 rounded text-[10px] transition text-slate-400 hover:text-white">3s</button>
-            <button data-duration="5000" class="px-2 py-0.5 rounded text-[10px] transition bg-emerald-600 text-white font-bold shadow-sm shadow-emerald-700/50">5s</button>
-            <button data-duration="8000" class="px-2 py-0.5 rounded text-[10px] transition text-slate-400 hover:text-white">8s</button>
+          <div class="flex items-center bg-black/60 border border-emerald-500/25 rounded-lg p-0.5 gap-0.5" id="allocationDurationPicker">
+            <button data-duration="3000" class="dur-preset-btn px-2 py-0.5 rounded text-[10px] transition text-slate-400 hover:text-white">3s</button>
+            <button data-duration="5000" class="dur-preset-btn px-2 py-0.5 rounded text-[10px] transition bg-emerald-600 text-white font-bold shadow-sm shadow-emerald-700/50">5s</button>
+            <button data-duration="8000" class="dur-preset-btn px-2 py-0.5 rounded text-[10px] transition text-slate-400 hover:text-white">8s</button>
+            
+            <!-- Input Kustom Durasi (Detik) -->
+            <div class="flex items-center pl-1 border-l border-emerald-500/30 gap-0.5">
+              <input type="number" id="customDurationInput" min="1" max="600" step="0.5" placeholder="Kustom" 
+                     class="w-12 bg-[#021810] text-emerald-200 font-mono text-[10px] px-1 py-0.5 rounded border border-emerald-500/40 focus:outline-none focus:border-emerald-300 text-center placeholder:text-slate-500" 
+                     title="Ketik durasi display kustom dalam detik lalu tekan Enter atau tombol Set">
+              <span class="text-[10px] text-slate-400 pr-0.5 font-mono">s</span>
+              <button type="button" id="btnApplyCustomDuration" class="px-1.5 py-0.5 rounded text-[10px] bg-emerald-700 hover:bg-emerald-500 text-white font-bold transition flex items-center gap-0.5 shadow-2xs" title="Terapkan Durasi Kustom">
+                <i data-lucide="check" class="w-2.5 h-2.5"></i>
+                <span class="hidden xl:inline text-[9px]">Set</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -212,9 +229,9 @@
 
       <!-- Right Action Hub -->
       <div class="flex items-center gap-2">
-        <div id="envBadge" class="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border bg-amber-500/10 text-amber-400 border-amber-500/20">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
-          <span id="envBadgeText">Mock</span>
+        <div id="envBadge" class="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border bg-emerald-500/10 text-emerald-400 border-emerald-500/20">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span id="envBadgeText">Supabase Live</span>
         </div>
 
         <button id="btnToggleAutoplay" title="Pause / Lanjutkan Alokasi Transisi" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-emerald-500/50 bg-emerald-600 text-white transition text-xs font-semibold shadow-md shadow-emerald-600/30">
@@ -226,11 +243,7 @@
           <i data-lucide="maximize" id="fullscreenIcon" class="w-4 h-4"></i>
         </button>
 
-        <button id="btnOpenConfig" title="Konfigurasi Supabase" class="p-2 rounded-xl text-slate-300 hover:text-white glass-subtle hover:border-emerald-500/50 transition">
-          <i data-lucide="database" class="w-4 h-4"></i>
-        </button>
-
-        <button id="btnOpenAddModal" class="p-2 sm:px-3 sm:py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold shadow-lg shadow-emerald-600/30 transition flex items-center gap-1.5 border border-emerald-400/30">
+        <button id="btnOpenAddModal" class="admin-control p-2 sm:px-3 sm:py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold shadow-lg shadow-emerald-600/30 transition flex items-center gap-1.5 border border-emerald-400/30">
           <i data-lucide="user-plus" class="w-4 h-4"></i>
           <span class="hidden sm:inline">Tambah Pengurus</span>
         </button>
@@ -268,9 +281,9 @@
       
       <!-- Counter & Indikator Angka -->
       <div class="flex items-center gap-2 font-mono text-xs text-slate-300">
-        <span class="text-emerald-400 font-bold text-sm" id="currentIndexText">01</span>
+        <span class="text-emerald-400 font-bold text-sm" id="currentIndexText">00</span>
         <span class="text-slate-600">/</span>
-        <span class="text-slate-400" id="totalCountText">05</span>
+        <span class="text-slate-400" id="totalCountText">00</span>
       </div>
 
       <!-- Mini Thumbnails Carousel -->
@@ -281,7 +294,7 @@
       <!-- Hint Navigasi Cepat -->
       <div class="hidden lg:flex items-center gap-3 text-[11px] font-mono text-slate-400">
         <span class="flex items-center gap-1"><kbd class="px-1.5 py-0.5 rounded bg-black/60 border border-white/10 text-[10px]">←</kbd><kbd class="px-1.5 py-0.5 rounded bg-black/60 border border-white/10 text-[10px]">→</kbd> Geser</span>
-        <span class="flex items-center gap-1"><kbd class="px-1.5 py-0.5 rounded bg-black/60 border border-white/10 text-[10px]">Spasi</kbd> Jeda</span>
+        <span class="flex items-center gap-1"><kbd class="px-1.5 py-0.5 rounded bg-black/60 border border-white/10 text-[10px]">Spasi 3x</kbd> Admin Mode</span>
         <span class="flex items-center gap-1"><kbd class="px-1.5 py-0.5 rounded bg-black/60 border border-white/10 text-[10px]">F</kbd> Layar Penuh</span>
       </div>
     </div>
@@ -320,15 +333,22 @@
 
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
-            <label class="block text-xs font-semibold text-slate-300 mb-1">Unit / Divisi *</label>
+            <div class="flex items-center justify-between mb-1">
+              <label class="block text-xs font-semibold text-slate-300">Unit / Divisi *</label>
+              <div class="flex items-center gap-2">
+                <button type="button" id="btnToggleCustomDept" class="text-[10px] text-emerald-400 hover:text-emerald-300 transition font-medium flex items-center gap-0.5">
+                  <i data-lucide="plus" class="w-3 h-3"></i> Unit Baru
+                </button>
+                <button type="button" id="btnDeleteCurrentDept" class="text-[10px] text-rose-400 hover:text-rose-300 transition font-medium flex items-center gap-0.5" title="Hapus Unit yang Dipilih">
+                  <i data-lucide="trash-2" class="w-3 h-3"></i> Hapus
+                </button>
+              </div>
+            </div>
             <select id="formDepartment" required class="w-full bg-[#051e15] border border-emerald-500/25 rounded-xl px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-emerald-400">
-              <option value="Yayasan">Yayasan</option>
-              <option value="Pimpinan">Pimpinan</option>
-              <option value="Kurikulum">Kurikulum</option>
-              <option value="Kesiswaan">Kesiswaan</option>
-              <option value="Sarpras">Sarpras</option>
-              <option value="Keagamaan">Keagamaan</option>
+              <!-- Rendered dynamically via JS -->
             </select>
+            <input type="text" id="formCustomDepartment" placeholder="Ketik nama unit / divisi baru..." 
+                   class="hidden mt-2 w-full bg-[#051e15] border border-emerald-400/50 rounded-xl px-3 py-2 text-xs text-emerald-200 placeholder:text-slate-500 focus:outline-none focus:border-emerald-300">
           </div>
 
           <div>
@@ -344,10 +364,65 @@
           </div>
         </div>
 
-        <div>
-          <label class="block text-xs font-semibold text-slate-300 mb-1">URL Foto Portrait (Rasio 4:6 disarankan)</label>
-          <input type="url" id="formAvatar" placeholder="https://images.unsplash.com/photo-..." 
-                 class="w-full bg-[#051e15] border border-emerald-500/25 rounded-xl px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-emerald-400 font-mono">
+        <!-- Opsi Sumber Pasfoto: Upload Berkas Langsung atau Tautan URL -->
+        <div class="rounded-2xl border border-emerald-500/25 bg-[#031c13]/70 p-3.5 space-y-3">
+          <div class="flex items-center justify-between">
+            <label class="block text-xs font-bold text-emerald-300 flex items-center gap-1.5">
+              <i data-lucide="image" class="w-4 h-4 text-emerald-400"></i>
+              <span>Foto Portrait Aparatur (Rasio Baku 4:6)</span>
+            </label>
+            
+            <!-- Switcher Tab: Upload Berkas vs Input URL -->
+            <div class="flex items-center bg-black/60 p-0.5 rounded-xl border border-emerald-500/30 text-[11px]">
+              <button type="button" id="tabPhotoUpload" class="px-2.5 py-1 rounded-lg font-medium transition bg-emerald-600 text-white shadow-xs flex items-center gap-1">
+                <i data-lucide="upload" class="w-3 h-3"></i>
+                <span>Unggah Berkas</span>
+              </button>
+              <button type="button" id="tabPhotoUrl" class="px-2.5 py-1 rounded-lg font-medium transition text-slate-400 hover:text-white flex items-center gap-1">
+                <i data-lucide="link-2" class="w-3 h-3"></i>
+                <span>Tautan URL</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Pilihan 1: Area Dropzone Unggah Berkas Gambar -->
+          <div id="sectionPhotoUpload" class="space-y-2">
+            <input type="file" id="formAvatarFile" accept="image/png,image/jpeg,image/webp,image/jpg" class="hidden">
+            <div id="dropzoneAvatar" class="border-2 border-dashed border-emerald-500/35 hover:border-emerald-400/70 bg-[#05261b]/60 hover:bg-[#05261b] transition-all rounded-2xl p-4 text-center cursor-pointer flex flex-col items-center justify-center gap-2 group">
+              <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+                <i data-lucide="upload-cloud" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <p class="text-xs font-semibold text-slate-200">
+                  <span class="text-emerald-400 underline decoration-emerald-500/50">Pilih berkas foto</span> atau seret ke sini
+                </p>
+                <p class="text-[10px] text-slate-400 mt-0.5">Format JPG, PNG, atau WebP (Maks. 5 MB) • Rasio 4:6</p>
+              </div>
+            </div>
+
+            <!-- Pratinjau Berkas Terpilih -->
+            <div id="fileUploadPreviewCard" class="hidden items-center justify-between p-2.5 rounded-xl bg-black/40 border border-emerald-500/30">
+              <div class="flex items-center gap-2.5 min-w-0">
+                <div class="w-10 aspect-[4/6] rounded-lg overflow-hidden border border-emerald-400/50 bg-teal-950 flex-shrink-0">
+                  <img id="fileUploadThumbnail" src="" alt="Thumbnail" class="w-full h-full object-cover">
+                </div>
+                <div class="min-w-0">
+                  <p id="fileUploadName" class="text-xs font-semibold text-white truncate max-w-[200px] sm:max-w-[280px]">foto.jpg</p>
+                  <p id="fileUploadSize" class="text-[10px] text-emerald-400 font-mono">0 KB</p>
+                </div>
+              </div>
+              <button type="button" id="btnRemoveUploadedFile" class="p-1.5 rounded-lg text-slate-400 hover:text-rose-400 hover:bg-white/5 transition" title="Hapus berkas ini">
+                <i data-lucide="x" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Pilihan 2: Input URL Langsung -->
+          <div id="sectionPhotoUrl" class="hidden">
+            <input type="url" id="formAvatar" placeholder="https://images.unsplash.com/photo-..." 
+                   class="w-full bg-[#051e15] border border-emerald-500/25 rounded-xl px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-emerald-400 font-mono">
+            <p class="text-[10px] text-slate-400 mt-1">Tempelkan tautan gambar online beresolusi tinggi portrait.</p>
+          </div>
         </div>
 
         <div>
@@ -379,57 +454,11 @@
         <div class="flex items-center justify-end gap-3 pt-4 border-t border-emerald-500/20">
           <button type="button" id="btnCancelModal" class="px-4 py-2 rounded-xl text-xs text-slate-400 hover:text-white hover:bg-white/5 transition">Batal</button>
           <button type="submit" id="btnSaveProfile" class="flex items-center gap-2 px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold shadow-lg shadow-emerald-600/30 transition">
-            <i data-lucide="check" class="w-4 h-4"></i>
-            <span>Simpan Data Aparatur</span>
+            <i data-lucide="check" class="w-4 h-4" id="saveBtnIcon"></i>
+            <span id="saveBtnLabel">Simpan Data Aparatur</span>
           </button>
         </div>
       </form>
-    </div>
-  </div>
-
-  <!-- MODAL: Pengaturan Supabase Cloud -->
-  <div id="configModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden items-center justify-center p-4">
-    <div class="glass-panel w-full max-w-md rounded-3xl p-6 sm:p-7 border border-emerald-500/25 shadow-2xl relative">
-      <div class="flex items-center justify-between pb-3 border-b border-emerald-500/20">
-        <h3 class="text-sm font-bold text-white flex items-center gap-2">
-          <i data-lucide="database" class="w-4 h-4 text-emerald-400"></i>
-          <span>Pengaturan Supabase Cloud</span>
-        </h3>
-        <button id="btnCloseConfigModal" class="p-1 rounded-lg text-slate-400 hover:text-white">
-          <i data-lucide="x" class="w-4 h-4"></i>
-        </button>
-      </div>
-
-      <div class="mt-4 space-y-3.5">
-        <p class="text-xs text-slate-300 leading-relaxed">
-          Ganti variabel koneksi untuk beralih secara langsung ke database PostgreSQL Supabase Anda secara real-time.
-        </p>
-
-        <div>
-          <label class="block text-xs font-semibold text-slate-300 mb-1">SUPABASE URL</label>
-          <input type="text" id="cfgSupabaseUrl" placeholder="https://xyzcompany.supabase.co" 
-                 class="w-full bg-[#051e15] border border-emerald-500/25 rounded-xl px-3 py-2 text-xs font-mono text-slate-200 focus:outline-none focus:border-emerald-400">
-        </div>
-
-        <div>
-          <label class="block text-xs font-semibold text-slate-300 mb-1">SUPABASE ANON KEY</label>
-          <input type="password" id="cfgSupabaseKey" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6..." 
-                 class="w-full bg-[#051e15] border border-emerald-500/25 rounded-xl px-3 py-2 text-xs font-mono text-slate-200 focus:outline-none focus:border-emerald-400">
-        </div>
-
-        <div class="flex items-center justify-between pt-2">
-          <label class="flex items-center gap-2 cursor-pointer text-xs text-slate-300">
-            <input type="checkbox" id="cfgPreviewToggle" class="rounded bg-slate-900 border-emerald-500/30 text-emerald-600 focus:ring-0">
-            <span>Paksa Mock Mode (Offline)</span>
-          </label>
-        </div>
-
-        <div class="flex items-center justify-end gap-2 pt-3 border-t border-emerald-500/20">
-          <button id="btnSaveConfig" class="w-full py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold shadow-lg shadow-emerald-600/30 transition">
-            Terapkan & Muat Ulang
-          </button>
-        </div>
-      </div>
     </div>
   </div>
 
@@ -455,146 +484,194 @@
   <script>
     /* =========================================================================
        ZERO-BUILD SINGULARITY ARCHITECTURE - MI AL-IRSYAD AL-ISLAMIYYAH
+       TAHAP PRODUKSI PENUH (LIVE PRODUCTION STAGE)
        ========================================================================= */
 
-    // The Master Zero-Latency Switch
+    // 1. Status Mode: false = Mode Produksi Live (Hanya data asli Supabase, tanpa dummy data)
     const is_preview = false;
 
-    // Supabase Credentials
-    const SUPABASE_URL = "https://ahzexczjwcikxlobqchh.supabase.co";
-    const SUPABASE_ANON_KEY = "sb_publishable_yG3SzF_f4vgoHCxu02Dm3Q_Z9gEP33c";
+    // 2. SUNTIKKAN KREDENSIAL SUPABASE LANGSUNG DI BAWAH INI:
+    const SUPABASE_URL = "https://ahzexczjwcikxlobqchh.supabase.co"; // Ganti dengan URL project Supabase Anda
+    const SUPABASE_ANON_KEY = "sb_publishable_yG3SzF_f4vgoHCxu02Dm3Q_Z9gEP33c"; // Ganti dengan Anon Key Supabase Anda
 
-    // Data Seed Resmi Aparatur MI Al-Irsyad Al-Islamiyyah
-    const MOCK_PROFILES = [
-      {
-        id: "11111111-1111-4111-8111-111111111111",
-        name: "Drs. H. M. Arifin, M.Pd.",
-        role: "Ketua Dewan Pembina Yayasan",
-        department: "Yayasan",
-        nip_nuptk: "YYS-001",
-        education: "S3 Manajemen Pendidikan",
-        avatar_url: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=80",
-        bio: "Mengawal visi strategis yayasan, standarisasi mutu pendidikan karakter, tata kelola wakaf institusi, dan pengembangan sarana terpadu generasi unggul.",
-        skills: ["Tata Kelola Yayasan", "Pengembangan Karakter", "Manajemen Strategis", "Kebijakan Institusi"],
-        email: "yayasan@alirsyad.sch.id",
-        phone: "081234567891"
-      },
-      {
-        id: "22222222-2222-4222-8222-222222222222",
-        name: "Dr. Hj. Nurul Hidayati, S.Pd., M.Si.",
-        role: "Kepala Madrasah",
-        department: "Pimpinan",
-        nip_nuptk: "19780415 200312 2 004",
-        education: "S2 Kepemimpinan Pendidikan",
-        avatar_url: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=80",
-        bio: "Bertanggung jawab penuh atas manajemen operasional madrasah, digitalisasi ekosistem belajar, pembinaan guru, serta akreditasi unggul nasional.",
-        skills: ["Supervisi Akademik", "Kepemimpinan Sekolah", "Inovasi Pedagogik", "Akreditasi A"],
-        email: "kepsek@alirsyad.sch.id",
-        phone: "081234567892"
-      },
-      {
-        id: "33333333-3333-4333-8333-333333333333",
-        name: "Bambang Setyawan, S.Kom., M.T.",
-        role: "Wakil Kepala Bidang Kurikulum",
-        department: "Kurikulum",
-        nip_nuptk: "19840210 200901 1 008",
-        education: "S2 Teknologi Pendidikan",
-        avatar_url: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80",
-        bio: "Mengorkestrasi implementasi Kurikulum Merdeka, sistem asesmen digital berbasis CBT, dan pembinaan tim olimpiade sains santri berprestasi.",
-        skills: ["Kurikulum Merdeka", "Asesmen Digital CBT", "Olimpiade Sains", "Teknologi Belajar"],
-        email: "kurikulum@alirsyad.sch.id",
-        phone: "081234567893"
-      },
-      {
-        id: "44444444-4444-4444-8444-444444444444",
-        name: "Fatimah Zahra, S.Psi., M.Pd.",
-        role: "Wakil Kepala Bidang Kesiswaan",
-        department: "Kesiswaan",
-        nip_nuptk: "19890722 201403 2 005",
-        education: "S2 Psikologi Pendidikan",
-        avatar_url: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=800&q=80",
-        bio: "Menyelenggarakan pembinaan kedisiplinan santri, kegiatan ekstrakurikuler kepemimpinan, pencegahan perundungan, dan bimbingan konseling anak.",
-        skills: ["Bimbingan Konseling", "Penguatan Karakter", "Kepemimpinan OSIS", "Disiplin Positif"],
-        email: "kesiswaan@alirsyad.sch.id",
-        phone: "081234567894"
-      },
-      {
-        id: "55555555-5555-4555-8555-555555555555",
-        name: "Ir. Hendra Kusuma, M.M.",
-        role: "Wakil Kepala Bidang Sarana & Prasarana",
-        department: "Sarpras",
-        nip_nuptk: "19811105 200604 1 012",
-        education: "S2 Manajemen Aset",
-        avatar_url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80",
-        bio: "Mengelola fasilitas smart classroom modern, laboratorium sains & bahasa terintegrasi, serta pemeliharaan gedung ramah lingkungan.",
-        skills: ["Smart Classroom", "Manajemen Fasilitas", "K3 Madrasah", "Infrastruktur IT"],
-        email: "sarpras@alirsyad.sch.id",
-        phone: "081234567895"
-      },
-      {
-        id: "66666666-6666-4666-8666-666666666666",
-        name: "Ustadz Ahmad Fauzi, S.Pd.I., M.Pd.",
-        role: "Koordinator Keagamaan & Tahfidz",
-        department: "Keagamaan",
-        nip_nuptk: "19910314 201701 1 007",
-        education: "S2 Studi Islam & Al-Qur'an",
-        avatar_url: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=80",
-        bio: "Membina program tahfidzul Qur'an bersanad, adab harian islami, kajian dhuha, dan bimbingan ibadah praktis bagi seluruh santri.",
-        skills: ["Tahfidz 30 Juz", "Sanad Qira'ah", "Adab & Karakter", "Bahasa Arab"],
-        email: "tahfidz@alirsyad.sch.id",
-        phone: "081234567896"
-      }
-    ];
+    // Data Seed Resmi Aparatur MI Al-Irsyad Al-Islamiyyah (Kosong untuk mode produksi)
+    const MOCK_PROFILES = [];
+
+    /* =========================================================================
+       ARSITEKTUR CLIENT & SERVICE LAYER
+       ========================================================================= */
 
     // State Aplikasi
     const State = {
       profiles: [],
       filteredProfiles: [],
+      slides: [],
+      departments: [],
       currentIndex: 0,
       isAutoplay: true,
+      isAdminMode: false,
       allocatedDuration: 5000,
       currentElapsed: 0,
       activeDepartment: 'All',
       searchQuery: '',
-      pendingDeleteId: null
+      pendingDeleteId: null,
+      selectedAvatarFile: null,
+      photoInputMode: 'upload'
     };
 
-    // Variabel Koneksi Supabase & Mock
-    let activePreviewState = is_preview;
+    // Variabel Koneksi Supabase
     let supabaseClient = null;
     let tickerInterval = null;
     let idleTimer = null;
 
-    // Inisialisasi Kredensial dari LocalStorage jika ada
     function initClient() {
-      const savedUrl = localStorage.getItem('cfg_supabase_url') || SUPABASE_URL;
-      const savedKey = localStorage.getItem('cfg_supabase_key') || SUPABASE_ANON_KEY;
-      const forceMock = localStorage.getItem('cfg_force_mock');
-
-      if (forceMock !== null) {
-        activePreviewState = forceMock === 'true';
-      }
-
-      if (!activePreviewState && savedUrl && savedKey && window.supabase) {
-        try {
-          supabaseClient = window.supabase.createClient(savedUrl, savedKey);
-        } catch (err) {
-          console.error("Gagal membuat koneksi Supabase:", err);
-          activePreviewState = true;
+      if (!is_preview && SUPABASE_URL && SUPABASE_ANON_KEY && window.supabase) {
+        if (!SUPABASE_URL.includes("your-supabase-project")) {
+          try {
+            supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+          } catch (err) {
+            console.error("Gagal menginisialisasi client Supabase:", err);
+            supabaseClient = null;
+          }
         }
       }
     }
 
     // Service Layer CRUD
     const Service = {
+      async uploadAvatar(file) {
+        if (!file) return null;
+
+        // Mode Preview: Menggunakan ObjectURL browser lokal
+        if (is_preview || !supabaseClient) {
+          return URL.createObjectURL(file);
+        }
+
+        try {
+          const fileExt = file.name.split('.').pop() || 'jpg';
+          const cleanName = `${Date.now()}_${Math.random().toString(36).substring(2, 8)}.${fileExt}`;
+          const filePath = `avatars/${cleanName}`;
+
+          const { error: uploadError } = await supabaseClient.storage
+            .from('avatars')
+            .upload(filePath, file, {
+              cacheControl: '3600',
+              upsert: true
+            });
+
+          if (uploadError) {
+            throw uploadError;
+          }
+
+          const { data: publicUrlData } = supabaseClient.storage
+            .from('avatars')
+            .getPublicUrl(filePath);
+
+          return publicUrlData.publicUrl;
+        } catch (err) {
+          console.error("Gagal mengunggah foto ke Supabase Storage:", err);
+          throw new Error("Gagal mengunggah ke bucket 'avatars'. Pastikan bucket sudah dibuat di Supabase Storage.");
+        }
+      },
+
+      async fetchDepartments() {
+        const fallbackDepts = [
+          'Yayasan', 'Pimpinan', 'Kurikulum', 'Kesiswaan', 'Sarpras',
+          'Keagamaan', 'Tata Usaha', 'Humas', 'Perpustakaan', 'Pendidik', 'Bimbingan Konseling'
+        ];
+
+        if (is_preview || !supabaseClient) {
+          const cached = localStorage.getItem('mi_alirsyad_depts_v1');
+          if (cached) {
+            try { return JSON.parse(cached); } catch (e) {}
+          }
+          localStorage.setItem('mi_alirsyad_depts_v1', JSON.stringify(fallbackDepts));
+          return fallbackDepts;
+        }
+
+        try {
+          const { data, error } = await supabaseClient
+            .from('departments')
+            .select('name')
+            .order('name', { ascending: true });
+
+          if (error) {
+            console.warn("Tabel departments belum ada, mengambil dari profil yang ada:", error.message);
+            const profiles = await this.fetchProfiles();
+            const fromProfiles = Array.from(new Set(profiles.map(p => p.department).filter(Boolean)));
+            return fromProfiles.length > 0 ? fromProfiles : fallbackDepts;
+          }
+
+          if (!data || data.length === 0) {
+            return [];
+          }
+
+          return data.map(d => d.name);
+        } catch (err) {
+          console.error("Gagal mengambil data departemen:", err);
+          return fallbackDepts;
+        }
+      },
+
+      async saveDepartment(name) {
+        if (!name) return;
+        const cleanName = name.trim();
+        if (!cleanName) return;
+
+        if (is_preview || !supabaseClient) {
+          let list = await this.fetchDepartments();
+          if (!list.includes(cleanName)) {
+            list.push(cleanName);
+            localStorage.setItem('mi_alirsyad_depts_v1', JSON.stringify(list));
+          }
+          return cleanName;
+        }
+
+        try {
+          await supabaseClient
+            .from('departments')
+            .upsert([{ name: cleanName }], { onConflict: 'name' });
+          return cleanName;
+        } catch (err) {
+          console.warn("Gagal menyimpan unit ke database:", err.message);
+          return cleanName;
+        }
+      },
+
+      async deleteDepartment(name) {
+        if (!name) return;
+        if (is_preview || !supabaseClient) {
+          let list = await this.fetchDepartments();
+          list = list.filter(d => d.toLowerCase() !== name.toLowerCase());
+          localStorage.setItem('mi_alirsyad_depts_v1', JSON.stringify(list));
+          return true;
+        }
+
+        try {
+          await supabaseClient
+            .from('departments')
+            .delete()
+            .eq('name', name);
+          return true;
+        } catch (err) {
+          console.error("Gagal menghapus unit dari database:", err);
+          throw err;
+        }
+      },
+
       async fetchProfiles() {
-        if (activePreviewState) {
+        if (is_preview) {
           const cached = localStorage.getItem('mi_alirsyad_profiles_v1');
           if (cached) {
             try { return JSON.parse(cached); } catch (e) {}
           }
           localStorage.setItem('mi_alirsyad_profiles_v1', JSON.stringify(MOCK_PROFILES));
           return [...MOCK_PROFILES];
+        }
+
+        // Mode Produksi: Tanpa fallback ke data dummy
+        if (!supabaseClient) {
+          return [];
         }
 
         try {
@@ -604,17 +681,15 @@
             .order('order_priority', { ascending: true });
 
           if (error) throw error;
-          if (data && data.length > 0) return data;
-          return [...MOCK_PROFILES];
+          return data || [];
         } catch (err) {
-          console.warn("Koneksi Supabase gagal, fallback ke Mock Data:", err.message);
-          showToast("Koneksi Supabase gagal. Menggunakan data lokal.", "error");
-          return [...MOCK_PROFILES];
+          console.error("Gagal mengambil data dari Supabase:", err);
+          return [];
         }
       },
 
       async saveProfile(profileData, isEdit = false) {
-        if (activePreviewState) {
+        if (is_preview) {
           let list = await this.fetchProfiles();
           if (isEdit) {
             list = list.map(item => item.id === profileData.id ? { ...item, ...profileData } : item);
@@ -624,6 +699,10 @@
           }
           localStorage.setItem('mi_alirsyad_profiles_v1', JSON.stringify(list));
           return profileData;
+        }
+
+        if (!supabaseClient) {
+          throw new Error("Koneksi Supabase belum disetel di variabel SUPABASE_URL & SUPABASE_ANON_KEY");
         }
 
         try {
@@ -649,11 +728,15 @@
       },
 
       async deleteProfile(id) {
-        if (activePreviewState) {
+        if (is_preview) {
           let list = await this.fetchProfiles();
           list = list.filter(item => item.id !== id);
           localStorage.setItem('mi_alirsyad_profiles_v1', JSON.stringify(list));
           return true;
+        }
+
+        if (!supabaseClient) {
+          throw new Error("Koneksi Supabase belum disetel.");
         }
 
         try {
@@ -671,7 +754,43 @@
 
     // UI Render Engine
     const UI = {
-      departments: ['All', 'Yayasan', 'Pimpinan', 'Kurikulum', 'Kesiswaan', 'Sarpras', 'Keagamaan'],
+      getDepartmentsList() {
+        const fromState = State.departments || [];
+        const fromProfiles = (State.profiles || []).map(p => p.department).filter(Boolean);
+        const combined = Array.from(new Set([...fromState, ...fromProfiles]));
+        return ['All', ...combined];
+      },
+
+      updateDepartmentSelectOptions(selectedDept = '') {
+        const select = document.getElementById('formDepartment');
+        const customInput = document.getElementById('formCustomDepartment');
+        if (!select) return;
+
+        const depts = (State.departments || []).filter(d => d && d !== 'All');
+
+        if (selectedDept && !depts.includes(selectedDept)) {
+          depts.push(selectedDept);
+        }
+
+        if (depts.length === 0) {
+          select.innerHTML = `
+            <option value="" disabled selected>Belum ada unit (+ Unit Baru)</option>
+            <option value="__custom__">+ Tambah Unit Kustom...</option>
+          `;
+        } else {
+          select.innerHTML = depts.map(d => `<option value="${d}">${d}</option>`).join('') + `
+            <option value="__custom__">+ Tambah Unit Kustom...</option>
+          `;
+        }
+
+        if (selectedDept) {
+          select.value = selectedDept;
+          if (customInput) customInput.classList.add('hidden');
+        } else if (depts.length > 0) {
+          select.value = depts[0];
+          if (customInput) customInput.classList.add('hidden');
+        }
+      },
 
       init() {
         this.updateBadge();
@@ -687,19 +806,23 @@
         const badgeText = document.getElementById('envBadgeText');
         if (!badge || !badgeText) return;
 
-        if (activePreviewState) {
+        if (is_preview) {
           badge.className = "hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border bg-amber-500/10 text-amber-400 border-amber-500/20";
           badgeText.textContent = "Mock Data";
-        } else {
+        } else if (supabaseClient) {
           badge.className = "hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border bg-emerald-500/10 text-emerald-400 border-emerald-500/20";
           badgeText.textContent = "Supabase Live";
+        } else {
+          badge.className = "hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border bg-amber-500/10 text-amber-400 border-amber-500/20";
+          badgeText.textContent = "Kredensial Belum Diisi";
         }
       },
 
       renderDepartments() {
         const container = document.getElementById('filterContainer');
-        container.innerHTML = this.departments.map(dept => {
-          const isActive = State.activeDepartment === dept;
+        const departments = this.getDepartmentsList();
+        container.innerHTML = departments.map(dept => {
+          const isActive = State.activeDepartment.toLowerCase() === dept.toLowerCase();
           return `
             <button data-dept="${dept}" class="dept-btn px-2.5 py-1 rounded-xl text-xs whitespace-nowrap font-medium transition ${
               isActive 
@@ -714,14 +837,14 @@
 
       renderAllocationSegments() {
         const track = document.getElementById('allocationSegmentsTrack');
-        const total = State.filteredProfiles.length;
+        const total = (State.slides || []).length;
         if (total === 0) {
           track.innerHTML = '';
           return;
         }
 
         track.style.gridTemplateColumns = `repeat(${total}, minmax(0, 1fr))`;
-        track.innerHTML = State.filteredProfiles.map((_, idx) => `
+        track.innerHTML = State.slides.map((_, idx) => `
           <div data-index="${idx}" class="segment-slot relative h-1.5 bg-white/10 rounded-full overflow-hidden cursor-pointer group">
             <div id="segment-fill-${idx}" class="segment-bar absolute top-0 left-0 h-full bg-gradient-to-r from-emerald-500 via-teal-400 to-amber-400 w-0"></div>
           </div>
@@ -731,17 +854,25 @@
       },
 
       updateAllocationStatus() {
-        const total = State.filteredProfiles.length;
+        const total = (State.slides || []).length;
         const curr = State.currentIndex + 1;
         const durSec = (State.allocatedDuration / 1000).toFixed(1);
         const text = document.getElementById('allocationStatusText');
         if (text) {
-          text.textContent = total > 0 ? `Aparatur ${curr} dari ${total} (${durSec}s)` : 'Tidak ada data';
+          if (total > 0) {
+            const activeSlide = State.slides[State.currentIndex];
+            const deptName = activeSlide ? activeSlide.department : '';
+            const memberCount = activeSlide && activeSlide.members ? activeSlide.members.length : 1;
+            const countLabel = memberCount > 1 ? `${memberCount} Aparatur (Bagi 2)` : '1 Aparatur';
+            text.textContent = `${deptName} [${countLabel}] • Kartu ${curr} dari ${total} (${durSec}s)`;
+          } else {
+            text.textContent = 'Tidak ada data';
+          }
         }
       },
 
       updateSegmentsProgress() {
-        const total = State.filteredProfiles.length;
+        const total = (State.slides || []).length;
         if (total === 0) return;
 
         const curr = State.currentIndex;
@@ -764,7 +895,7 @@
         let list = [...State.profiles];
         
         if (State.activeDepartment !== 'All') {
-          list = list.filter(p => p.department.toLowerCase() === State.activeDepartment.toLowerCase());
+          list = list.filter(p => (p.department || '').toLowerCase() === State.activeDepartment.toLowerCase());
         }
 
         if (State.searchQuery.trim() !== '') {
@@ -772,53 +903,223 @@
           list = list.filter(p => 
             p.name.toLowerCase().includes(q) ||
             p.role.toLowerCase().includes(q) ||
-            p.department.toLowerCase().includes(q) ||
+            (p.department && p.department.toLowerCase().includes(q)) ||
             (p.skills && p.skills.some(s => s.toLowerCase().includes(q)))
           );
         }
 
         State.filteredProfiles = list;
+
+        // Pengelompokan Berdasarkan Unit / Divisi: Jika dalam unit terdapat beberapa orang, kartunya dibagi menjadi 2 orang
+        const deptMap = new Map();
+        list.forEach(p => {
+          const dept = p.department || 'Umum';
+          if (!deptMap.has(dept)) {
+            deptMap.set(dept, []);
+          }
+          deptMap.get(dept).push(p);
+        });
+
+        const slides = [];
+        deptMap.forEach((members, dept) => {
+          if (members.length <= 1) {
+            // Hanya 1 orang dalam unit ini: tampilkan kartu tunggal berformat luas
+            slides.push({
+              id: `slide-${dept}-single`,
+              type: 'single',
+              department: dept,
+              members: members
+            });
+          } else {
+            // Ada beberapa orang dalam unit ini: kartunya dibagi per 2 orang
+            for (let i = 0; i < members.length; i += 2) {
+              const chunk = members.slice(i, i + 2);
+              slides.push({
+                id: `slide-${dept}-chunk-${Math.floor(i / 2)}`,
+                type: chunk.length === 2 ? 'pair' : 'single',
+                department: dept,
+                members: chunk
+              });
+            }
+          }
+        });
+
+        State.slides = slides;
         
-        if (State.currentIndex >= list.length) {
-          State.currentIndex = Math.max(0, list.length - 1);
+        if (State.currentIndex >= slides.length) {
+          State.currentIndex = Math.max(0, slides.length - 1);
         }
         this.renderAllocationSegments();
       },
 
       renderStage() {
         const viewport = document.getElementById('cardsViewport');
-        const list = State.filteredProfiles;
+        const slides = State.slides || [];
 
-        if (!list || list.length === 0) {
+        if (!slides || slides.length === 0) {
           viewport.innerHTML = `
-            <div class="flex flex-col items-center justify-center text-center p-8 max-w-sm glass-panel rounded-3xl">
+            <div class="flex flex-col items-center justify-center text-center p-8 max-w-sm glass-panel rounded-3xl border border-emerald-500/20 shadow-2xl">
               <div class="w-14 h-14 rounded-2xl bg-white/5 border border-emerald-500/20 flex items-center justify-center text-emerald-400 mb-3">
-                <i data-lucide="graduation-cap" class="w-7 h-7"></i>
+                <i data-lucide="users" class="w-7 h-7"></i>
               </div>
-              <h3 class="text-sm font-bold text-white mb-1">Tidak Ada Data Struktur</h3>
-              <p class="text-xs text-slate-300 mb-4">Coba sesuaikan filter bidang atau yayasan.</p>
-              <button id="btnResetFilter" class="px-4 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-xs text-white transition shadow-md shadow-emerald-600/30">
-                Reset Filter
+              <h3 class="text-sm font-bold text-white mb-1">Data Struktur Belum Tersedia</h3>
+              <p class="text-xs text-slate-300 mb-4 leading-relaxed">Belum ada data aparatur yang dimuat dari database Supabase.</p>
+              <button id="btnEmptyAdd" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-xs font-semibold text-white transition flex items-center gap-1.5 shadow-md shadow-emerald-600/30 mx-auto">
+                <i data-lucide="user-plus" class="w-4 h-4"></i>
+                <span>Tambah Pengurus</span>
               </button>
             </div>
           `;
           lucide.createIcons();
+          const btnAdd = document.getElementById('btnEmptyAdd');
+          if (btnAdd) {
+            btnAdd.addEventListener('click', () => UI.openModal(false));
+          }
           this.updateCounter(0, 0);
           this.renderThumbnails();
           return;
         }
 
         const curr = State.currentIndex;
-        const total = list.length;
+        const total = slides.length;
         const prevIndex = (curr - 1 + total) % total;
         const nextIndex = (curr + 1) % total;
 
-        viewport.innerHTML = list.map((item, idx) => {
+        viewport.innerHTML = slides.map((slide, idx) => {
           let posClass = 'card-hidden';
           if (idx === curr) posClass = 'card-active';
           else if (idx === prevIndex && total > 1) posClass = 'card-prev';
           else if (idx === nextIndex && total > 1) posClass = 'card-next';
 
+          // TAMPILAN KARTU TERBAGI 2 ORANG (Jika beberapa orang dalam 1 unit)
+          if (slide.type === 'pair' && slide.members.length === 2) {
+            const p1 = slide.members[0];
+            const p2 = slide.members[1];
+
+            const renderMemberColumn = (item, orderNum) => {
+              const skillsBadges = (item.skills || []).slice(0, 3).map(skill => `
+                <span class="px-2.5 py-1 rounded-lg bg-teal-50 border border-teal-300 text-xs text-teal-950 font-bold tracking-wide shadow-2xs">
+                  ${skill}
+                </span>
+              `).join('');
+
+              return `
+                <div class="flex-1 flex flex-col justify-between p-4 sm:p-5 lg:p-6 rounded-2xl bg-white/75 border border-teal-200/90 shadow-sm relative group hover:border-teal-400 transition-colors">
+                  
+                  <!-- Top Row Member (NIP & Action buttons) -->
+                  <div class="flex items-center justify-between pb-2 mb-3 border-b border-teal-100 text-[11px] font-mono">
+                    <span class="text-teal-900 font-bold bg-teal-100/90 px-2 py-0.5 rounded-md border border-teal-200 truncate max-w-[200px]">
+                      ${item.nip_nuptk && item.nip_nuptk !== '-' ? 'NIP: ' + item.nip_nuptk : 'Aparatur #' + orderNum}
+                    </span>
+                    <div class="admin-control flex items-center gap-1">
+                      <button class="btn-edit-card p-1.5 rounded-lg text-slate-500 hover:text-teal-800 hover:bg-teal-100 transition" data-id="${item.id}" title="Edit Data">
+                        <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
+                      </button>
+                      <button class="btn-delete-card p-1.5 rounded-lg text-slate-500 hover:text-rose-600 hover:bg-rose-100 transition" data-id="${item.id}" title="Hapus Data">
+                        <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Pasfoto 4:6 & Data Persona -->
+                  <div class="flex flex-col sm:flex-row gap-4 items-center sm:items-start flex-1 min-h-0">
+                    <div class="relative w-full max-w-[170px] sm:w-[140px] md:w-[150px] lg:w-[165px] flex-shrink-0">
+                      <div class="w-full aspect-[4/6] rounded-2xl overflow-hidden relative border-2 border-teal-300 shadow-md bg-teal-50">
+                        <img src="${item.avatar_url || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=800&q=80'}" 
+                             alt="${item.name}" 
+                             onerror="this.src='https://placehold.co/400x600/0f766e/ffffff?text=${encodeURIComponent(item.name)}'"
+                             class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 ease-out select-none">
+                      </div>
+                      <span class="absolute top-2 left-2 flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-teal-950/90 border border-amber-400/50 text-[10px] text-amber-300 font-mono font-bold shadow">
+                        <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
+                        ${item.education || 'Pendidik'}
+                      </span>
+                    </div>
+
+                    <div class="flex-1 flex flex-col justify-between w-full min-w-0">
+                      <div>
+                        <h3 class="text-lg sm:text-xl md:text-2xl font-black text-slate-900 tracking-tight leading-tight line-clamp-2">
+                          ${item.name}
+                        </h3>
+                        <p class="text-xs sm:text-sm text-teal-800 font-black mt-1 mb-2 flex items-center gap-1.5">
+                          <i data-lucide="award" class="w-4 h-4 text-amber-500 flex-shrink-0"></i>
+                          <span class="truncate">${item.role}</span>
+                        </p>
+                        <p class="text-xs sm:text-sm text-slate-700 leading-relaxed mb-3 font-medium line-clamp-3">
+                          ${item.bio || 'Menjalankan tugas pokok dan fungsi kepemimpinan pendidikan madrasah.'}
+                        </p>
+                        <div class="flex flex-wrap gap-1.5 mb-3">
+                          ${skillsBadges}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Bottom Contact Row -->
+                  <div class="pt-3 mt-3 border-t border-teal-100 flex items-center justify-between gap-2">
+                    <div class="flex items-center gap-2">
+                      ${item.email ? `
+                        <button class="btn-copy-email px-3 py-1.5 rounded-xl bg-white hover:bg-teal-700 hover:text-white text-teal-950 transition text-xs border border-teal-300 font-bold flex items-center gap-1.5 shadow-2xs" data-email="${item.email}" title="Salin Email">
+                          <i data-lucide="mail" class="w-3.5 h-3.5 text-teal-600"></i>
+                          <span>Email</span>
+                        </button>
+                      ` : ''}
+                      ${item.phone ? `
+                        <a href="https://wa.me/${item.phone.replace(/[^0-9]/g, '')}" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white transition text-xs border border-emerald-700 font-bold flex items-center gap-1.5 shadow-xs" title="WhatsApp">
+                          <i data-lucide="phone" class="w-3.5 h-3.5 text-white"></i>
+                          <span>WA</span>
+                        </a>
+                      ` : ''}
+                    </div>
+                    <span class="text-[10px] text-amber-900 font-mono font-bold bg-amber-100 px-2 py-1 rounded-lg border border-amber-300">
+                      Resmi MI
+                    </span>
+                  </div>
+                </div>
+              `;
+            };
+
+            return `
+              <div class="profile-card absolute w-[96%] sm:w-[760px] md:w-[940px] lg:w-[1140px] xl:w-[1260px] 2xl:w-[1340px] max-h-[90vh] overflow-y-auto sm:overflow-visible card-light-theme rounded-3xl p-5 sm:p-7 md:p-8 shadow-2xl flex flex-col justify-between ${posClass}">
+                
+                <!-- Dual Card Header -->
+                <div class="flex items-center justify-between pb-3.5 mb-4 border-b border-teal-200/90 text-xs font-mono">
+                  <div class="flex items-center gap-3 sm:gap-4">
+                    <img src="https://i.ibb.co.com/676xL3yn/MI-AL-IRSYAD-AL-ISLAMIYYAH-20260604-173251-0000.png" 
+                         alt="Logo MI Al-Irsyad Al-Islamiyyah" 
+                         class="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 object-contain filter drop-shadow-[0_4px_14px_rgba(13,148,136,0.35)] flex-shrink-0 select-none">
+                    <div class="flex flex-col justify-center">
+                      <span class="text-teal-950 font-black tracking-wider text-xs sm:text-sm md:text-base font-sans uppercase leading-tight">MI AL-IRSYAD AL-ISLAMIYYAH</span>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="text-white text-xs font-mono font-bold bg-teal-700 px-2.5 py-0.5 rounded-lg uppercase tracking-wider shadow-2xs">
+                          Unit: ${slide.department}
+                        </span>
+                        <span class="text-teal-800 text-xs font-mono font-extrabold flex items-center gap-1">
+                          <i data-lucide="users" class="w-3.5 h-3.5"></i>
+                          2 Aparatur Terpadu
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="flex items-center gap-2">
+                    <span class="text-teal-900 font-extrabold bg-teal-100 text-xs px-3 py-1 rounded-full border border-teal-300 shadow-xs">
+                      ${(State.allocatedDuration / 1000).toFixed(1)}s / Rotasi
+                    </span>
+                  </div>
+                </div>
+
+                <!-- Dual Grid Body: Terbagi Menjadi 2 Kolom Orang -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 lg:gap-6 items-stretch flex-1 min-h-0">
+                  ${renderMemberColumn(p1, 1)}
+                  ${renderMemberColumn(p2, 2)}
+                </div>
+              </div>
+            `;
+          }
+
+          // TAMPILAN KARTU TUNGGAL (Jika hanya ada 1 orang dalam unit atau sisa ganjil)
+          const item = slide.members[0];
           const skillsBadges = (item.skills || []).slice(0, 5).map(skill => `
             <span class="px-3 sm:px-3.5 py-1.5 rounded-xl bg-white border border-teal-300 text-xs sm:text-sm text-teal-950 font-bold tracking-wide shadow-xs hover:border-teal-500 transition-colors">
               ${skill}
@@ -826,9 +1127,9 @@
           `).join('');
 
           return `
-            <div class="profile-card absolute w-[96%] sm:w-[740px] md:w-[900px] lg:w-[1040px] xl:w-[1180px] 2xl:w-[1260px] max-h-[88vh] overflow-y-auto sm:overflow-visible card-light-theme rounded-3xl p-5 sm:p-7 md:p-9 lg:p-10 shadow-2xl flex flex-col justify-between ${posClass}" data-id="${item.id}">
+            <div class="profile-card absolute w-[96%] sm:w-[740px] md:w-[900px] lg:w-[1040px] xl:w-[1180px] 2xl:w-[1260px] max-h-[88vh] overflow-y-auto sm:overflow-visible card-light-theme rounded-3xl p-5 sm:p-7 md:p-9 lg:p-10 shadow-2xl flex flex-col justify-between ${posClass}">
               
-              <!-- Card Top Header (Logo Instansi MI Al-Irsyad, Hierarki Pejabat & Aksi) -->
+              <!-- Card Top Header -->
               <div class="flex items-center justify-between pb-4 mb-4 sm:mb-6 border-b border-teal-200/90 text-xs font-mono">
                 <div class="flex items-center gap-3.5 sm:gap-4">
                   <img src="https://i.ibb.co.com/676xL3yn/MI-AL-IRSYAD-AL-ISLAMIYYAH-20260604-173251-0000.png" 
@@ -844,7 +1145,7 @@
                   <span class="text-teal-900 font-extrabold bg-teal-100 text-xs sm:text-sm px-3.5 py-1.5 rounded-full border border-teal-300 shadow-xs">
                     ${(State.allocatedDuration / 1000).toFixed(1)}s / Rotasi
                   </span>
-                  <div class="flex items-center gap-1.5">
+                  <div class="admin-control flex items-center gap-1.5">
                     <button class="btn-edit-card p-2 rounded-xl text-slate-500 hover:text-teal-800 hover:bg-teal-100 transition" data-id="${item.id}" title="Edit Data">
                       <i data-lucide="edit-3" class="w-4 h-4"></i>
                     </button>
@@ -855,10 +1156,8 @@
                 </div>
               </div>
 
-              <!-- Main Card Body: Tata Letak Horizontal Lebih Besar & Kontras Tinggi -->
+              <!-- Main Card Body -->
               <div class="flex flex-col sm:flex-row gap-6 md:gap-8 lg:gap-10 items-center sm:items-stretch flex-1 min-h-0">
-                
-                <!-- Kolom Pasfoto Ekstra Besar Rasio Baku 4:6 -->
                 <div class="relative w-full max-w-[280px] sm:max-w-none sm:w-[260px] md:w-[310px] lg:w-[350px] xl:w-[390px] flex-shrink-0 group mx-auto sm:mx-0">
                   <div class="w-full aspect-[4/6] rounded-2xl sm:rounded-3xl overflow-hidden relative border-2 border-teal-300/80 shadow-xl bg-teal-50">
                     <img src="${item.avatar_url || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=800&q=80'}" 
@@ -873,7 +1172,6 @@
                   </span>
                 </div>
 
-                <!-- Kolom Samping: Nama Dominan Hitam/Gelap, Jabatan Teal Berwibawa & Keterangan Tajam -->
                 <div class="flex-1 flex flex-col justify-between w-full">
                   <div>
                     <div class="flex flex-wrap items-center gap-2.5 mb-2.5">
@@ -887,7 +1185,6 @@
                       ` : ''}
                     </div>
 
-                    <!-- Nama Lengkap & Gelar (Hitam Pekat & Sangat Eye-Catching) -->
                     <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-[40px] xl:text-[44px] font-black text-slate-900 tracking-tight leading-tight">
                       ${item.name}
                     </h2>
@@ -896,18 +1193,15 @@
                       <span>${item.role}</span>
                     </p>
 
-                    <!-- Keterangan / Deskripsi Tupoksi (Kontras Tinggi & Mudah Dibaca) -->
                     <p class="text-xs sm:text-sm md:text-base lg:text-lg text-slate-700 leading-relaxed mb-4 sm:mb-6 font-medium">
                       ${item.bio || 'Melaksanakan tugas pokok dan fungsi kepemimpinan pendidikan madrasah.'}
                     </p>
 
-                    <!-- Badges Bidang Tugas -->
                     <div class="flex flex-wrap gap-2 mb-5 sm:mb-6">
                       ${skillsBadges}
                     </div>
                   </div>
 
-                  <!-- Baris Bawah: Tombol Hubungi & Informasi Kontak -->
                   <div class="pt-4 border-t border-teal-200/90 flex items-center justify-between mt-auto gap-3">
                     <div class="flex items-center gap-2.5">
                       ${item.email ? `
@@ -950,16 +1244,38 @@
 
       renderThumbnails() {
         const dock = document.getElementById('thumbnailDock');
-        const list = State.filteredProfiles;
+        const slides = State.slides || [];
 
-        dock.innerHTML = list.map((item, idx) => {
+        dock.innerHTML = slides.map((slide, idx) => {
           const isActive = idx === State.currentIndex;
+          const isPair = slide.type === 'pair' && slide.members.length === 2;
+
+          // Thumbnail ganda untuk kartu dengan 2 orang
+          if (isPair) {
+            const m1 = slide.members[0];
+            const m2 = slide.members[1];
+            return `
+              <button data-index="${idx}" class="thumb-btn relative rounded-xl px-1.5 py-1 transition-all duration-300 flex-shrink-0 flex items-center justify-center ${
+                isActive 
+                  ? 'ring-2 ring-emerald-400 scale-110 shadow-lg shadow-emerald-600/40 bg-teal-900/60' 
+                  : 'opacity-50 hover:opacity-90 hover:scale-95 ring-1 ring-white/20 bg-black/40'
+              }" title="${slide.department}: ${m1.name} & ${m2.name}">
+                <div class="flex -space-x-2">
+                  <img src="${m1.avatar_url || 'https://placehold.co/100x100/064e3b/ffffff?text=1'}" class="w-6 h-6 rounded-full object-cover border border-emerald-400">
+                  <img src="${m2.avatar_url || 'https://placehold.co/100x100/064e3b/ffffff?text=2'}" class="w-6 h-6 rounded-full object-cover border border-amber-400">
+                </div>
+              </button>
+            `;
+          }
+
+          const item = slide.members[0];
+          if (!item) return '';
           return `
             <button data-index="${idx}" class="thumb-btn relative rounded-xl overflow-hidden transition-all duration-300 flex-shrink-0 ${
               isActive 
                 ? 'w-10 h-10 ring-2 ring-emerald-400 scale-110 shadow-lg shadow-emerald-600/40' 
                 : 'w-7 h-7 opacity-40 hover:opacity-90 hover:scale-95 ring-1 ring-white/20'
-            }">
+            }" title="${slide.department}: ${item.name}">
               <img src="${item.avatar_url || 'https://placehold.co/100x100/064e3b/ffffff?text=' + encodeURIComponent(item.name)}" 
                    alt="${item.name}" 
                    class="w-full h-full object-cover">
@@ -989,15 +1305,23 @@
         const modal = document.getElementById('profileModal');
         const title = document.getElementById('modalTitle');
         const form = document.getElementById('profileForm');
+        const customDeptInput = document.getElementById('formCustomDepartment');
 
         form.reset();
+        State.selectedAvatarFile = null;
+        this.resetPhotoUploadUI();
+
+        if (customDeptInput) {
+          customDeptInput.classList.add('hidden');
+          customDeptInput.value = '';
+        }
 
         if (isEdit && profile) {
           title.innerHTML = `<i data-lucide="edit-3" class="w-5 h-5 text-emerald-400"></i> <span>Edit Data Aparatur</span>`;
           document.getElementById('formProfileId').value = profile.id;
           document.getElementById('formName').value = profile.name;
           document.getElementById('formRole').value = profile.role;
-          document.getElementById('formDepartment').value = profile.department;
+          this.updateDepartmentSelectOptions(profile.department);
           document.getElementById('formNip').value = profile.nip_nuptk || '';
           document.getElementById('formEducation').value = profile.education || '';
           document.getElementById('formAvatar').value = profile.avatar_url || '';
@@ -1005,14 +1329,104 @@
           document.getElementById('formSkills').value = (profile.skills || []).join(', ');
           document.getElementById('formEmail').value = profile.email || '';
           document.getElementById('formPhone').value = profile.phone || '';
+
+          // Jika sudah ada avatar berupa URL, arahkan tab ke URL untuk kemudahan edit
+          if (profile.avatar_url) {
+            this.setPhotoInputMode('url');
+          } else {
+            this.setPhotoInputMode('upload');
+          }
         } else {
           title.innerHTML = `<i data-lucide="user-plus" class="w-5 h-5 text-emerald-400"></i> <span>Tambah Pengurus / Guru</span>`;
           document.getElementById('formProfileId').value = '';
+          this.updateDepartmentSelectOptions('Yayasan');
+          this.setPhotoInputMode('upload');
         }
 
         modal.classList.remove('hidden');
         modal.classList.add('flex');
         lucide.createIcons();
+      },
+
+      async deleteSelectedDepartment() {
+        const select = document.getElementById('formDepartment');
+        if (!select) return;
+
+        const currentVal = select.value;
+        if (!currentVal || currentVal === '__custom__') {
+          showToast("Pilih unit yang valid untuk dihapus!", "error");
+          return;
+        }
+
+        // Cek apakah ada pengurus yang masih terdaftar di unit ini
+        const inUseCount = (State.profiles || []).filter(p => p.department && p.department.toLowerCase() === currentVal.toLowerCase()).length;
+        if (inUseCount > 0) {
+          showToast(`Unit "${currentVal}" masih digunakan oleh ${inUseCount} orang pengurus. Ubah unit mereka terlebih dahulu.`, "error");
+          return;
+        }
+
+        try {
+          await Service.deleteDepartment(currentVal);
+          State.departments = await Service.fetchDepartments();
+          if (State.activeDepartment.toLowerCase() === currentVal.toLowerCase()) {
+            State.activeDepartment = 'All';
+          }
+          this.updateDepartmentSelectOptions();
+          this.renderDepartments();
+          this.filterData();
+          this.renderStage();
+          showToast(`Unit "${currentVal}" berhasil dihapus.`);
+        } catch (err) {
+          showToast("Gagal menghapus unit: " + err.message, "error");
+        }
+      },
+
+      setPhotoInputMode(mode) {
+        State.photoInputMode = mode;
+        const tabUpload = document.getElementById('tabPhotoUpload');
+        const tabUrl = document.getElementById('tabPhotoUrl');
+        const sectionUpload = document.getElementById('sectionPhotoUpload');
+        const sectionUrl = document.getElementById('sectionPhotoUrl');
+
+        if (mode === 'upload') {
+          tabUpload.className = "px-2.5 py-1 rounded-lg font-medium transition bg-emerald-600 text-white shadow-xs flex items-center gap-1";
+          tabUrl.className = "px-2.5 py-1 rounded-lg font-medium transition text-slate-400 hover:text-white flex items-center gap-1";
+          sectionUpload.classList.remove('hidden');
+          sectionUrl.classList.add('hidden');
+        } else {
+          tabUrl.className = "px-2.5 py-1 rounded-lg font-medium transition bg-emerald-600 text-white shadow-xs flex items-center gap-1";
+          tabUpload.className = "px-2.5 py-1 rounded-lg font-medium transition text-slate-400 hover:text-white flex items-center gap-1";
+          sectionUrl.classList.remove('hidden');
+          sectionUpload.classList.add('hidden');
+        }
+      },
+
+      resetPhotoUploadUI() {
+        State.selectedAvatarFile = null;
+        const fileInput = document.getElementById('formAvatarFile');
+        if (fileInput) fileInput.value = '';
+        const previewCard = document.getElementById('fileUploadPreviewCard');
+        if (previewCard) previewCard.classList.add('hidden');
+        const dropzone = document.getElementById('dropzoneAvatar');
+        if (dropzone) dropzone.classList.remove('hidden');
+      },
+
+      displaySelectedFile(file) {
+        State.selectedAvatarFile = file;
+        const previewCard = document.getElementById('fileUploadPreviewCard');
+        const dropzone = document.getElementById('dropzoneAvatar');
+        const thumb = document.getElementById('fileUploadThumbnail');
+        const nameEl = document.getElementById('fileUploadName');
+        const sizeEl = document.getElementById('fileUploadSize');
+
+        if (previewCard && dropzone && thumb && nameEl && sizeEl) {
+          dropzone.classList.add('hidden');
+          previewCard.classList.remove('hidden');
+          previewCard.classList.add('flex');
+          nameEl.textContent = file.name;
+          sizeEl.textContent = (file.size / 1024).toFixed(1) + ' KB';
+          thumb.src = URL.createObjectURL(file);
+        }
       },
 
       closeModal() {
@@ -1053,7 +1467,7 @@
 
     // Navigasi & Siklus Rotasi Waktu
     function goToCard(index) {
-      const total = State.filteredProfiles.length;
+      const total = (State.slides || []).length;
       if (total === 0) return;
       State.currentIndex = (index + total) % total;
       State.currentElapsed = 0;
@@ -1078,7 +1492,7 @@
       if (tickerInterval) clearInterval(tickerInterval);
       const stepMs = 100;
       tickerInterval = setInterval(() => {
-        if (!State.isAutoplay || State.filteredProfiles.length <= 1) return;
+        if (!State.isAutoplay || (State.slides || []).length <= 1) return;
 
         State.currentElapsed += stepMs;
         UI.updateSegmentsProgress();
@@ -1159,23 +1573,88 @@
         nextCard();
       });
 
-      // Pemilih Durasi Alokasi (3s, 5s, 8s)
-      document.getElementById('allocationDurationPicker').addEventListener('click', (e) => {
-        const btn = e.target.closest('button');
-        if (!btn) return;
-        const dur = parseInt(btn.dataset.duration, 10);
-        State.allocatedDuration = dur;
+      // Fungsi Pengaturan Durasi Alokasi (Preset & Kustom)
+      function setDuration(durMs, isCustom = false) {
+        if (isNaN(durMs) || durMs < 1000) durMs = 1000;
+        State.allocatedDuration = durMs;
         resetTransitionAllocation();
 
-        document.querySelectorAll('#allocationDurationPicker button').forEach(b => {
-          b.className = "px-2 py-0.5 rounded text-[10px] transition text-slate-400 hover:text-white";
+        // Perbarui gaya tombol preset
+        document.querySelectorAll('#allocationDurationPicker .dur-preset-btn').forEach(b => {
+          const bDur = parseInt(b.dataset.duration, 10);
+          if (!isCustom && bDur === durMs) {
+            b.className = "dur-preset-btn px-2 py-0.5 rounded text-[10px] transition bg-emerald-600 text-white font-bold shadow-sm shadow-emerald-700/50";
+          } else {
+            b.className = "dur-preset-btn px-2 py-0.5 rounded text-[10px] transition text-slate-400 hover:text-white";
+          }
         });
-        btn.className = "px-2 py-0.5 rounded text-[10px] transition bg-emerald-600 text-white font-bold";
+
+        // Indikasi aktif pada kotak input kustom
+        const customInput = document.getElementById('customDurationInput');
+        if (customInput) {
+          if (isCustom) {
+            customInput.classList.add('border-emerald-300', 'bg-emerald-950', 'text-white', 'font-bold');
+          } else {
+            customInput.classList.remove('border-emerald-300', 'bg-emerald-950', 'text-white', 'font-bold');
+            customInput.value = '';
+          }
+        }
 
         UI.updateAllocationStatus();
         UI.renderStage();
-        showToast(`Alokasi transisi diubah ke ${(dur/1000).toFixed(1)} detik / kartu`);
+        showToast(`Alokasi transisi diubah ke ${(durMs / 1000).toFixed(1)} detik / kartu`);
+      }
+
+      // Handler Tombol Preset (3s, 5s, 8s)
+      document.querySelectorAll('#allocationDurationPicker .dur-preset-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const dur = parseInt(btn.dataset.duration, 10);
+          if (dur) setDuration(dur, false);
+        });
       });
+
+      // Handler Terapkan Durasi Kustom
+      function handleApplyCustomDuration() {
+        const input = document.getElementById('customDurationInput');
+        if (!input) return;
+        const val = parseFloat(input.value);
+        if (isNaN(val) || val <= 0) {
+          showToast("Masukkan angka durasi dalam detik yang valid!", "error");
+          return;
+        }
+        if (val < 1) {
+          showToast("Durasi minimal adalah 1.0 detik", "error");
+          return;
+        }
+        if (val > 600) {
+          showToast("Durasi maksimal adalah 600 detik (10 menit)", "error");
+          return;
+        }
+        const durMs = Math.round(val * 1000);
+        setDuration(durMs, true);
+      }
+
+      const btnApplyCustom = document.getElementById('btnApplyCustomDuration');
+      const customInput = document.getElementById('customDurationInput');
+
+      if (btnApplyCustom) {
+        btnApplyCustom.addEventListener('click', (e) => {
+          e.stopPropagation();
+          handleApplyCustomDuration();
+        });
+      }
+
+      if (customInput) {
+        customInput.addEventListener('keydown', (e) => {
+          e.stopPropagation();
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            handleApplyCustomDuration();
+          }
+        });
+        customInput.addEventListener('click', (e) => e.stopPropagation());
+      }
 
       // Klik Segmen Linimasa
       document.getElementById('allocationSegmentsTrack').addEventListener('click', (e) => {
@@ -1210,6 +1689,80 @@
         UI.openModal(false);
       });
 
+      // Tombol Hapus Unit Terpilih
+      const btnDeleteDept = document.getElementById('btnDeleteCurrentDept');
+      if (btnDeleteDept) {
+        btnDeleteDept.addEventListener('click', (e) => {
+          e.preventDefault();
+          UI.deleteSelectedDepartment();
+        });
+      }
+
+      // Tab Switcher Foto (Upload vs URL)
+      document.getElementById('tabPhotoUpload').addEventListener('click', () => {
+        UI.setPhotoInputMode('upload');
+      });
+
+      document.getElementById('tabPhotoUrl').addEventListener('click', () => {
+        UI.setPhotoInputMode('url');
+      });
+
+      // File Input & Dropzone Handler
+      const dropzone = document.getElementById('dropzoneAvatar');
+      const fileInput = document.getElementById('formAvatarFile');
+      const btnRemoveFile = document.getElementById('btnRemoveUploadedFile');
+
+      if (dropzone && fileInput) {
+        dropzone.addEventListener('click', () => fileInput.click());
+
+        fileInput.addEventListener('change', (e) => {
+          if (e.target.files && e.target.files[0]) {
+            const file = e.target.files[0];
+            if (file.size > 5 * 1024 * 1024) {
+              showToast("Ukuran foto maksimal 5 MB!", "error");
+              fileInput.value = '';
+              return;
+            }
+            UI.displaySelectedFile(file);
+          }
+        });
+
+        // Drag and Drop Effects
+        dropzone.addEventListener('dragover', (e) => {
+          e.preventDefault();
+          dropzone.classList.add('border-emerald-400', 'bg-emerald-950/40');
+        });
+
+        ['dragleave', 'dragend'].forEach(type => {
+          dropzone.addEventListener(type, () => {
+            dropzone.classList.remove('border-emerald-400', 'bg-emerald-950/40');
+          });
+        });
+
+        dropzone.addEventListener('drop', (e) => {
+          e.preventDefault();
+          dropzone.classList.remove('border-emerald-400', 'bg-emerald-950/40');
+          if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+            const file = e.dataTransfer.files[0];
+            if (!file.type.startsWith('image/')) {
+              showToast("Berkas harus berupa gambar (JPG, PNG, WebP)!", "error");
+              return;
+            }
+            if (file.size > 5 * 1024 * 1024) {
+              showToast("Ukuran foto maksimal 5 MB!", "error");
+              return;
+            }
+            UI.displaySelectedFile(file);
+          }
+        });
+      }
+
+      if (btnRemoveFile) {
+        btnRemoveFile.addEventListener('click', () => {
+          UI.resetPhotoUploadUI();
+        });
+      }
+
       document.getElementById('btnCloseProfileModal').addEventListener('click', () => {
         UI.closeModal();
       });
@@ -1224,35 +1777,111 @@
         const id = document.getElementById('formProfileId').value;
         const isEdit = Boolean(id);
 
+        const btnSave = document.getElementById('btnSaveProfile');
+        const btnLabel = document.getElementById('saveBtnLabel');
+        const btnIcon = document.getElementById('saveBtnIcon');
+
+        // Tampilkan State Loading saat mengunggah foto
+        if (btnSave && btnLabel) {
+          btnSave.disabled = true;
+          btnLabel.textContent = State.selectedAvatarFile ? "Mengunggah Foto..." : "Menyimpan Data...";
+          btnIcon.setAttribute('data-lucide', 'loader-2');
+          btnIcon.classList.add('animate-spin');
+          lucide.createIcons();
+        }
+
+        const selectDept = document.getElementById('formDepartment').value;
+        const customDept = document.getElementById('formCustomDepartment').value.trim();
+        const finalDepartment = (selectDept === '__custom__' || !document.getElementById('formCustomDepartment').classList.contains('hidden')) && customDept
+          ? customDept 
+          : (selectDept === '__custom__' ? 'Umum' : selectDept);
+
         const skillsStr = document.getElementById('formSkills').value;
         const skillsArray = skillsStr.split(',').map(s => s.trim()).filter(Boolean);
 
-        const payload = {
-          name: document.getElementById('formName').value.trim(),
-          role: document.getElementById('formRole').value.trim(),
-          department: document.getElementById('formDepartment').value,
-          nip_nuptk: document.getElementById('formNip').value.trim() || '-',
-          education: document.getElementById('formEducation').value.trim() || 'S1',
-          avatar_url: document.getElementById('formAvatar').value.trim(),
-          bio: document.getElementById('formBio').value.trim(),
-          skills: skillsArray,
-          email: document.getElementById('formEmail').value.trim(),
-          phone: document.getElementById('formPhone').value.trim()
-        };
-
-        if (isEdit) payload.id = id;
+        let resolvedAvatarUrl = document.getElementById('formAvatar').value.trim();
 
         try {
+          // Jika unit baru kustom diketik, daftarkan ke master unit
+          if (finalDepartment && !State.departments.includes(finalDepartment)) {
+            await Service.saveDepartment(finalDepartment);
+            State.departments = await Service.fetchDepartments();
+          }
+
+          // Jika ada berkas foto yang dipilih, unggah ke Supabase Storage terlebih dahulu
+          if (State.photoInputMode === 'upload' && State.selectedAvatarFile) {
+            const uploadedUrl = await Service.uploadAvatar(State.selectedAvatarFile);
+            if (uploadedUrl) {
+              resolvedAvatarUrl = uploadedUrl;
+            }
+          }
+
+          const payload = {
+            name: document.getElementById('formName').value.trim(),
+            role: document.getElementById('formRole').value.trim(),
+            department: finalDepartment,
+            nip_nuptk: document.getElementById('formNip').value.trim() || '-',
+            education: document.getElementById('formEducation').value.trim() || 'S1',
+            avatar_url: resolvedAvatarUrl,
+            bio: document.getElementById('formBio').value.trim(),
+            skills: skillsArray,
+            email: document.getElementById('formEmail').value.trim(),
+            phone: document.getElementById('formPhone').value.trim()
+          };
+
+          if (isEdit) payload.id = id;
+
           await Service.saveProfile(payload, isEdit);
           State.profiles = await Service.fetchProfiles();
+          UI.renderDepartments();
           UI.filterData();
           UI.renderStage();
           UI.closeModal();
           showToast(isEdit ? "Data aparatur berhasil diperbarui" : "Aparatur baru berhasil ditambahkan");
         } catch (err) {
           showToast("Gagal menyimpan data: " + err.message, "error");
+        } finally {
+          if (btnSave && btnLabel) {
+            btnSave.disabled = false;
+            btnLabel.textContent = "Simpan Data Aparatur";
+            btnIcon.setAttribute('data-lucide', 'check');
+            btnIcon.classList.remove('animate-spin');
+            lucide.createIcons();
+          }
         }
       });
+
+      // Kontrol Input Unit / Divisi Kustom
+      const deptSelect = document.getElementById('formDepartment');
+      const customDeptInput = document.getElementById('formCustomDepartment');
+      const btnToggleCustomDept = document.getElementById('btnToggleCustomDept');
+
+      if (deptSelect && customDeptInput) {
+        deptSelect.addEventListener('change', () => {
+          if (deptSelect.value === '__custom__') {
+            customDeptInput.classList.remove('hidden');
+            customDeptInput.focus();
+          } else {
+            customDeptInput.classList.add('hidden');
+          }
+        });
+      }
+
+      if (btnToggleCustomDept && customDeptInput && deptSelect) {
+        btnToggleCustomDept.addEventListener('click', () => {
+          const isHidden = customDeptInput.classList.contains('hidden');
+          if (isHidden) {
+            customDeptInput.classList.remove('hidden');
+            deptSelect.value = '__custom__';
+            customDeptInput.focus();
+          } else {
+            customDeptInput.classList.add('hidden');
+            if (deptSelect.value === '__custom__') {
+              deptSelect.value = 'Yayasan';
+            }
+          }
+        });
+      }
 
       // Aksi Delegasi Kartu (Salin Email, Edit, Hapus)
       document.getElementById('cardsViewport').addEventListener('click', (e) => {
@@ -1310,37 +1939,23 @@
         }
       });
 
-      // Konfigurasi Supabase Modal Handlers
-      const cfgModal = document.getElementById('configModal');
-      document.getElementById('btnOpenConfig').addEventListener('click', () => {
-        document.getElementById('cfgSupabaseUrl').value = localStorage.getItem('cfg_supabase_url') || '';
-        document.getElementById('cfgSupabaseKey').value = localStorage.getItem('cfg_supabase_key') || '';
-        document.getElementById('cfgPreviewToggle').checked = activePreviewState;
-        cfgModal.classList.remove('hidden');
-        cfgModal.classList.add('flex');
-      });
-
-      document.getElementById('btnCloseConfigModal').addEventListener('click', () => {
-        cfgModal.classList.add('hidden');
-        cfgModal.classList.remove('flex');
-      });
-
-      document.getElementById('btnSaveConfig').addEventListener('click', () => {
-        const url = document.getElementById('cfgSupabaseUrl').value.trim();
-        const key = document.getElementById('cfgSupabaseKey').value.trim();
-        const forceMock = document.getElementById('cfgPreviewToggle').checked;
-
-        localStorage.setItem('cfg_supabase_url', url);
-        localStorage.setItem('cfg_supabase_key', key);
-        localStorage.setItem('cfg_force_mock', forceMock);
-
-        cfgModal.classList.add('hidden');
-        cfgModal.classList.remove('flex');
-        showToast("Konfigurasi disimpan. Memuat ulang aplikasi...");
-        setTimeout(() => window.location.reload(), 800);
-      });
-
       // Kontrol Keyboard (Panah Kiri, Kanan, Spasi, F)
+      let spacePressHistory = [];
+
+      function toggleAdminMode() {
+        State.isAdminMode = !State.isAdminMode;
+        if (State.isAdminMode) {
+          document.body.classList.add('is-admin');
+          State.isAutoplay = false;
+          UI.updateAutoplayUI();
+          showToast("🔓 Mode Pengeditan Aktif (Tombol Tambah, Edit & Hapus Ditampilkan)", "success");
+        } else {
+          document.body.classList.remove('is-admin');
+          showToast("🔒 Mode Pengeditan Terkunci (Tampilan Bersih Aktif)", "success");
+        }
+        lucide.createIcons();
+      }
+
       window.addEventListener('keydown', (e) => {
         if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) return;
 
@@ -1348,10 +1963,23 @@
           nextCard();
         } else if (e.key === 'ArrowLeft') {
           prevCard();
-        } else if (e.key === ' ') {
+        } else if (e.key === ' ' || e.code === 'Space') {
           e.preventDefault();
+          const now = Date.now();
+          spacePressHistory.push(now);
+          // Pertahankan riwayat ketukan dalam jendela waktu 1000ms (1 detik)
+          spacePressHistory = spacePressHistory.filter(t => now - t <= 1000);
+
+          if (spacePressHistory.length >= 3) {
+            spacePressHistory = [];
+            toggleAdminMode();
+            return;
+          }
+
+          // Jika ditekan 1x (normal), toggle jeda/putar otomatis
           State.isAutoplay = !State.isAutoplay;
           UI.updateAutoplayUI();
+          showToast(State.isAutoplay ? "Rotasi otomatis aktif" : "Rotasi otomatis dijeda");
         } else if (e.key.toLowerCase() === 'f') {
           toggleFullScreen();
         }
@@ -1378,7 +2006,8 @@
       initClient();
       bindEvents();
 
-      // Ambil data profil (Mock / Supabase)
+      // Ambil master departemen & data profil
+      State.departments = await Service.fetchDepartments();
       State.profiles = await Service.fetchProfiles();
       UI.init();
       startTicker();
