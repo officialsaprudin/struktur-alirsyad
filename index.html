@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OmniProfile Showcase | Ultimate Singularity</title>
+  <title>Struktur Organisasi - MI Al-Irsyad Al-Islamiyyah</title>
+  <link rel="icon" type="image/png" href="poto.png">
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -14,13 +15,22 @@
         extend: {
           colors: {
             brand: {
-              50: '#eef2ff',
-              100: '#e0e7ff',
-              400: '#818cf8',
-              500: '#6366f1',
-              600: '#4f46e5',
-              900: '#1e1b4b',
-              950: '#0a0a14',
+              50: '#ecfdf5',
+              100: '#d1fae5',
+              200: '#a7f3d0',
+              400: '#34d399',
+              500: '#10b981',
+              600: '#059669',
+              700: '#047857',
+              800: '#065f46',
+              900: '#064e3b',
+              950: '#022c22',
+            },
+            gold: {
+              300: '#fde047',
+              400: '#fbbf24',
+              500: '#f59e0b',
+              600: '#d97706',
             }
           },
           fontFamily: {
@@ -30,11 +40,11 @@
       }
     }
   </script>
-  
+
   <!-- Google Fonts: Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -43,9 +53,9 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
-    /* Full Screen Perspective Engine */
+    /* Full Screen 3D Showcase Perspective */
     .perspective-container {
-      perspective: 1400px;
+      perspective: 1600px;
     }
     .profile-card {
       transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), 
@@ -55,9 +65,9 @@
       will-change: transform, opacity;
     }
     .card-prev {
-      transform: translateX(-55%) scale(0.82) rotateY(22deg) translateZ(-80px);
-      opacity: 0.2;
-      filter: blur(4px);
+      transform: translateX(-60%) scale(0.80) rotateY(22deg) translateZ(-100px);
+      opacity: 0.18;
+      filter: blur(5px);
       pointer-events: none;
       z-index: 10;
     }
@@ -66,12 +76,12 @@
       opacity: 1;
       filter: blur(0px);
       z-index: 30;
-      box-shadow: 0 25px 50px -12px rgba(99, 102, 241, 0.15), 0 0 40px rgba(0, 0, 0, 0.8);
+      box-shadow: 0 35px 70px -15px rgba(13, 148, 136, 0.45), 0 12px 35px rgba(0, 0, 0, 0.35);
     }
     .card-next {
-      transform: translateX(55%) scale(0.82) rotateY(-22deg) translateZ(-80px);
-      opacity: 0.2;
-      filter: blur(4px);
+      transform: translateX(60%) scale(0.80) rotateY(-22deg) translateZ(-100px);
+      opacity: 0.18;
+      filter: blur(5px);
       pointer-events: none;
       z-index: 10;
     }
@@ -81,33 +91,39 @@
       pointer-events: none;
       z-index: 0;
     }
-    /* Dynamic Glass & Backdrop Blur */
+
+    /* Bright Tosca-White Card Theme with Vivid Islamic Accents */
+    .card-light-theme {
+      background: linear-gradient(145deg, #ffffff 0%, #f0fdfa 42%, #ccfbf1 100%);
+      border: 2px solid rgba(20, 184, 166, 0.5);
+      box-shadow: 0 25px 50px -12px rgba(13, 148, 136, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.95) inset;
+    }
+
+    /* Emerald & Gold Islamic Glass Themes */
     .glass-panel {
-      background: rgba(14, 14, 24, 0.78);
+      background: rgba(3, 20, 14, 0.88);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.22);
     }
     .glass-subtle {
-      background: rgba(22, 22, 36, 0.6);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(6, 32, 22, 0.68);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(16, 185, 129, 0.16);
     }
-    /* Segment Progress Bar Animation */
     .segment-bar {
       transition: width 0.1s linear;
     }
-    /* Custom Scrollbar */
     ::-webkit-scrollbar {
       width: 5px;
       height: 5px;
     }
     ::-webkit-scrollbar-thumb {
-      background: #312e81;
+      background: #047857;
       border-radius: 9999px;
     }
 
-    /* Clean Mode: Auto-Hide HUD for Pure Exhibition View */
+    /* Clean Auto-Hide HUD for TV/Lobby Showcase */
     .hud-element {
       transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
     }
@@ -130,66 +146,67 @@
     }
   </style>
 </head>
-<body class="bg-[#06060c] text-slate-100 h-screen w-screen overflow-hidden font-sans flex flex-col justify-between selection:bg-indigo-600 selection:text-white relative">
 
-  <!-- Ambient Dynamic Lighting Backdrop -->
+<body class="bg-[#02110a] text-slate-100 h-screen w-screen overflow-hidden font-sans flex flex-col justify-between selection:bg-emerald-600 selection:text-white relative select-none">
+
   <!-- Ambient Dynamic Lighting Backdrop -->
   <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
-    <div id="ambientBackdrop1" class="absolute -top-32 left-1/4 w-[600px] h-[600px] bg-indigo-600/15 rounded-full blur-[140px] transition-all duration-1000"></div>
-    <div id="ambientBackdrop2" class="absolute -bottom-32 right-1/4 w-[600px] h-[600px] bg-purple-600/15 rounded-full blur-[140px] transition-all duration-1000"></div>
-    <div class="absolute inset-0 bg-[radial-gradient(#ffffff05_1px,transparent_1px)] [background-size:24px_24px] opacity-40"></div>
+    <div id="ambientBackdrop1" class="absolute -top-32 left-1/4 w-[650px] h-[650px] bg-emerald-600/15 rounded-full blur-[150px] transition-all duration-1000"></div>
+    <div id="ambientBackdrop2" class="absolute -bottom-32 right-1/4 w-[650px] h-[650px] bg-amber-500/12 rounded-full blur-[150px] transition-all duration-1000"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(#10b98108_1px,transparent_1px)] [background-size:24px_24px] opacity-60"></div>
   </div>
 
-  <!-- Notification Banner Pemicu Fullscreen Otomatis Saat Refresh -->
-  <div id="fullscreenHint" class="hud-element fixed top-2 left-1/2 -translate-x-1/2 z-50 pointer-events-auto flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-600/30 border border-indigo-500/40 backdrop-blur-md text-[11px] text-indigo-200 transition-all duration-500 cursor-pointer shadow-lg shadow-indigo-600/20">
-    <i data-lucide="sparkles" class="w-3.5 h-3.5 text-indigo-400 animate-spin"></i>
-    <span>Klik di mana saja untuk mengunci Full Screen Otomatis</span>
+  <!-- Notification Banner Pemicu Fullscreen Otomatis -->
+  <div id="fullscreenHint" class="hud-element fixed top-2 left-1/2 -translate-x-1/2 z-50 pointer-events-auto flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-950/80 border border-emerald-500/40 backdrop-blur-md text-[11px] text-emerald-200 transition-all duration-500 cursor-pointer shadow-xl shadow-emerald-950/60">
+    <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-400 animate-spin"></i>
+    <span>Klik di mana saja untuk mengunci Layar Penuh Otomatis</span>
   </div>
 
   <!-- Top Floating Header & Card Allocation Timeline -->
   <header class="hud-element relative z-40 w-full px-4 lg:px-8 pt-3 pb-2 flex flex-col gap-2.5">
     
-    <!-- Alokasi Linimasa Segmen Transisi Setiap Kartu (Story-Style Allocation Rail) -->
+    <!-- Linimasa Alokasi Transisi Setiap Kartu (Story-Style Timeline Rail) -->
     <div class="max-w-4xl w-full mx-auto flex flex-col gap-1.5">
-      <div class="flex items-center justify-between text-[11px] font-mono text-slate-400 px-1">
+      <div class="flex items-center justify-between text-[11px] font-mono text-slate-300 px-1">
         <div class="flex items-center gap-2">
-          <span class="inline-block w-2 h-2 rounded-full bg-indigo-400 animate-ping"></span>
-          <span class="text-indigo-300 font-semibold uppercase tracking-wider">Transisi Struktur:</span>
-          <span id="allocationStatusText" class="text-white">Aparatur 1 dari 5 (5.0s)</span>
+          <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+          <span class="text-emerald-300 font-semibold uppercase tracking-wider">Transisi Struktur:</span>
+          <span id="allocationStatusText" class="text-white font-medium">Aparatur 1 dari 5 (5.0s)</span>
         </div>
-        <!-- Selector Pengaturan Alokasi Durasi Tiap Kartu -->
+        
+        <!-- Pilihan Durasi Rotasi Transisi (3s, 5s, 8s) -->
         <div class="flex items-center gap-1.5">
-          <span class="text-slate-500 hidden sm:inline">Durasi Display:</span>
-          <div class="flex items-center bg-black/40 border border-white/10 rounded-lg p-0.5" id="allocationDurationPicker">
+          <span class="text-slate-400 hidden sm:inline text-[10px]">Durasi Display:</span>
+          <div class="flex items-center bg-black/60 border border-emerald-500/25 rounded-lg p-0.5" id="allocationDurationPicker">
             <button data-duration="3000" class="px-2 py-0.5 rounded text-[10px] transition text-slate-400 hover:text-white">3s</button>
-            <button data-duration="5000" class="px-2 py-0.5 rounded text-[10px] transition bg-indigo-600 text-white font-bold">5s</button>
+            <button data-duration="5000" class="px-2 py-0.5 rounded text-[10px] transition bg-emerald-600 text-white font-bold shadow-sm shadow-emerald-700/50">5s</button>
             <button data-duration="8000" class="px-2 py-0.5 rounded text-[10px] transition text-slate-400 hover:text-white">8s</button>
           </div>
         </div>
       </div>
 
-      <!-- Segment Slots Track (Alokasi fisik per kartu) -->
+      <!-- Segment Slots Track (Alokasi Fisik per Kartu) -->
       <div id="allocationSegmentsTrack" class="grid w-full gap-1.5 h-1.5 rounded-full overflow-hidden">
-        <!-- Rendered dynamically via JS based on profile count -->
+        <!-- Rendered dynamically via JS -->
       </div>
     </div>
 
     <!-- Navigation Bar & Controls -->
     <div class="max-w-7xl w-full mx-auto flex items-center justify-between gap-3 mt-1">
       <div class="flex items-center gap-3">
-        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-600/30 ring-1 ring-white/20">
-          <i data-lucide="graduation-cap" class="w-4 h-4 text-white"></i>
-        </div>
+        <img src="https://i.ibb.co.com/676xL3yn/MI-AL-IRSYAD-AL-ISLAMIYYAH-20260604-173251-0000.png" 
+             alt="Logo MI Al-Irsyad Al-Islamiyyah" 
+             class="w-12 h-12 object-contain filter drop-shadow-[0_2px_10px_rgba(16,185,129,0.35)] select-none">
         <div>
           <h1 class="text-sm font-bold text-white tracking-tight leading-none flex items-center gap-2">
             Struktur Organisasi
-            <span class="text-[10px] px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 uppercase tracking-widest font-mono">Yayasan & Sekolah</span>
+            <span class="text-[10px] px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 uppercase tracking-widest font-mono font-semibold">MI Al-Irsyad Al-Islamiyyah</span>
           </h1>
         </div>
       </div>
 
-      <!-- Middle Department Chips -->
-      <div class="hidden md:flex items-center gap-1 bg-white/5 border border-white/10 p-1 rounded-2xl backdrop-blur-md" id="filterContainer">
+      <!-- Department Filter Chips -->
+      <div class="hidden md:flex items-center gap-1 bg-white/5 border border-emerald-500/20 p-1 rounded-2xl backdrop-blur-md" id="filterContainer">
         <!-- Rendered via JS -->
       </div>
 
@@ -200,20 +217,20 @@
           <span id="envBadgeText">Mock</span>
         </div>
 
-        <button id="btnToggleAutoplay" title="Pause / Lanjutkan Alokasi Transisi" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-indigo-500/40 bg-indigo-600/20 text-indigo-300 hover:bg-indigo-600 hover:text-white transition text-xs font-semibold">
-          <i data-lucide="play" id="autoplayIcon" class="w-3.5 h-3.5"></i>
-          <span class="hidden sm:inline" id="autoplayLabel">Mulai</span>
+        <button id="btnToggleAutoplay" title="Pause / Lanjutkan Alokasi Transisi" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-emerald-500/50 bg-emerald-600 text-white transition text-xs font-semibold shadow-md shadow-emerald-600/30">
+          <i data-lucide="pause" id="autoplayIcon" class="w-3.5 h-3.5"></i>
+          <span class="hidden sm:inline" id="autoplayLabel">Berhenti</span>
         </button>
 
-        <button id="btnToggleFullscreen" title="Layar Penuh (F11)" class="p-2 rounded-xl text-slate-300 hover:text-white glass-subtle hover:border-indigo-500/50 transition">
+        <button id="btnToggleFullscreen" title="Layar Penuh (F)" class="p-2 rounded-xl text-slate-300 hover:text-white glass-subtle hover:border-emerald-500/50 transition">
           <i data-lucide="maximize" id="fullscreenIcon" class="w-4 h-4"></i>
         </button>
 
-        <button id="btnOpenConfig" title="Konfigurasi Supabase" class="p-2 rounded-xl text-slate-300 hover:text-white glass-subtle transition">
+        <button id="btnOpenConfig" title="Konfigurasi Supabase" class="p-2 rounded-xl text-slate-300 hover:text-white glass-subtle hover:border-emerald-500/50 transition">
           <i data-lucide="database" class="w-4 h-4"></i>
         </button>
 
-        <button id="btnOpenAddModal" class="p-2 sm:px-3 sm:py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold shadow-lg shadow-indigo-600/30 transition flex items-center gap-1.5">
+        <button id="btnOpenAddModal" class="p-2 sm:px-3 sm:py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold shadow-lg shadow-emerald-600/30 transition flex items-center gap-1.5 border border-emerald-400/30">
           <i data-lucide="user-plus" class="w-4 h-4"></i>
           <span class="hidden sm:inline">Tambah Pengurus</span>
         </button>
@@ -222,135 +239,146 @@
   </header>
 
   <!-- MAIN FULL-SCREEN SHOWCASE STAGE -->
-  <main class="relative z-10 flex-1 w-full max-w-7xl mx-auto px-4 flex flex-col items-center justify-center min-h-0 py-2">
+  <main class="relative z-10 flex-1 w-full max-w-[1400px] mx-auto px-2 sm:px-4 flex flex-col items-center justify-center min-h-0 py-1">
     
-    <!-- Stage Perspective Viewport -->
-    <div class="relative w-full h-full max-h-[720px] flex items-center justify-center perspective-container overflow-hidden">
+    <!-- 3D Viewport Box -->
+    <div class="perspective-container relative w-full h-full flex items-center justify-center">
       
-      <!-- Arrow Controls -->
-      <button id="btnPrev" aria-label="Profil Sebelumnya" class="hud-element hud-arrow-left absolute left-2 sm:left-6 z-40 p-3.5 rounded-2xl glass-panel text-slate-300 hover:text-white hover:border-indigo-500/50 transition active:scale-90 shadow-2xl group">
-        <i data-lucide="chevron-left" class="w-6 h-6 group-hover:-translate-x-0.5 transition-transform"></i>
-      </button>
-
-      <button id="btnNext" aria-label="Profil Berikutnya" class="hud-element hud-arrow-right absolute right-2 sm:right-6 z-40 p-3.5 rounded-2xl glass-panel text-slate-300 hover:text-white hover:border-indigo-500/50 transition active:scale-90 shadow-2xl group">
-        <i data-lucide="chevron-right" class="w-6 h-6 group-hover:translate-x-0.5 transition-transform"></i>
-      </button>
-
-      <!-- Carousel Cards Mount Point (Full Screen Proportions) -->
+      <!-- Kartu-kartu Profil Dirender di Sini -->
       <div id="cardsViewport" class="relative w-full h-full flex items-center justify-center">
-        <div id="loadingSpinner" class="flex flex-col items-center gap-3">
-          <div class="w-10 h-10 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
-          <span class="text-xs text-slate-400 font-mono tracking-wider">Memuat Struktur Organisasi Sekolah...</span>
-        </div>
+        <!-- Rendered via JS -->
       </div>
+
+      <!-- Navigasi Panah Kiri -->
+      <button id="btnPrevCard" title="Sebelumnya (Panah Kiri)" class="hud-element hud-arrow-left absolute left-2 sm:left-4 z-40 p-3 sm:p-4 rounded-2xl glass-subtle text-slate-300 hover:text-white hover:border-emerald-500/50 hover:bg-emerald-900/30 transition transform -translate-y-1/2 top-1/2 shadow-xl shadow-black/50">
+        <i data-lucide="chevron-left" class="w-6 h-6"></i>
+      </button>
+
+      <!-- Navigasi Panah Kanan -->
+      <button id="btnNextCard" title="Selanjutnya (Panah Kanan)" class="hud-element hud-arrow-right absolute right-2 sm:right-4 z-40 p-3 sm:p-4 rounded-2xl glass-subtle text-slate-300 hover:text-white hover:border-emerald-500/50 hover:bg-emerald-900/30 transition transform -translate-y-1/2 top-1/2 shadow-xl shadow-black/50">
+        <i data-lucide="chevron-right" class="w-6 h-6"></i>
+      </button>
+
     </div>
   </main>
 
-  <!-- Bottom Floating Dock -->
-  <footer class="hud-element hud-dock-bottom relative z-30 w-full px-4 py-3 bg-gradient-to-t from-[#06060c] via-[#06060c]/80 to-transparent">
-    <div class="max-w-4xl mx-auto flex items-center justify-between gap-4">
-      <div class="flex items-center gap-2 text-xs text-slate-400 font-mono">
-        <span class="text-indigo-400 font-bold text-sm" id="currentIndexText">01</span>
+  <!-- BOTTOM DOCK: Thumbnail Bar & Counter Indicators -->
+  <footer class="hud-element hud-dock-bottom relative z-40 w-full px-4 pb-3 pt-1">
+    <div class="max-w-4xl mx-auto flex items-center justify-between gap-4 glass-subtle px-4 py-2 rounded-2xl border border-emerald-500/20 shadow-2xl">
+      
+      <!-- Counter & Indikator Angka -->
+      <div class="flex items-center gap-2 font-mono text-xs text-slate-300">
+        <span class="text-emerald-400 font-bold text-sm" id="currentIndexText">01</span>
         <span class="text-slate-600">/</span>
-        <span id="totalCountText">05</span>
-        <span class="text-slate-600 ml-2 hidden sm:inline">• Navigasi: Geser / Tombol Panah</span>
+        <span class="text-slate-400" id="totalCountText">05</span>
       </div>
 
-      <!-- Quick Avatars Thumbnail Dock -->
-      <div id="thumbnailDock" class="flex items-center gap-2 overflow-x-auto max-w-[60%] sm:max-w-md pb-1 px-1">
+      <!-- Mini Thumbnails Carousel -->
+      <div class="flex items-center gap-2 overflow-x-auto max-w-full py-1 px-2" id="thumbnailDock">
         <!-- Rendered via JS -->
+      </div>
+
+      <!-- Hint Navigasi Cepat -->
+      <div class="hidden lg:flex items-center gap-3 text-[11px] font-mono text-slate-400">
+        <span class="flex items-center gap-1"><kbd class="px-1.5 py-0.5 rounded bg-black/60 border border-white/10 text-[10px]">←</kbd><kbd class="px-1.5 py-0.5 rounded bg-black/60 border border-white/10 text-[10px]">→</kbd> Geser</span>
+        <span class="flex items-center gap-1"><kbd class="px-1.5 py-0.5 rounded bg-black/60 border border-white/10 text-[10px]">Spasi</kbd> Jeda</span>
+        <span class="flex items-center gap-1"><kbd class="px-1.5 py-0.5 rounded bg-black/60 border border-white/10 text-[10px]">F</kbd> Layar Penuh</span>
       </div>
     </div>
   </footer>
 
-  <!-- Modal: Add / Edit Profile -->
-  <div id="profileModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden items-center justify-center p-4 overflow-y-auto">
-    <div class="glass-panel w-full max-w-lg rounded-3xl p-6 sm:p-8 text-left border border-white/15 shadow-2xl relative my-8">
-      <div class="flex items-center justify-between pb-4 border-b border-white/10">
+  <!-- MODAL: Tambah & Edit Data Aparatur / Guru -->
+  <div id="profileModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden items-center justify-center p-4">
+    <div class="glass-panel w-full max-w-xl max-h-[90vh] overflow-y-auto rounded-3xl p-6 sm:p-8 border border-emerald-500/30 shadow-2xl relative">
+      
+      <div class="flex items-center justify-between pb-4 border-b border-emerald-500/20">
         <h3 id="modalTitle" class="text-base font-bold text-white flex items-center gap-2">
-          <i data-lucide="user-plus" class="w-5 h-5 text-indigo-400"></i>
-          <span>Tambah Profil Baru</span>
+          <i data-lucide="user-plus" class="w-5 h-5 text-emerald-400"></i>
+          <span>Tambah Pengurus / Guru</span>
         </h3>
-        <button id="btnCloseModal" class="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition">
-          <i data-lucide="x" class="w-4 h-4"></i>
+        <button id="btnCloseProfileModal" class="p-1.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/10 transition">
+          <i data-lucide="x" class="w-5 h-5"></i>
         </button>
       </div>
 
-      <form id="profileForm" class="mt-5 space-y-4">
+      <form id="profileForm" class="mt-4 space-y-4">
         <input type="hidden" id="formProfileId">
 
-        <div>
-          <label class="block text-xs font-semibold text-slate-300 mb-1">Nama Lengkap & Gelar *</label>
-          <input type="text" id="formName" required placeholder="Contoh: Drs. H. Ahmad Fauzi, M.Pd." 
-                 class="w-full bg-[#121220] border border-white/10 rounded-xl px-3.5 py-2 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition">
-        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">Nama Lengkap & Gelar *</label>
+            <input type="text" id="formName" required placeholder="Dr. H. Ahmad Dahlan, M.Pd." 
+                   class="w-full bg-[#051e15] border border-emerald-500/25 rounded-xl px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-emerald-400">
+          </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
             <label class="block text-xs font-semibold text-slate-300 mb-1">Jabatan / Amanah *</label>
-            <input type="text" id="formRole" required placeholder="Kepala Sekolah / Waka Kurikulum" 
-                   class="w-full bg-[#121220] border border-white/10 rounded-xl px-3.5 py-2 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition">
+            <input type="text" id="formRole" required placeholder="Kepala Madrasah" 
+                   class="w-full bg-[#051e15] border border-emerald-500/25 rounded-xl px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-emerald-400">
           </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
-            <label class="block text-xs font-semibold text-slate-300 mb-1">Bidang / Unit Kerja *</label>
-            <select id="formDepartment" required class="w-full bg-[#121220] border border-white/10 rounded-xl px-3.5 py-2 text-xs text-slate-100 focus:outline-none focus:border-indigo-500 transition">
-              <option value="Yayasan">Yayasan / Pembina</option>
-              <option value="Pimpinan">Pimpinan Sekolah</option>
-              <option value="Kurikulum">Bidang Kurikulum</option>
-              <option value="Kesiswaan">Bidang Kesiswaan</option>
-              <option value="Sarpras">Sarana & Prasarana</option>
-              <option value="Tenaga Pendidik">Tenaga Pendidik / Guru</option>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">Unit / Divisi *</label>
+            <select id="formDepartment" required class="w-full bg-[#051e15] border border-emerald-500/25 rounded-xl px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-emerald-400">
+              <option value="Yayasan">Yayasan</option>
+              <option value="Pimpinan">Pimpinan</option>
+              <option value="Kurikulum">Kurikulum</option>
+              <option value="Kesiswaan">Kesiswaan</option>
+              <option value="Sarpras">Sarpras</option>
+              <option value="Keagamaan">Keagamaan</option>
             </select>
           </div>
-        </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <label class="block text-xs font-semibold text-slate-300 mb-1">NIP / NUPTK / No. Induk</label>
-            <input type="text" id="formNip" placeholder="19800101 200501 1 001 atau -" 
-                   class="w-full bg-[#121220] border border-white/10 rounded-xl px-3.5 py-2 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition">
+            <label class="block text-xs font-semibold text-slate-300 mb-1">NIP / NUPTK</label>
+            <input type="text" id="formNip" placeholder="19780415 200312..." 
+                   class="w-full bg-[#051e15] border border-emerald-500/25 rounded-xl px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-emerald-400 font-mono">
           </div>
+
           <div>
             <label class="block text-xs font-semibold text-slate-300 mb-1">Pendidikan Terakhir</label>
-            <input type="text" id="formEducation" placeholder="S2 Manajemen Pendidikan" 
-                   class="w-full bg-[#121220] border border-white/10 rounded-xl px-3.5 py-2 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition">
+            <input type="text" id="formEducation" placeholder="S2 Pendidikan" 
+                   class="w-full bg-[#051e15] border border-emerald-500/25 rounded-xl px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-emerald-400">
           </div>
         </div>
 
         <div>
-          <label class="block text-xs font-semibold text-slate-300 mb-1">URL Pasfoto Resmi (Rasio 4:6)</label>
-          <input type="url" id="formAvatar" placeholder="https://..." 
-                 class="w-full bg-[#121220] border border-white/10 rounded-xl px-3.5 py-2 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition">
+          <label class="block text-xs font-semibold text-slate-300 mb-1">URL Foto Portrait (Rasio 4:6 disarankan)</label>
+          <input type="url" id="formAvatar" placeholder="https://images.unsplash.com/photo-..." 
+                 class="w-full bg-[#051e15] border border-emerald-500/25 rounded-xl px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-emerald-400 font-mono">
         </div>
 
         <div>
-          <label class="block text-xs font-semibold text-slate-300 mb-1">Tupoksi & Deskripsi Tanggung Jawab</label>
-          <textarea id="formBio" rows="3" placeholder="Jelaskan peran tugas utama dan tanggung jawab dalam struktur sekolah/yayasan..." 
-                    class="w-full bg-[#121220] border border-white/10 rounded-xl px-3.5 py-2 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition resize-none"></textarea>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">Keterangan Tugas / Tupoksi Visi</label>
+          <textarea id="formBio" rows="3" placeholder="Menjalankan tata kelola akademik, peningkatan mutu santri..." 
+                    class="w-full bg-[#051e15] border border-emerald-500/25 rounded-xl px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-emerald-400"></textarea>
         </div>
 
         <div>
-          <label class="block text-xs font-semibold text-slate-300 mb-1">Kompetensi / Bidang Tugas (Pisahkan dengan koma)</label>
-          <input type="text" id="formSkills" placeholder="Kurikulum Merdeka, Supervisi Akademik, Manajemen OSIS" 
-                 class="w-full bg-[#121220] border border-white/10 rounded-xl px-3.5 py-2 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition">
+          <label class="block text-xs font-semibold text-slate-300 mb-1">Bidang Tugas / Keahlian (Pisahkan dengan koma)</label>
+          <input type="text" id="formSkills" placeholder="Kurikulum Merdeka, CBT Asesmen, Tahsin Al-Qur'an" 
+                 class="w-full bg-[#051e15] border border-emerald-500/25 rounded-xl px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-emerald-400">
         </div>
 
-        <div class="grid grid-cols-2 gap-3">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label class="block text-xs font-semibold text-slate-300 mb-1">Email Sekolah</label>
-            <input type="email" id="formEmail" placeholder="guru@sekolah.sch.id" 
-                   class="w-full bg-[#121220] border border-white/10 rounded-xl px-3.5 py-2 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition">
+            <label class="block text-xs font-semibold text-slate-300 mb-1">Email Resmi</label>
+            <input type="email" id="formEmail" placeholder="nama@sekolah.sch.id" 
+                   class="w-full bg-[#051e15] border border-emerald-500/25 rounded-xl px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-emerald-400">
           </div>
+
           <div>
-            <label class="block text-xs font-semibold text-slate-300 mb-1">Nomor WhatsApp / Kantor</label>
-            <input type="text" id="formPhone" placeholder="08123456789" 
-                   class="w-full bg-[#121220] border border-white/10 rounded-xl px-3.5 py-2 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition">
+            <label class="block text-xs font-semibold text-slate-300 mb-1">Nomor WhatsApp</label>
+            <input type="text" id="formPhone" placeholder="081234567890" 
+                   class="w-full bg-[#051e15] border border-emerald-500/25 rounded-xl px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-emerald-400 font-mono">
           </div>
         </div>
 
-        <div class="flex items-center justify-end gap-3 pt-4 border-t border-white/10">
+        <div class="flex items-center justify-end gap-3 pt-4 border-t border-emerald-500/20">
           <button type="button" id="btnCancelModal" class="px-4 py-2 rounded-xl text-xs text-slate-400 hover:text-white hover:bg-white/5 transition">Batal</button>
-          <button type="submit" id="btnSaveProfile" class="flex items-center gap-2 px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold shadow-lg shadow-indigo-600/30 transition">
+          <button type="submit" id="btnSaveProfile" class="flex items-center gap-2 px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold shadow-lg shadow-emerald-600/30 transition">
             <i data-lucide="check" class="w-4 h-4"></i>
             <span>Simpan Data Aparatur</span>
           </button>
@@ -359,12 +387,12 @@
     </div>
   </div>
 
-  <!-- Modal: Supabase Credentials Config -->
-  <div id="configModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden items-center justify-center p-4">
-    <div class="glass-panel w-full max-w-md rounded-3xl p-6 sm:p-7 border border-white/15 shadow-2xl relative">
-      <div class="flex items-center justify-between pb-3 border-b border-white/10">
+  <!-- MODAL: Pengaturan Supabase Cloud -->
+  <div id="configModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden items-center justify-center p-4">
+    <div class="glass-panel w-full max-w-md rounded-3xl p-6 sm:p-7 border border-emerald-500/25 shadow-2xl relative">
+      <div class="flex items-center justify-between pb-3 border-b border-emerald-500/20">
         <h3 class="text-sm font-bold text-white flex items-center gap-2">
-          <i data-lucide="database" class="w-4 h-4 text-indigo-400"></i>
+          <i data-lucide="database" class="w-4 h-4 text-emerald-400"></i>
           <span>Pengaturan Supabase Cloud</span>
         </h3>
         <button id="btnCloseConfigModal" class="p-1 rounded-lg text-slate-400 hover:text-white">
@@ -373,31 +401,31 @@
       </div>
 
       <div class="mt-4 space-y-3.5">
-        <p class="text-xs text-slate-400 leading-relaxed">
-          Ganti variabel koneksi untuk beralih secara langsung ke database PostgreSQL Supabase Anda tanpa deploy ulang.
+        <p class="text-xs text-slate-300 leading-relaxed">
+          Ganti variabel koneksi untuk beralih secara langsung ke database PostgreSQL Supabase Anda secara real-time.
         </p>
 
         <div>
           <label class="block text-xs font-semibold text-slate-300 mb-1">SUPABASE URL</label>
           <input type="text" id="cfgSupabaseUrl" placeholder="https://xyzcompany.supabase.co" 
-                 class="w-full bg-[#121220] border border-white/10 rounded-xl px-3 py-2 text-xs font-mono text-slate-200 focus:outline-none focus:border-indigo-500">
+                 class="w-full bg-[#051e15] border border-emerald-500/25 rounded-xl px-3 py-2 text-xs font-mono text-slate-200 focus:outline-none focus:border-emerald-400">
         </div>
 
         <div>
           <label class="block text-xs font-semibold text-slate-300 mb-1">SUPABASE ANON KEY</label>
           <input type="password" id="cfgSupabaseKey" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6..." 
-                 class="w-full bg-[#121220] border border-white/10 rounded-xl px-3 py-2 text-xs font-mono text-slate-200 focus:outline-none focus:border-indigo-500">
+                 class="w-full bg-[#051e15] border border-emerald-500/25 rounded-xl px-3 py-2 text-xs font-mono text-slate-200 focus:outline-none focus:border-emerald-400">
         </div>
 
         <div class="flex items-center justify-between pt-2">
           <label class="flex items-center gap-2 cursor-pointer text-xs text-slate-300">
-            <input type="checkbox" id="cfgPreviewToggle" class="rounded bg-slate-900 border-white/20 text-indigo-600 focus:ring-0">
+            <input type="checkbox" id="cfgPreviewToggle" class="rounded bg-slate-900 border-emerald-500/30 text-emerald-600 focus:ring-0">
             <span>Paksa Mock Mode (Offline)</span>
           </label>
         </div>
 
-        <div class="flex items-center justify-end gap-2 pt-3 border-t border-white/10">
-          <button id="btnSaveConfig" class="w-full py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold shadow-lg shadow-indigo-600/30 transition">
+        <div class="flex items-center justify-end gap-2 pt-3 border-t border-emerald-500/20">
+          <button id="btnSaveConfig" class="w-full py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold shadow-lg shadow-emerald-600/30 transition">
             Terapkan & Muat Ulang
           </button>
         </div>
@@ -405,85 +433,41 @@
     </div>
   </div>
 
-  <!-- Custom Confirmation Dialog (Replaces native confirm/alert) -->
-  <div id="confirmModal" class="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm hidden items-center justify-center p-4">
-    <div class="glass-panel w-full max-w-sm rounded-2xl p-6 border border-white/15 text-center">
-      <div class="w-12 h-12 rounded-full bg-rose-500/10 text-rose-400 mx-auto flex items-center justify-center mb-3 border border-rose-500/20">
+  <!-- MODAL: Konfirmasi Hapus Data (Tanpa native alert/confirm) -->
+  <div id="deleteConfirmModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden items-center justify-center p-4">
+    <div class="glass-panel w-full max-w-sm rounded-3xl p-6 border border-rose-500/30 shadow-2xl relative text-center">
+      <div class="w-12 h-12 rounded-2xl bg-rose-500/10 border border-rose-500/30 text-rose-400 flex items-center justify-center mx-auto mb-3">
         <i data-lucide="alert-triangle" class="w-6 h-6"></i>
       </div>
-      <h4 id="confirmTitle" class="text-sm font-bold text-white mb-1">Hapus Persona Profil?</h4>
-      <p id="confirmMessage" class="text-xs text-slate-400 mb-5">Tindakan ini permanen dan tidak dapat dibatalkan.</p>
+      <h3 class="text-sm font-bold text-white mb-1">Hapus Data Pengurus?</h3>
+      <p class="text-xs text-slate-300 mb-5 leading-relaxed">Tindakan ini tidak dapat dibatalkan. Data aparatur akan dihapus dari sistem.</p>
+      
       <div class="flex items-center justify-center gap-3">
-        <button id="btnCancelConfirm" class="px-4 py-2 rounded-xl text-xs text-slate-300 hover:bg-white/5 transition">Batal</button>
-        <button id="btnAcceptConfirm" class="px-5 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-semibold transition shadow-md shadow-rose-600/30">Ya, Lanjutkan</button>
+        <button id="btnCancelDelete" class="px-4 py-2 rounded-xl text-xs text-slate-300 hover:text-white hover:bg-white/5 transition border border-white/10">Batal</button>
+        <button id="btnExecuteDelete" class="px-5 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-semibold shadow-lg shadow-rose-600/30 transition">Ya, Hapus</button>
       </div>
     </div>
   </div>
 
-  <!-- Toast Notification Dock -->
-  <div id="toastDock" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none max-w-sm w-full"></div>
+  <!-- Floating Toast Notifications Dock -->
+  <div id="toastDock" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none max-w-sm"></div>
 
   <script>
-    /* ==========================================================================
-       OMNIPROFILE JAVASCRIPT ENGINE (ZERO-BUILD ARCHITECTURE)
-       ========================================================================== */
+    /* =========================================================================
+       ZERO-BUILD SINGULARITY ARCHITECTURE - MI AL-IRSYAD AL-ISLAMIYYAH
+       ========================================================================= */
 
-    const is_preview = true;
+    // The Master Zero-Latency Switch
+    const is_preview = false;
 
-    let SUPABASE_URL = localStorage.getItem('OMNI_SUPABASE_URL') || "https://your-project-id.supabase.co";
-    let SUPABASE_ANON_KEY = localStorage.getItem('OMNI_SUPABASE_KEY') || "your-anon-key-here";
-    let activePreviewState = localStorage.getItem('OMNI_FORCE_PREVIEW') !== null 
-      ? localStorage.getItem('OMNI_FORCE_PREVIEW') === 'true' 
-      : is_preview;
+    // Supabase Credentials
+    const SUPABASE_URL = "https://ahzexczjwcikxlobqchh.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_yG3SzF_f4vgoHCxu02Dm3Q_Z9gEP33c";
 
-    let supabaseClient = null;
-    if (!activePreviewState && window.supabase && SUPABASE_URL.includes('.supabase.co')) {
-      try {
-        supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-      } catch (err) {
-        console.error("Gagal menginisialisasi Supabase:", err);
-      }
-    }
-
-    /* --------------------------------------------------------------------------
-       BLOK 1: STATE MANAGEMENT DENGAN ALOKASI TRANSISI
-       -------------------------------------------------------------------------- */
-    const State = {
-      profiles: [],
-      filteredProfiles: [],
-      currentIndex: 0,
-      activeDepartment: 'All',
-      searchQuery: '',
-      
-      // Alokasi Transisi
-      isAutoplay: true, // Otomatis aktif saat awal dibuka agar transisi langsung terlihat
-      allocatedDuration: 5000, // 5 detik per alokasi kartu (default)
-      currentElapsed: 0,
-      tickerInterval: null,
-      
-      saveToStorage() {
-        if (activePreviewState) {
-          localStorage.setItem('OMNI_MOCK_PROFILES', JSON.stringify(this.profiles));
-        }
-        localStorage.setItem('OMNI_LAST_DEPT', this.activeDepartment);
-      },
-
-      loadFromStorage() {
-        this.activeDepartment = localStorage.getItem('OMNI_LAST_DEPT') || 'All';
-        const saved = localStorage.getItem('OMNI_MOCK_PROFILES');
-        if (saved) {
-          try {
-            return JSON.parse(saved);
-          } catch(e) { return null; }
-        }
-        return null;
-      }
-    };
-
-    // Default High-Fidelity Mock Personas
-    const DEFAULT_PROFILES = [
+    // Data Seed Resmi Aparatur MI Al-Irsyad Al-Islamiyyah
+    const MOCK_PROFILES = [
       {
-        id: "sch-01",
+        id: "11111111-1111-4111-8111-111111111111",
         name: "Drs. H. M. Arifin, M.Pd.",
         role: "Ketua Dewan Pembina Yayasan",
         department: "Yayasan",
@@ -491,180 +475,210 @@
         education: "S3 Manajemen Pendidikan",
         avatar_url: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=80",
         bio: "Mengawal visi strategis yayasan, standarisasi mutu pendidikan karakter, tata kelola wakaf institusi, dan pengembangan sarana terpadu generasi unggul.",
-        skills: ["Tata Kelola Yayasan", "Pendidikan Karakter", "Manajemen Strategis", "Kebijakan Mutu"],
-        email: "yayasan@sekolah-teladan.sch.id",
-        phone: "08123456789",
-        rating: 5.00
+        skills: ["Tata Kelola Yayasan", "Pengembangan Karakter", "Manajemen Strategis", "Kebijakan Institusi"],
+        email: "yayasan@alirsyad.sch.id",
+        phone: "081234567891"
       },
       {
-        id: "sch-02",
+        id: "22222222-2222-4222-8222-222222222222",
         name: "Dr. Hj. Nurul Hidayati, S.Pd., M.Si.",
-        role: "Kepala Sekolah",
+        role: "Kepala Madrasah",
         department: "Pimpinan",
         nip_nuptk: "19780415 200312 2 004",
         education: "S2 Kepemimpinan Pendidikan",
         avatar_url: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=80",
-        bio: "Bertanggung jawab penuh atas manajemen operasional sekolah, digitalisasi ekosistem belajar, pembinaan guru, serta akreditasi unggul nasional.",
+        bio: "Bertanggung jawab penuh atas manajemen operasional madrasah, digitalisasi ekosistem belajar, pembinaan guru, serta akreditasi unggul nasional.",
         skills: ["Supervisi Akademik", "Kepemimpinan Sekolah", "Inovasi Pedagogik", "Akreditasi A"],
-        email: "kepsek@sekolah-teladan.sch.id",
-        phone: "08123456780",
-        rating: 4.98
+        email: "kepsek@alirsyad.sch.id",
+        phone: "081234567892"
       },
       {
-        id: "sch-03",
+        id: "33333333-3333-4333-8333-333333333333",
         name: "Bambang Setyawan, S.Kom., M.T.",
-        role: "Wakil Kepala Sekolah Bidang Kurikulum",
+        role: "Wakil Kepala Bidang Kurikulum",
         department: "Kurikulum",
         nip_nuptk: "19840210 200901 1 008",
         education: "S2 Teknologi Pendidikan",
         avatar_url: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80",
-        bio: "Mengorkestrasi Kurikulum Merdeka, sistem asesmen digital berbasis CBT, standarisasi perangkat ajar, dan pembinaan tim olimpiade sains siswa.",
-        skills: ["Kurikulum Merdeka", "Asesmen Digital CBT", "Olimpiade Sains", "Teknologi Pembelajaran"],
-        email: "kurikulum@sekolah-teladan.sch.id",
-        phone: "08123456781",
-        rating: 4.95
+        bio: "Mengorkestrasi implementasi Kurikulum Merdeka, sistem asesmen digital berbasis CBT, dan pembinaan tim olimpiade sains santri berprestasi.",
+        skills: ["Kurikulum Merdeka", "Asesmen Digital CBT", "Olimpiade Sains", "Teknologi Belajar"],
+        email: "kurikulum@alirsyad.sch.id",
+        phone: "081234567893"
       },
       {
-        id: "sch-04",
+        id: "44444444-4444-4444-8444-444444444444",
         name: "Fatimah Zahra, S.Psi., M.Pd.",
-        role: "Wakil Kepala Sekolah Bidang Kesiswaan",
+        role: "Wakil Kepala Bidang Kesiswaan",
         department: "Kesiswaan",
         nip_nuptk: "19890722 201403 2 005",
         education: "S2 Psikologi Pendidikan",
         avatar_url: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=800&q=80",
-        bio: "Menyelenggarakan pembinaan kedisiplinan, OSIS/MPK, ekstrakurikuler kepemimpinan, pencegahan perundungan, dan layanan bimbingan konseling karir.",
-        skills: ["Bimbingan Konseling", "Kepemimpinan OSIS", "Penguatan Karakter", "Disiplin Positif"],
-        email: "kesiswaan@sekolah-teladan.sch.id",
-        phone: "08123456782",
-        rating: 4.97
+        bio: "Menyelenggarakan pembinaan kedisiplinan santri, kegiatan ekstrakurikuler kepemimpinan, pencegahan perundungan, dan bimbingan konseling anak.",
+        skills: ["Bimbingan Konseling", "Penguatan Karakter", "Kepemimpinan OSIS", "Disiplin Positif"],
+        email: "kesiswaan@alirsyad.sch.id",
+        phone: "081234567894"
       },
       {
-        id: "sch-05",
+        id: "55555555-5555-4555-8555-555555555555",
         name: "Ir. Hendra Kusuma, M.M.",
-        role: "Wakil Kepala Sekolah Bidang Sarana & Prasarana",
+        role: "Wakil Kepala Bidang Sarana & Prasarana",
         department: "Sarpras",
         nip_nuptk: "19811105 200604 1 012",
         education: "S2 Manajemen Aset",
         avatar_url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80",
-        bio: "Mengelola inventaris fasilitas pembelajaran modern, laboratorium sains & bahasa, pemeliharaan gedung ramah lingkungan, dan jaringan internet kampus.",
-        skills: ["Smart Classroom", "Manajemen Aset", "K3 Laboratorium", "Infrastruktur IT"],
-        email: "sarpras@sekolah-teladan.sch.id",
-        phone: "08123456783",
-        rating: 4.94
+        bio: "Mengelola fasilitas smart classroom modern, laboratorium sains & bahasa terintegrasi, serta pemeliharaan gedung ramah lingkungan.",
+        skills: ["Smart Classroom", "Manajemen Fasilitas", "K3 Madrasah", "Infrastruktur IT"],
+        email: "sarpras@alirsyad.sch.id",
+        phone: "081234567895"
+      },
+      {
+        id: "66666666-6666-4666-8666-666666666666",
+        name: "Ustadz Ahmad Fauzi, S.Pd.I., M.Pd.",
+        role: "Koordinator Keagamaan & Tahfidz",
+        department: "Keagamaan",
+        nip_nuptk: "19910314 201701 1 007",
+        education: "S2 Studi Islam & Al-Qur'an",
+        avatar_url: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=80",
+        bio: "Membina program tahfidzul Qur'an bersanad, adab harian islami, kajian dhuha, dan bimbingan ibadah praktis bagi seluruh santri.",
+        skills: ["Tahfidz 30 Juz", "Sanad Qira'ah", "Adab & Karakter", "Bahasa Arab"],
+        email: "tahfidz@alirsyad.sch.id",
+        phone: "081234567896"
       }
     ];
 
+    // State Aplikasi
+    const State = {
+      profiles: [],
+      filteredProfiles: [],
+      currentIndex: 0,
+      isAutoplay: true,
+      allocatedDuration: 5000,
+      currentElapsed: 0,
+      activeDepartment: 'All',
+      searchQuery: '',
+      pendingDeleteId: null
+    };
+
+    // Variabel Koneksi Supabase & Mock
+    let activePreviewState = is_preview;
+    let supabaseClient = null;
+    let tickerInterval = null;
+    let idleTimer = null;
+
+    // Inisialisasi Kredensial dari LocalStorage jika ada
+    function initClient() {
+      const savedUrl = localStorage.getItem('cfg_supabase_url') || SUPABASE_URL;
+      const savedKey = localStorage.getItem('cfg_supabase_key') || SUPABASE_ANON_KEY;
+      const forceMock = localStorage.getItem('cfg_force_mock');
+
+      if (forceMock !== null) {
+        activePreviewState = forceMock === 'true';
+      }
+
+      if (!activePreviewState && savedUrl && savedKey && window.supabase) {
+        try {
+          supabaseClient = window.supabase.createClient(savedUrl, savedKey);
+        } catch (err) {
+          console.error("Gagal membuat koneksi Supabase:", err);
+          activePreviewState = true;
+        }
+      }
+    }
+
+    // Service Layer CRUD
     const Service = {
       async fetchProfiles() {
-        if (!activePreviewState && supabaseClient) {
-          try {
-            const { data, error } = await supabaseClient
-              .from('profiles')
-              .select('*')
-              .order('order_priority', { ascending: true });
-
-            if (error) throw error;
-            if (data && data.length > 0) {
-              return data.map(item => ({
-                id: item.id,
-                name: item.name,
-                role: item.role,
-                department: item.department || 'Pimpinan',
-                nip_nuptk: item.nip_nuptk || '-',
-                education: item.education || '',
-                avatar_url: item.avatar_url || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=800&q=80',
-                bio: item.bio || '',
-                skills: Array.isArray(item.skills) ? item.skills : (item.skills ? item.skills.split(',').map(s=>s.trim()) : []),
-                email: item.social_links?.email || '',
-                phone: item.social_links?.phone || '',
-                rating: item.rating || 5.0
-              }));
-            }
-          } catch (err) {
-            console.warn("Koneksi Supabase gagal, fallback ke Mock Data:", err.message);
-            showToast("Koneksi Supabase gagal. Beralih ke data lokal.", "error");
+        if (activePreviewState) {
+          const cached = localStorage.getItem('mi_alirsyad_profiles_v1');
+          if (cached) {
+            try { return JSON.parse(cached); } catch (e) {}
           }
+          localStorage.setItem('mi_alirsyad_profiles_v1', JSON.stringify(MOCK_PROFILES));
+          return [...MOCK_PROFILES];
         }
-        
-        const cached = State.loadFromStorage();
-        if (cached && cached.length > 0) return cached;
-        return DEFAULT_PROFILES;
+
+        try {
+          const { data, error } = await supabaseClient
+            .from('profiles')
+            .select('*')
+            .order('order_priority', { ascending: true });
+
+          if (error) throw error;
+          if (data && data.length > 0) return data;
+          return [...MOCK_PROFILES];
+        } catch (err) {
+          console.warn("Koneksi Supabase gagal, fallback ke Mock Data:", err.message);
+          showToast("Koneksi Supabase gagal. Menggunakan data lokal.", "error");
+          return [...MOCK_PROFILES];
+        }
       },
 
-      async saveProfile(profile) {
-        if (!activePreviewState && supabaseClient) {
-          try {
-            const payload = {
-              name: profile.name,
-              role: profile.role,
-              department: profile.department,
-              nip_nuptk: profile.nip_nuptk,
-              education: profile.education,
-              avatar_url: profile.avatar_url,
-              bio: profile.bio,
-              skills: profile.skills,
-              social_links: { email: profile.email, phone: profile.phone }
-            };
-
-            if (profile.id && !profile.id.startsWith('sch-')) {
-              const { error } = await supabaseClient
-                .from('profiles')
-                .update(payload)
-                .eq('id', profile.id);
-              if (error) throw error;
-            } else {
-              const { data, error } = await supabaseClient
-                .from('profiles')
-                .insert([payload])
-                .select();
-              if (error) throw error;
-              if (data && data[0]) profile.id = data[0].id;
-            }
-            return profile;
-          } catch (err) {
-            console.error("Gagal menyimpan ke Supabase:", err);
-            showToast("Gagal sync ke cloud: " + err.message, "error");
+      async saveProfile(profileData, isEdit = false) {
+        if (activePreviewState) {
+          let list = await this.fetchProfiles();
+          if (isEdit) {
+            list = list.map(item => item.id === profileData.id ? { ...item, ...profileData } : item);
+          } else {
+            profileData.id = "local-" + Date.now();
+            list.push(profileData);
           }
+          localStorage.setItem('mi_alirsyad_profiles_v1', JSON.stringify(list));
+          return profileData;
         }
 
-        if (!profile.id) {
-          profile.id = 'sch-' + Date.now().toString(36);
-          State.profiles.unshift(profile);
-        } else {
-          const index = State.profiles.findIndex(p => p.id === profile.id);
-          if (index !== -1) State.profiles[index] = profile;
-          else State.profiles.unshift(profile);
+        try {
+          if (isEdit) {
+            const { data, error } = await supabaseClient
+              .from('profiles')
+              .update(profileData)
+              .eq('id', profileData.id)
+              .select();
+            if (error) throw error;
+            return data[0];
+          } else {
+            const { data, error } = await supabaseClient
+              .from('profiles')
+              .insert([profileData])
+              .select();
+            if (error) throw error;
+            return data[0];
+          }
+        } catch (err) {
+          throw err;
         }
-        State.saveToStorage();
-        return profile;
       },
 
       async deleteProfile(id) {
-        if (!activePreviewState && supabaseClient && !id.startsWith('sch-')) {
-          try {
-            const { error } = await supabaseClient
-              .from('profiles')
-              .delete()
-              .eq('id', id);
-            if (error) throw error;
-          } catch (err) {
-            console.error("Gagal menghapus dari Supabase:", err);
-            showToast("Gagal hapus di cloud: " + err.message, "error");
-          }
+        if (activePreviewState) {
+          let list = await this.fetchProfiles();
+          list = list.filter(item => item.id !== id);
+          localStorage.setItem('mi_alirsyad_profiles_v1', JSON.stringify(list));
+          return true;
         }
 
-        State.profiles = State.profiles.filter(p => p.id !== id);
-        State.saveToStorage();
-        return true;
+        try {
+          const { error } = await supabaseClient
+            .from('profiles')
+            .delete()
+            .eq('id', id);
+          if (error) throw error;
+          return true;
+        } catch (err) {
+          throw err;
+        }
       }
     };
 
+    // UI Render Engine
     const UI = {
-      departments: ['All', 'Yayasan', 'Pimpinan', 'Kurikulum', 'Kesiswaan', 'Sarpras', 'Tenaga Pendidik'],
+      departments: ['All', 'Yayasan', 'Pimpinan', 'Kurikulum', 'Kesiswaan', 'Sarpras', 'Keagamaan'],
 
       init() {
         this.updateBadge();
         this.renderDepartments();
+        this.filterData();
+        this.renderAllocationSegments();
+        this.renderStage();
         this.updateAutoplayUI();
       },
 
@@ -675,7 +689,7 @@
 
         if (activePreviewState) {
           badge.className = "hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border bg-amber-500/10 text-amber-400 border-amber-500/20";
-          badgeText.textContent = "Mock";
+          badgeText.textContent = "Mock Data";
         } else {
           badge.className = "hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border bg-emerald-500/10 text-emerald-400 border-emerald-500/20";
           badgeText.textContent = "Supabase Live";
@@ -689,8 +703,8 @@
           return `
             <button data-dept="${dept}" class="dept-btn px-2.5 py-1 rounded-xl text-xs whitespace-nowrap font-medium transition ${
               isActive 
-                ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30' 
-                : 'text-slate-400 hover:text-slate-200 hover:bg-white/5 border border-transparent'
+                ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/30 border border-emerald-400/30 font-semibold' 
+                : 'text-slate-300 hover:text-white hover:bg-white/5 border border-transparent'
             }">
               ${dept === 'All' ? 'Semua' : dept}
             </button>
@@ -698,7 +712,6 @@
         }).join('');
       },
 
-      // Render Bar Alokasi Transisi (Slot Timeline Setiap Kartu)
       renderAllocationSegments() {
         const track = document.getElementById('allocationSegmentsTrack');
         const total = State.filteredProfiles.length;
@@ -710,7 +723,7 @@
         track.style.gridTemplateColumns = `repeat(${total}, minmax(0, 1fr))`;
         track.innerHTML = State.filteredProfiles.map((_, idx) => `
           <div data-index="${idx}" class="segment-slot relative h-1.5 bg-white/10 rounded-full overflow-hidden cursor-pointer group">
-            <div id="segment-fill-${idx}" class="segment-bar absolute top-0 left-0 h-full bg-gradient-to-r from-indigo-500 to-purple-400 w-0"></div>
+            <div id="segment-fill-${idx}" class="segment-bar absolute top-0 left-0 h-full bg-gradient-to-r from-emerald-500 via-teal-400 to-amber-400 w-0"></div>
           </div>
         `).join('');
 
@@ -747,23 +760,6 @@
         }
       },
 
-      updateAutoplayUI() {
-        const btn = document.getElementById('btnToggleAutoplay');
-        const icon = document.getElementById('autoplayIcon');
-        const label = document.getElementById('autoplayLabel');
-
-        if (State.isAutoplay) {
-          btn.className = "flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-indigo-500/50 bg-indigo-600 text-white shadow-md shadow-indigo-600/30 transition text-xs font-semibold";
-          icon.setAttribute('data-lucide', 'pause');
-          if (label) label.textContent = "Berhenti";
-        } else {
-          btn.className = "flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-white/10 bg-white/5 text-slate-300 hover:text-white transition text-xs font-semibold";
-          icon.setAttribute('data-lucide', 'play');
-          if (label) label.textContent = "Mulai";
-        }
-        lucide.createIcons();
-      },
-
       filterData() {
         let list = [...State.profiles];
         
@@ -796,12 +792,12 @@
         if (!list || list.length === 0) {
           viewport.innerHTML = `
             <div class="flex flex-col items-center justify-center text-center p-8 max-w-sm glass-panel rounded-3xl">
-              <div class="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 mb-3">
+              <div class="w-14 h-14 rounded-2xl bg-white/5 border border-emerald-500/20 flex items-center justify-center text-emerald-400 mb-3">
                 <i data-lucide="graduation-cap" class="w-7 h-7"></i>
               </div>
               <h3 class="text-sm font-bold text-white mb-1">Tidak Ada Data Struktur</h3>
-              <p class="text-xs text-slate-400 mb-4">Coba sesuaikan filter bidang atau yayasan.</p>
-              <button id="btnResetFilter" class="px-4 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-xs text-white transition">
+              <p class="text-xs text-slate-300 mb-4">Coba sesuaikan filter bidang atau yayasan.</p>
+              <button id="btnResetFilter" class="px-4 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-xs text-white transition shadow-md shadow-emerald-600/30">
                 Reset Filter
               </button>
             </div>
@@ -824,105 +820,113 @@
           else if (idx === nextIndex && total > 1) posClass = 'card-next';
 
           const skillsBadges = (item.skills || []).slice(0, 5).map(skill => `
-            <span class="px-2.5 py-1 rounded-xl bg-[#141424] border border-white/5 text-[11px] text-indigo-300 font-medium tracking-wide">
+            <span class="px-3 sm:px-3.5 py-1.5 rounded-xl bg-white border border-teal-300 text-xs sm:text-sm text-teal-950 font-bold tracking-wide shadow-xs hover:border-teal-500 transition-colors">
               ${skill}
             </span>
           `).join('');
 
           return `
-            <div class="profile-card absolute w-[94%] sm:w-[660px] md:w-[760px] lg:w-[860px] max-h-[84vh] overflow-y-auto sm:overflow-visible glass-panel rounded-3xl p-5 sm:p-7 md:p-8 border border-white/10 shadow-2xl flex flex-col justify-between ${posClass}" data-id="${item.id}">
+            <div class="profile-card absolute w-[96%] sm:w-[740px] md:w-[900px] lg:w-[1040px] xl:w-[1180px] 2xl:w-[1260px] max-h-[88vh] overflow-y-auto sm:overflow-visible card-light-theme rounded-3xl p-5 sm:p-7 md:p-9 lg:p-10 shadow-2xl flex flex-col justify-between ${posClass}" data-id="${item.id}">
               
-              <!-- Card Top Header (Alokasi & Aksi Pengaturan) -->
-              <div class="flex items-center justify-between pb-3 mb-4 border-b border-white/5 text-[10px] font-mono text-slate-400">
-                <div class="flex items-center gap-1.5">
-                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                  <span class="text-slate-300 font-semibold">Hierarki Pejabat #${String(idx + 1).padStart(2, '0')}</span>
+              <!-- Card Top Header (Logo Instansi MI Al-Irsyad, Hierarki Pejabat & Aksi) -->
+              <div class="flex items-center justify-between pb-4 mb-4 sm:mb-6 border-b border-teal-200/90 text-xs font-mono">
+                <div class="flex items-center gap-3.5 sm:gap-4">
+                  <img src="https://i.ibb.co.com/676xL3yn/MI-AL-IRSYAD-AL-ISLAMIYYAH-20260604-173251-0000.png" 
+                       alt="Logo MI Al-Irsyad Al-Islamiyyah" 
+                       class="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 object-contain filter drop-shadow-[0_4px_14px_rgba(13,148,136,0.35)] flex-shrink-0 select-none transition-transform duration-300 hover:scale-105">
+                  <div class="flex flex-col justify-center">
+                    <span class="text-teal-950 font-black tracking-wider text-sm sm:text-base md:text-lg font-sans uppercase leading-tight">MI AL-IRSYAD AL-ISLAMIYYAH</span>
+                    <span class="text-teal-700 text-xs sm:text-sm font-mono mt-0.5 font-bold">Hierarki Pejabat #${String(idx + 1).padStart(2, '0')}</span>
+                  </div>
                 </div>
+
                 <div class="flex items-center gap-3">
-                  <span class="text-indigo-400 font-semibold">${(State.allocatedDuration / 1000).toFixed(1)}s / Rotasi</span>
-                  <div class="flex items-center gap-1">
-                    <button class="btn-edit-card p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition" data-id="${item.id}" title="Edit Data">
-                      <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
+                  <span class="text-teal-900 font-extrabold bg-teal-100 text-xs sm:text-sm px-3.5 py-1.5 rounded-full border border-teal-300 shadow-xs">
+                    ${(State.allocatedDuration / 1000).toFixed(1)}s / Rotasi
+                  </span>
+                  <div class="flex items-center gap-1.5">
+                    <button class="btn-edit-card p-2 rounded-xl text-slate-500 hover:text-teal-800 hover:bg-teal-100 transition" data-id="${item.id}" title="Edit Data">
+                      <i data-lucide="edit-3" class="w-4 h-4"></i>
                     </button>
-                    <button class="btn-delete-card p-1.5 rounded-lg text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 transition" data-id="${item.id}" title="Hapus Data">
-                      <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                    <button class="btn-delete-card p-2 rounded-xl text-slate-500 hover:text-rose-600 hover:bg-rose-100 transition" data-id="${item.id}" title="Hapus Data">
+                      <i data-lucide="trash-2" class="w-4 h-4"></i>
                     </button>
                   </div>
                 </div>
               </div>
 
-              <!-- Main Card Body: Tata Letak Horizontal (Foto 4:6 di Kiri, Detail di Kanan) -->
-              <div class="flex flex-col sm:flex-row gap-5 md:gap-7 items-center sm:items-stretch flex-1 min-h-0">
+              <!-- Main Card Body: Tata Letak Horizontal Lebih Besar & Kontras Tinggi -->
+              <div class="flex flex-col sm:flex-row gap-6 md:gap-8 lg:gap-10 items-center sm:items-stretch flex-1 min-h-0">
                 
-                <!-- Kolom Foto Rasio Baku 4:6 (Portrait Standard) -->
-                <div class="relative w-full max-w-[240px] sm:max-w-none sm:w-[220px] md:w-[260px] lg:w-[280px] flex-shrink-0 group mx-auto sm:mx-0">
-                  <div class="w-full aspect-[4/6] rounded-2xl overflow-hidden relative border border-white/10 shadow-2xl bg-[#0a0a14]">
+                <!-- Kolom Pasfoto Ekstra Besar Rasio Baku 4:6 -->
+                <div class="relative w-full max-w-[280px] sm:max-w-none sm:w-[260px] md:w-[310px] lg:w-[350px] xl:w-[390px] flex-shrink-0 group mx-auto sm:mx-0">
+                  <div class="w-full aspect-[4/6] rounded-2xl sm:rounded-3xl overflow-hidden relative border-2 border-teal-300/80 shadow-xl bg-teal-50">
                     <img src="${item.avatar_url || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=800&q=80'}" 
                          alt="${item.name}" 
-                         onerror="this.src='https://placehold.co/400x600/1e1b4b/ffffff?text=${encodeURIComponent(item.name)}'"
+                         onerror="this.src='https://placehold.co/400x600/0f766e/ffffff?text=${encodeURIComponent(item.name)}'"
                          class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out select-none">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent sm:hidden"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent sm:hidden"></div>
                   </div>
-                  <span class="absolute top-3 left-3 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-[10px] text-emerald-400 font-mono font-medium shadow-md">
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                  <span class="absolute top-3.5 left-3.5 flex items-center gap-2 px-3 py-1.5 rounded-full bg-teal-950/90 backdrop-blur-md border border-amber-400/50 text-xs text-amber-300 font-mono font-bold shadow-lg">
+                    <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
                     ${item.education || 'Pendidik'}
                   </span>
                 </div>
 
-                <!-- Kolom Samping: Nama, Jabatan, NIP, Keterangan & Tugas -->
+                <!-- Kolom Samping: Nama Dominan Hitam/Gelap, Jabatan Teal Berwibawa & Keterangan Tajam -->
                 <div class="flex-1 flex flex-col justify-between w-full">
                   <div>
-                    <div class="flex flex-wrap items-center gap-2 mb-2">
-                      <span class="text-[10px] font-mono tracking-wider uppercase text-indigo-400 font-bold px-2.5 py-0.5 bg-indigo-500/10 rounded-md border border-indigo-500/20">
+                    <div class="flex flex-wrap items-center gap-2.5 mb-2.5">
+                      <span class="text-xs sm:text-sm font-mono tracking-wider uppercase text-white font-bold px-3 py-1 bg-teal-600 rounded-lg border border-teal-700 shadow-xs">
                         ${item.department}
                       </span>
                       ${item.nip_nuptk && item.nip_nuptk !== '-' ? `
-                        <span class="text-[10px] font-mono text-slate-400 px-2 py-0.5 bg-white/5 rounded-md border border-white/10">
+                        <span class="text-xs sm:text-sm font-mono text-slate-800 px-3 py-1 bg-white rounded-lg border border-teal-200/90 font-semibold shadow-xs">
                           NIP/NUPTK: ${item.nip_nuptk}
                         </span>
                       ` : ''}
                     </div>
 
-                    <!-- Nama Lengkap & Jabatan -->
-                    <h2 class="text-xl sm:text-2xl md:text-3xl font-extrabold text-white tracking-tight leading-snug">
+                    <!-- Nama Lengkap & Gelar (Hitam Pekat & Sangat Eye-Catching) -->
+                    <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-[40px] xl:text-[44px] font-black text-slate-900 tracking-tight leading-tight">
                       ${item.name}
                     </h2>
-                    <p class="text-xs sm:text-sm md:text-base text-indigo-300 font-medium mt-0.5 mb-3 flex items-center gap-1.5">
-                      <i data-lucide="award" class="w-4 h-4 text-indigo-400"></i>
+                    <p class="text-sm sm:text-base md:text-lg lg:text-xl text-teal-800 font-black mt-1.5 mb-3 sm:mb-4 flex items-center gap-2">
+                      <i data-lucide="award" class="w-5 h-5 text-amber-500 flex-shrink-0"></i>
                       <span>${item.role}</span>
                     </p>
 
-                    <!-- Keterangan / Deskripsi Tupoksi -->
-                    <p class="text-xs sm:text-sm text-slate-300 leading-relaxed mb-4">
-                      ${item.bio || 'Melaksanakan tugas pokok dan fungsi kepemimpinan pendidikan.'}
+                    <!-- Keterangan / Deskripsi Tupoksi (Kontras Tinggi & Mudah Dibaca) -->
+                    <p class="text-xs sm:text-sm md:text-base lg:text-lg text-slate-700 leading-relaxed mb-4 sm:mb-6 font-medium">
+                      ${item.bio || 'Melaksanakan tugas pokok dan fungsi kepemimpinan pendidikan madrasah.'}
                     </p>
 
                     <!-- Badges Bidang Tugas -->
-                    <div class="flex flex-wrap gap-1.5 sm:gap-2 mb-4">
+                    <div class="flex flex-wrap gap-2 mb-5 sm:mb-6">
                       ${skillsBadges}
                     </div>
                   </div>
 
                   <!-- Baris Bawah: Tombol Hubungi & Informasi Kontak -->
-                  <div class="pt-3.5 border-t border-white/10 flex items-center justify-between mt-auto gap-2">
-                    <div class="flex items-center gap-2">
+                  <div class="pt-4 border-t border-teal-200/90 flex items-center justify-between mt-auto gap-3">
+                    <div class="flex items-center gap-2.5">
                       ${item.email ? `
-                        <button class="btn-copy-email px-3 py-1.5 sm:py-2 rounded-xl bg-white/5 hover:bg-indigo-600 hover:text-white text-slate-200 transition text-xs border border-white/10 flex items-center gap-2" data-email="${item.email}" title="Salin Email Resmi">
-                          <i data-lucide="mail" class="w-3.5 h-3.5 text-indigo-400 group-hover:text-white"></i>
-                          <span class="font-medium text-xs">Email</span>
+                        <button class="btn-copy-email px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl bg-white hover:bg-teal-700 hover:text-white text-teal-950 transition text-xs sm:text-sm border border-teal-300 font-bold flex items-center gap-2 shadow-xs" data-email="${item.email}" title="Salin Email Resmi">
+                          <i data-lucide="mail" class="w-4 h-4 text-teal-600"></i>
+                          <span>Email</span>
                         </button>
                       ` : ''}
                       ${item.phone ? `
-                        <a href="https://wa.me/${item.phone.replace(/[^0-9]/g, '')}" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 sm:py-2 rounded-xl bg-white/5 hover:bg-emerald-600 hover:text-white text-slate-200 transition text-xs border border-white/10 flex items-center gap-2" title="Hubungi via WhatsApp">
-                          <i data-lucide="phone" class="w-3.5 h-3.5 text-emerald-400 group-hover:text-white"></i>
-                          <span class="font-medium text-xs">WhatsApp</span>
+                        <a href="https://wa.me/${item.phone.replace(/[^0-9]/g, '')}" target="_blank" rel="noopener noreferrer" class="px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white transition text-xs sm:text-sm border border-emerald-700 font-bold flex items-center gap-2 shadow-md shadow-emerald-700/20" title="Hubungi via WhatsApp">
+                          <i data-lucide="phone" class="w-4 h-4 text-white"></i>
+                          <span>WhatsApp</span>
                         </a>
                       ` : ''}
                     </div>
 
-                    <div class="flex items-center gap-1.5 text-indigo-300 font-mono text-xs bg-indigo-500/10 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl border border-indigo-500/20">
-                      <i data-lucide="shield-check" class="w-3.5 h-3.5 text-indigo-400"></i>
-                      <span>Resmi</span>
+                    <div class="flex items-center gap-2 text-amber-900 font-mono text-xs sm:text-sm bg-amber-100 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl border border-amber-300 font-bold shadow-xs">
+                      <i data-lucide="shield-check" class="w-4 h-4 text-amber-600"></i>
+                      <span>Resmi MI Al-Irsyad</span>
                     </div>
                   </div>
                 </div>
@@ -953,15 +957,32 @@
           return `
             <button data-index="${idx}" class="thumb-btn relative rounded-xl overflow-hidden transition-all duration-300 flex-shrink-0 ${
               isActive 
-                ? 'w-10 h-10 ring-2 ring-indigo-500 scale-110 shadow-lg shadow-indigo-600/40' 
-                : 'w-7 h-7 opacity-35 hover:opacity-90 hover:scale-95 ring-1 ring-white/20'
+                ? 'w-10 h-10 ring-2 ring-emerald-400 scale-110 shadow-lg shadow-emerald-600/40' 
+                : 'w-7 h-7 opacity-40 hover:opacity-90 hover:scale-95 ring-1 ring-white/20'
             }">
-              <img src="${item.avatar_url || 'https://placehold.co/100x100/1e1b4b/ffffff?text=' + encodeURIComponent(item.name)}" 
+              <img src="${item.avatar_url || 'https://placehold.co/100x100/064e3b/ffffff?text=' + encodeURIComponent(item.name)}" 
                    alt="${item.name}" 
                    class="w-full h-full object-cover">
             </button>
           `;
         }).join('');
+      },
+
+      updateAutoplayUI() {
+        const btn = document.getElementById('btnToggleAutoplay');
+        const icon = document.getElementById('autoplayIcon');
+        const label = document.getElementById('autoplayLabel');
+
+        if (State.isAutoplay) {
+          btn.className = "flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-emerald-500/50 bg-emerald-600 text-white shadow-md shadow-emerald-600/30 transition text-xs font-semibold";
+          icon.setAttribute('data-lucide', 'pause');
+          if (label) label.textContent = "Berhenti";
+        } else {
+          btn.className = "flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-white/10 bg-white/5 text-slate-300 hover:text-white transition text-xs font-semibold";
+          icon.setAttribute('data-lucide', 'play');
+          if (label) label.textContent = "Mulai";
+        }
+        lucide.createIcons();
       },
 
       openModal(isEdit = false, profile = null) {
@@ -972,7 +993,7 @@
         form.reset();
 
         if (isEdit && profile) {
-          title.innerHTML = `<i data-lucide="edit-3" class="w-5 h-5 text-indigo-400"></i> <span>Edit Data Aparatur</span>`;
+          title.innerHTML = `<i data-lucide="edit-3" class="w-5 h-5 text-emerald-400"></i> <span>Edit Data Aparatur</span>`;
           document.getElementById('formProfileId').value = profile.id;
           document.getElementById('formName').value = profile.name;
           document.getElementById('formRole').value = profile.role;
@@ -985,7 +1006,7 @@
           document.getElementById('formEmail').value = profile.email || '';
           document.getElementById('formPhone').value = profile.phone || '';
         } else {
-          title.innerHTML = `<i data-lucide="user-plus" class="w-5 h-5 text-indigo-400"></i> <span>Tambah Pengurus / Guru</span>`;
+          title.innerHTML = `<i data-lucide="user-plus" class="w-5 h-5 text-emerald-400"></i> <span>Tambah Pengurus / Guru</span>`;
           document.getElementById('formProfileId').value = '';
         }
 
@@ -998,63 +1019,23 @@
         const modal = document.getElementById('profileModal');
         modal.classList.add('hidden');
         modal.classList.remove('flex');
-      },
-
-      openConfigModal() {
-        const modal = document.getElementById('configModal');
-        document.getElementById('cfgSupabaseUrl').value = SUPABASE_URL;
-        document.getElementById('cfgSupabaseKey').value = SUPABASE_ANON_KEY;
-        document.getElementById('cfgPreviewToggle').checked = activePreviewState;
-        modal.classList.remove('hidden');
-        modal.classList.add('flex');
-      },
-
-      closeConfigModal() {
-        const modal = document.getElementById('configModal');
-        modal.classList.add('hidden');
-        modal.classList.remove('flex');
-      },
-
-      showConfirm(title, message, onAccept) {
-        const modal = document.getElementById('confirmModal');
-        document.getElementById('confirmTitle').textContent = title;
-        document.getElementById('confirmMessage').textContent = message;
-
-        const btnAccept = document.getElementById('btnAcceptConfirm');
-        const btnCancel = document.getElementById('btnCancelConfirm');
-
-        const cleanup = () => {
-          modal.classList.add('hidden');
-          modal.classList.remove('flex');
-          btnAccept.onclick = null;
-          btnCancel.onclick = null;
-        };
-
-        btnAccept.onclick = () => {
-          cleanup();
-          onAccept();
-        };
-
-        btnCancel.onclick = cleanup;
-
-        modal.classList.remove('hidden');
-        modal.classList.add('flex');
       }
     };
 
+    // Toast Notification System
     function showToast(message, type = 'success') {
       const dock = document.getElementById('toastDock');
       const toast = document.createElement('div');
       
       const isSuccess = type === 'success';
       const icon = isSuccess ? 'check-circle-2' : 'alert-circle';
-      const borderClass = isSuccess ? 'border-indigo-500/30 bg-[#0e0e1c]/95' : 'border-rose-500/30 bg-[#1c0e0e]/95';
-      const iconColor = isSuccess ? 'text-indigo-400' : 'text-rose-400';
+      const borderClass = isSuccess ? 'border-emerald-500/40 bg-[#032014]/95' : 'border-rose-500/40 bg-[#250d0d]/95';
+      const iconColor = isSuccess ? 'text-emerald-400' : 'text-rose-400';
 
       toast.className = `pointer-events-auto flex items-center gap-3 px-4 py-3 rounded-2xl glass-panel border ${borderClass} shadow-2xl transition-all duration-300 transform translate-y-3 opacity-0`;
       toast.innerHTML = `
         <i data-lucide="${icon}" class="w-4 h-4 ${iconColor} flex-shrink-0"></i>
-        <span class="text-xs text-slate-200 font-medium leading-snug">${message}</span>
+        <span class="text-xs text-slate-100 font-medium leading-snug">${message}</span>
       `;
 
       dock.appendChild(toast);
@@ -1070,180 +1051,115 @@
       }, 3500);
     }
 
-    /* --------------------------------------------------------------------------
-       BLOK 4: LOGIKA ALOKASI TRANSISI & FULL SCREEN CONTROLS
-       -------------------------------------------------------------------------- */
+    // Navigasi & Siklus Rotasi Waktu
+    function goToCard(index) {
+      const total = State.filteredProfiles.length;
+      if (total === 0) return;
+      State.currentIndex = (index + total) % total;
+      State.currentElapsed = 0;
+      UI.renderStage();
+    }
+
+    function nextCard() {
+      goToCard(State.currentIndex + 1);
+    }
+
+    function prevCard() {
+      goToCard(State.currentIndex - 1);
+    }
+
     function resetTransitionAllocation() {
       State.currentElapsed = 0;
       UI.updateSegmentsProgress();
     }
 
-    function nextProfile() {
-      const len = State.filteredProfiles.length;
-      if (len <= 1) return;
-      State.currentIndex = (State.currentIndex + 1) % len;
-      resetTransitionAllocation();
-      UI.renderStage();
-    }
+    // Engine Ticker Transisi Berkelanjutan
+    function startTicker() {
+      if (tickerInterval) clearInterval(tickerInterval);
+      const stepMs = 100;
+      tickerInterval = setInterval(() => {
+        if (!State.isAutoplay || State.filteredProfiles.length <= 1) return;
 
-    function prevProfile() {
-      const len = State.filteredProfiles.length;
-      if (len <= 1) return;
-      State.currentIndex = (State.currentIndex - 1 + len) % len;
-      resetTransitionAllocation();
-      UI.renderStage();
-    }
+        State.currentElapsed += stepMs;
+        UI.updateSegmentsProgress();
 
-    function startTransitionTicker() {
-      if (State.tickerInterval) clearInterval(State.tickerInterval);
-      const step = 100; // Update progress bar setiap 100ms
-      State.tickerInterval = setInterval(() => {
-        if (!State.isAutoplay) return;
-
-        State.currentElapsed += step;
         if (State.currentElapsed >= State.allocatedDuration) {
-          nextProfile();
-        } else {
-          UI.updateSegmentsProgress();
+          nextCard();
         }
-      }, step);
+      }, stepMs);
     }
 
-    function toggleAutoplay() {
-      State.isAutoplay = !State.isAutoplay;
-      UI.updateAutoplayUI();
-      if (State.isAutoplay) {
-        showToast(`Alokasi transisi aktif (${(State.allocatedDuration/1000).toFixed(1)}s)`, "success");
-      } else {
-        showToast("Alokasi transisi dijeda", "success");
-      }
-    }
-
+    // Fullscreen Toggle Handler
     function toggleFullScreen() {
-      const icon = document.getElementById('fullscreenIcon');
-      const hint = document.getElementById('fullscreenHint');
       if (!document.fullscreenElement) {
-        document.documentElement.requestFullscreen().then(() => {
-          if (hint) hint.classList.add('hidden');
-        }).catch(() => {});
-        icon.setAttribute('data-lucide', 'minimize');
+        document.documentElement.requestFullscreen().catch(() => {});
       } else {
         if (document.exitFullscreen) {
-          document.exitFullscreen();
-          icon.setAttribute('data-lucide', 'maximize');
+          document.exitFullscreen().catch(() => {});
         }
       }
-      lucide.createIcons();
     }
 
-    /* Pemicu Fullscreen Otomatis & Manajemen Mode Bersih (Clean Zen Mode) */
-    function setupCleanAndAutoFullscreen() {
-      let isFirstInteraction = true;
-      const hint = document.getElementById('fullscreenHint');
-
-      // 1. Coba Fullscreen langsung saat script dieksekusi
-      if (!document.fullscreenElement) {
-        document.documentElement.requestFullscreen().then(() => {
-          if (hint) hint.classList.add('hidden');
-        }).catch(() => {
-          // Kebijakan browser memerlukan 1 interaksi pengguna pertama kali
-        });
-      }
-
-      // 2. Kunci Fullscreen seketika pada sentuhan, klik, atau tombol keyboard pertama
-      const triggerFullscreenOnFirstGesture = () => {
-        if (!document.fullscreenElement && isFirstInteraction) {
-          document.documentElement.requestFullscreen().then(() => {
-            if (hint) hint.classList.add('hidden');
-          }).catch(() => {});
-          isFirstInteraction = false;
-        }
-      };
-
-      window.addEventListener('click', triggerFullscreenOnFirstGesture, { once: true });
-      window.addEventListener('touchstart', triggerFullscreenOnFirstGesture, { once: true });
-      window.addEventListener('keydown', triggerFullscreenOnFirstGesture, { once: true });
-
-      // 3. Engine Clean Mode (Auto-Hide Controller saat idle selama 2.5 detik)
-      let idleTimer = null;
-      const resetCleanIdleTimer = () => {
-        document.body.classList.remove('is-idle');
-        clearTimeout(idleTimer);
-        
-        // Sembunyikan elemen kontrol hanya jika mode autoplay aktif
-        if (State.isAutoplay) {
-          idleTimer = setTimeout(() => {
-            document.body.classList.add('is-idle');
-          }, 2500);
-        }
-      };
-
-      window.addEventListener('mousemove', resetCleanIdleTimer);
-      window.addEventListener('touchstart', resetCleanIdleTimer);
-      window.addEventListener('keydown', resetCleanIdleTimer);
-
-      // Mulai timer clean mode
-      resetCleanIdleTimer();
+    // Reset Idle Timer (Auto-Hide Zen Mode)
+    function resetIdleTimer() {
+      document.body.classList.remove('is-idle');
+      if (idleTimer) clearTimeout(idleTimer);
+      idleTimer = setTimeout(() => {
+        document.body.classList.add('is-idle');
+      }, 2500);
     }
 
-    // Gestur Sentuh & Swipe
-    let touchStartX = 0;
-    let touchEndX = 0;
-    const stageElement = document.querySelector('.perspective-container');
+    // Event Listeners Binding
+    function bindEvents() {
+      // Idle Activity Listeners
+      ['mousemove', 'mousedown', 'touchstart', 'keydown'].forEach(evt => {
+        window.addEventListener(evt, resetIdleTimer, { passive: true });
+      });
+      resetIdleTimer();
 
-    stageElement.addEventListener('touchstart', (e) => {
-      touchStartX = e.changedTouches[0].screenX;
-    }, { passive: true });
+      // Pemicu Fullscreen Otomatis Saat Klik Pertama
+      const fullscreenHint = document.getElementById('fullscreenHint');
+      const handleInitialGesture = () => {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen().catch(() => {});
+        }
+        fullscreenHint.classList.add('opacity-0', 'pointer-events-none');
+        window.removeEventListener('click', handleInitialGesture);
+      };
+      window.addEventListener('click', handleInitialGesture);
 
-    stageElement.addEventListener('touchend', (e) => {
-      touchEndX = e.changedTouches[0].screenX;
-      const diff = touchEndX - touchStartX;
-      if (Math.abs(diff) > 40) {
-        if (diff < 0) nextProfile();
-        else prevProfile();
-      }
-    }, { passive: true });
+      fullscreenHint.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleFullScreen();
+        fullscreenHint.classList.add('opacity-0', 'pointer-events-none');
+      });
 
-    // Keyboard Arrow Listeners
-    window.addEventListener('keydown', (e) => {
-      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-      if (e.key === 'ArrowRight') nextProfile();
-      else if (e.key === 'ArrowLeft') prevProfile();
-      else if (e.key === 'f' || e.key === 'F') toggleFullScreen();
-      else if (e.key === ' ') {
-        e.preventDefault();
-        toggleAutoplay();
-      }
-    });
+      // Tombol Fullscreen Navbar
+      document.getElementById('btnToggleFullscreen').addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleFullScreen();
+      });
 
-    document.addEventListener('DOMContentLoaded', async () => {
-      UI.init();
+      // Tombol Autoplay Toggle
+      document.getElementById('btnToggleAutoplay').addEventListener('click', (e) => {
+        e.stopPropagation();
+        State.isAutoplay = !State.isAutoplay;
+        UI.updateAutoplayUI();
+        showToast(State.isAutoplay ? "Rotasi otomatis aktif" : "Rotasi otomatis dijeda");
+      });
 
-      try {
-        State.profiles = await Service.fetchProfiles();
-      } catch (err) {
-        console.error(err);
-        State.profiles = DEFAULT_PROFILES;
-      }
+      // Tombol Panah Navigasi
+      document.getElementById('btnPrevCard').addEventListener('click', (e) => {
+        e.stopPropagation();
+        prevCard();
+      });
 
-      UI.filterData();
-      UI.renderStage();
-      
-      // Jalankan linimasa alokasi transisi otomatis seketika saat dibuka
-      State.isAutoplay = true;
-      UI.updateAutoplayUI();
-      startTransitionTicker();
+      document.getElementById('btnNextCard').addEventListener('click', (e) => {
+        e.stopPropagation();
+        nextCard();
+      });
 
-      // Aktifkan inisialisasi Fullscreen & Clean Mode
-      setupCleanAndAutoFullscreen();
-
-      // Navigation Buttons
-      document.getElementById('btnNext').addEventListener('click', nextProfile);
-      document.getElementById('btnPrev').addEventListener('click', prevProfile);
-      document.getElementById('btnToggleAutoplay').addEventListener('click', toggleAutoplay);
-      document.getElementById('btnToggleFullscreen').addEventListener('click', toggleFullScreen);
-
-      // Pemilih Alokasi Durasi Transisi (3s, 5s, 8s)
+      // Pemilih Durasi Alokasi (3s, 5s, 8s)
       document.getElementById('allocationDurationPicker').addEventListener('click', (e) => {
         const btn = e.target.closest('button');
         if (!btn) return;
@@ -1251,143 +1167,223 @@
         State.allocatedDuration = dur;
         resetTransitionAllocation();
 
-        // Update active class
         document.querySelectorAll('#allocationDurationPicker button').forEach(b => {
           b.className = "px-2 py-0.5 rounded text-[10px] transition text-slate-400 hover:text-white";
         });
-        btn.className = "px-2 py-0.5 rounded text-[10px] transition bg-indigo-600 text-white font-bold";
+        btn.className = "px-2 py-0.5 rounded text-[10px] transition bg-emerald-600 text-white font-bold";
 
         UI.updateAllocationStatus();
         UI.renderStage();
-        showToast(`Alokasi transisi diubah ke ${(dur/1000).toFixed(1)} detik / kartu`, "success");
+        showToast(`Alokasi transisi diubah ke ${(dur/1000).toFixed(1)} detik / kartu`);
       });
 
-      // Klik Segmen Alokasi untuk Melompat ke Kartu Tertentu
+      // Klik Segmen Linimasa
       document.getElementById('allocationSegmentsTrack').addEventListener('click', (e) => {
         const slot = e.target.closest('.segment-slot');
         if (!slot) return;
-        State.currentIndex = parseInt(slot.dataset.index, 10);
-        resetTransitionAllocation();
-        UI.renderStage();
+        const targetIdx = parseInt(slot.dataset.index, 10);
+        goToCard(targetIdx);
       });
 
-      // Filter Departments Click
+      // Klik Thumbnail Dock
+      document.getElementById('thumbnailDock').addEventListener('click', (e) => {
+        const thumb = e.target.closest('.thumb-btn');
+        if (!thumb) return;
+        const targetIdx = parseInt(thumb.dataset.index, 10);
+        goToCard(targetIdx);
+      });
+
+      // Filter Departemen
       document.getElementById('filterContainer').addEventListener('click', (e) => {
         const btn = e.target.closest('.dept-btn');
         if (!btn) return;
         State.activeDepartment = btn.dataset.dept;
-        State.saveToStorage();
+        State.currentIndex = 0;
+        resetTransitionAllocation();
         UI.renderDepartments();
         UI.filterData();
         UI.renderStage();
       });
 
-      // Thumbnail Click Navigation
-      document.getElementById('thumbnailDock').addEventListener('click', (e) => {
-        const thumb = e.target.closest('.thumb-btn');
-        if (!thumb) return;
-        State.currentIndex = parseInt(thumb.dataset.index, 10);
-        resetTransitionAllocation();
-        UI.renderStage();
+      // Tombol Tambah Pengurus
+      document.getElementById('btnOpenAddModal').addEventListener('click', () => {
+        UI.openModal(false);
       });
 
-      // Modal Controls
-      document.getElementById('btnOpenAddModal').addEventListener('click', () => UI.openModal(false));
-      document.getElementById('btnCloseModal').addEventListener('click', UI.closeModal);
-      document.getElementById('btnCancelModal').addEventListener('click', UI.closeModal);
-
-      // Card Action Delegation
-      document.getElementById('cardsViewport').addEventListener('click', (e) => {
-        const btnEdit = e.target.closest('.btn-edit-card');
-        if (btnEdit) {
-          const id = btnEdit.dataset.id;
-          const targetProfile = State.profiles.find(p => p.id === id);
-          if (targetProfile) UI.openModal(true, targetProfile);
-          return;
-        }
-
-        const btnDelete = e.target.closest('.btn-delete-card');
-        if (btnDelete) {
-          const id = btnDelete.dataset.id;
-          UI.showConfirm("Hapus Persona", "Apakah Anda yakin ingin menghapus profil ini secara permanen?", async () => {
-            await Service.deleteProfile(id);
-            UI.filterData();
-            UI.renderStage();
-            showToast("Persona berhasil dihapus", "success");
-          });
-          return;
-        }
-
-        const btnCopy = e.target.closest('.btn-copy-email');
-        if (btnCopy) {
-          const email = btnCopy.dataset.email;
-          const el = document.createElement('textarea');
-          el.value = email;
-          document.body.appendChild(el);
-          el.select();
-          document.execCommand('copy');
-          document.body.removeChild(el);
-          showToast(`Email ${email} disalin!`, "success");
-        }
-
-        if (e.target.id === 'btnResetFilter') {
-          State.activeDepartment = 'All';
-          UI.renderDepartments();
-          UI.filterData();
-          UI.renderStage();
-        }
+      document.getElementById('btnCloseProfileModal').addEventListener('click', () => {
+        UI.closeModal();
       });
 
-      // Form Simpan Persona
+      document.getElementById('btnCancelModal').addEventListener('click', () => {
+        UI.closeModal();
+      });
+
+      // Form Simpan Profil (Tambah / Edit)
       document.getElementById('profileForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         const id = document.getElementById('formProfileId').value;
-        const skillsRaw = document.getElementById('formSkills').value;
-        const skillsArray = skillsRaw.split(',').map(s => s.trim()).filter(Boolean);
+        const isEdit = Boolean(id);
 
-        const newProfile = {
-          id: id || undefined,
+        const skillsStr = document.getElementById('formSkills').value;
+        const skillsArray = skillsStr.split(',').map(s => s.trim()).filter(Boolean);
+
+        const payload = {
           name: document.getElementById('formName').value.trim(),
           role: document.getElementById('formRole').value.trim(),
           department: document.getElementById('formDepartment').value,
           nip_nuptk: document.getElementById('formNip').value.trim() || '-',
           education: document.getElementById('formEducation').value.trim() || 'S1',
-          avatar_url: document.getElementById('formAvatar').value.trim() || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=800&q=80',
+          avatar_url: document.getElementById('formAvatar').value.trim(),
           bio: document.getElementById('formBio').value.trim(),
-          skills: skillsArray.length > 0 ? skillsArray : ['Pendidikan', 'Manajemen'],
+          skills: skillsArray,
           email: document.getElementById('formEmail').value.trim(),
-          phone: document.getElementById('formPhone').value.trim(),
-          rating: 5.0
+          phone: document.getElementById('formPhone').value.trim()
         };
 
-        const saved = await Service.saveProfile(newProfile);
-        UI.closeModal();
-        UI.filterData();
-        
-        const targetIdx = State.filteredProfiles.findIndex(p => p.id === saved.id);
-        if (targetIdx !== -1) State.currentIndex = targetIdx;
+        if (isEdit) payload.id = id;
 
-        resetTransitionAllocation();
-        UI.renderStage();
-        showToast("Data aparatur sekolah berhasil disimpan!", "success");
+        try {
+          await Service.saveProfile(payload, isEdit);
+          State.profiles = await Service.fetchProfiles();
+          UI.filterData();
+          UI.renderStage();
+          UI.closeModal();
+          showToast(isEdit ? "Data aparatur berhasil diperbarui" : "Aparatur baru berhasil ditambahkan");
+        } catch (err) {
+          showToast("Gagal menyimpan data: " + err.message, "error");
+        }
       });
 
-      // Config Modal Handlers
-      document.getElementById('btnOpenConfig').addEventListener('click', UI.openConfigModal);
-      document.getElementById('btnCloseConfigModal').addEventListener('click', UI.closeConfigModal);
+      // Aksi Delegasi Kartu (Salin Email, Edit, Hapus)
+      document.getElementById('cardsViewport').addEventListener('click', (e) => {
+        const emailBtn = e.target.closest('.btn-copy-email');
+        if (emailBtn) {
+          e.stopPropagation();
+          const email = emailBtn.dataset.email;
+          navigator.clipboard.writeText(email).then(() => {
+            showToast(`Email ${email} berhasil disalin!`);
+          });
+          return;
+        }
+
+        const editBtn = e.target.closest('.btn-edit-card');
+        if (editBtn) {
+          e.stopPropagation();
+          const cardId = editBtn.dataset.id;
+          const target = State.profiles.find(p => p.id === cardId);
+          if (target) UI.openModal(true, target);
+          return;
+        }
+
+        const deleteBtn = e.target.closest('.btn-delete-card');
+        if (deleteBtn) {
+          e.stopPropagation();
+          State.pendingDeleteId = deleteBtn.dataset.id;
+          const confirmModal = document.getElementById('deleteConfirmModal');
+          confirmModal.classList.remove('hidden');
+          confirmModal.classList.add('flex');
+          return;
+        }
+      });
+
+      // Konfirmasi Hapus Modal Handlers
+      document.getElementById('btnCancelDelete').addEventListener('click', () => {
+        State.pendingDeleteId = null;
+        document.getElementById('deleteConfirmModal').classList.add('hidden');
+        document.getElementById('deleteConfirmModal').classList.remove('flex');
+      });
+
+      document.getElementById('btnExecuteDelete').addEventListener('click', async () => {
+        if (!State.pendingDeleteId) return;
+        try {
+          await Service.deleteProfile(State.pendingDeleteId);
+          State.profiles = await Service.fetchProfiles();
+          UI.filterData();
+          UI.renderStage();
+          showToast("Data aparatur berhasil dihapus");
+        } catch (err) {
+          showToast("Gagal menghapus: " + err.message, "error");
+        } finally {
+          State.pendingDeleteId = null;
+          document.getElementById('deleteConfirmModal').classList.add('hidden');
+          document.getElementById('deleteConfirmModal').classList.remove('flex');
+        }
+      });
+
+      // Konfigurasi Supabase Modal Handlers
+      const cfgModal = document.getElementById('configModal');
+      document.getElementById('btnOpenConfig').addEventListener('click', () => {
+        document.getElementById('cfgSupabaseUrl').value = localStorage.getItem('cfg_supabase_url') || '';
+        document.getElementById('cfgSupabaseKey').value = localStorage.getItem('cfg_supabase_key') || '';
+        document.getElementById('cfgPreviewToggle').checked = activePreviewState;
+        cfgModal.classList.remove('hidden');
+        cfgModal.classList.add('flex');
+      });
+
+      document.getElementById('btnCloseConfigModal').addEventListener('click', () => {
+        cfgModal.classList.add('hidden');
+        cfgModal.classList.remove('flex');
+      });
 
       document.getElementById('btnSaveConfig').addEventListener('click', () => {
         const url = document.getElementById('cfgSupabaseUrl').value.trim();
         const key = document.getElementById('cfgSupabaseKey').value.trim();
-        const forcePreview = document.getElementById('cfgPreviewToggle').checked;
+        const forceMock = document.getElementById('cfgPreviewToggle').checked;
 
-        localStorage.setItem('OMNI_SUPABASE_URL', url);
-        localStorage.setItem('OMNI_SUPABASE_KEY', key);
-        localStorage.setItem('OMNI_FORCE_PREVIEW', forcePreview ? 'true' : 'false');
+        localStorage.setItem('cfg_supabase_url', url);
+        localStorage.setItem('cfg_supabase_key', key);
+        localStorage.setItem('cfg_force_mock', forceMock);
 
-        showToast("Konfigurasi disimpan. Memuat ulang...", "success");
-        setTimeout(() => location.reload(), 600);
+        cfgModal.classList.add('hidden');
+        cfgModal.classList.remove('flex');
+        showToast("Konfigurasi disimpan. Memuat ulang aplikasi...");
+        setTimeout(() => window.location.reload(), 800);
       });
+
+      // Kontrol Keyboard (Panah Kiri, Kanan, Spasi, F)
+      window.addEventListener('keydown', (e) => {
+        if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) return;
+
+        if (e.key === 'ArrowRight') {
+          nextCard();
+        } else if (e.key === 'ArrowLeft') {
+          prevCard();
+        } else if (e.key === ' ') {
+          e.preventDefault();
+          State.isAutoplay = !State.isAutoplay;
+          UI.updateAutoplayUI();
+        } else if (e.key.toLowerCase() === 'f') {
+          toggleFullScreen();
+        }
+      });
+
+      // Usapan Sentuh Mobile (Touch Swiping)
+      let touchStartX = 0;
+      window.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+      }, { passive: true });
+
+      window.addEventListener('touchend', (e) => {
+        const touchEndX = e.changedTouches[0].screenX;
+        const deltaX = touchEndX - touchStartX;
+        if (Math.abs(deltaX) > 45) {
+          if (deltaX < 0) nextCard();
+          else prevCard();
+        }
+      }, { passive: true });
+    }
+
+    // Inisialisasi Utama Saat Halaman Dimuat
+    window.addEventListener('DOMContentLoaded', async () => {
+      initClient();
+      bindEvents();
+
+      // Ambil data profil (Mock / Supabase)
+      State.profiles = await Service.fetchProfiles();
+      UI.init();
+      startTicker();
+
+      lucide.createIcons();
     });
   </script>
 </body>
