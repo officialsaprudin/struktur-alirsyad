@@ -51,7 +51,6 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
-    /* Full Screen 3D Showcase Perspective */
     .perspective-container {
       perspective: 1600px;
     }
@@ -90,14 +89,12 @@
       z-index: 0;
     }
 
-    /* Bright Tosca-White Card Theme with High Contrast Typography */
     .card-light-theme {
       background: linear-gradient(145deg, #ffffff 0%, #f0fdfa 42%, #ccfbf1 100%);
       border: 2px solid rgba(20, 184, 166, 0.5);
       box-shadow: 0 25px 50px -12px rgba(13, 148, 136, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.95) inset;
     }
 
-    /* Emerald & Obsidian Glass Background */
     .glass-panel {
       background: rgba(3, 20, 14, 0.92);
       backdrop-filter: blur(20px);
@@ -121,7 +118,6 @@
       border-radius: 9999px;
     }
 
-    /* Utilitas Sembunyikan Scrollbar Horizontal Filter */
     .scrollbar-none::-webkit-scrollbar {
       display: none;
     }
@@ -130,7 +126,6 @@
       scrollbar-width: none;
     }
 
-    /* Auto-Hide HUD for Lobby Showcase */
     .hud-element {
       transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
     }
@@ -152,7 +147,6 @@
       cursor: none;
     }
 
-    /* Sembunyikan Tombol Pengeditan secara Default (Kunci Kiosk) */
     body:not(.is-admin) .admin-control {
       display: none !important;
     }
@@ -161,22 +155,18 @@
 
 <body class="bg-[#02110a] text-slate-100 h-screen w-screen overflow-hidden font-sans flex flex-col selection:bg-emerald-600 selection:text-white relative select-none">
 
-  <!-- Ambient Dynamic Lighting Backdrop -->
   <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
     <div id="ambientBackdrop1" class="absolute -top-32 left-1/4 w-[650px] h-[650px] bg-emerald-600/15 rounded-full blur-[150px] transition-all duration-1000"></div>
     <div id="ambientBackdrop2" class="absolute -bottom-32 right-1/4 w-[650px] h-[650px] bg-amber-500/12 rounded-full blur-[150px] transition-all duration-1000"></div>
     <div class="absolute inset-0 bg-[radial-gradient(#10b98108_1px,transparent_1px)] [background-size:24px_24px] opacity-60"></div>
   </div>
 
-  <!-- Notification Banner Pemicu Fullscreen Otomatis -->
   <div id="fullscreenHint" class="hud-element fixed top-1.5 left-1/2 -translate-x-1/2 z-50 pointer-events-auto flex items-center gap-2 px-3 py-0.5 rounded-full bg-emerald-950/90 border border-emerald-500/40 backdrop-blur-md text-[10px] sm:text-[11px] text-emerald-200 transition-all duration-500 cursor-pointer shadow-xl shadow-emerald-950/60">
     <i data-lucide="sparkles" class="w-3 h-3 text-amber-400 animate-spin"></i>
     <span>Klik di mana saja untuk mengaktifkan Layar Penuh Kiosk</span>
   </div>
 
   <header class="hud-element relative z-40 w-full px-4 lg:px-8 pt-6 sm:pt-7 pb-2 flex-shrink-0 flex flex-col gap-2">
-    
-    <!-- Linimasa Alokasi Transisi Setiap Kartu -->
     <div class="max-w-4xl w-full mx-auto flex flex-col gap-1.5">
       <div class="flex items-center justify-between text-[11px] font-mono text-slate-300 px-1 gap-2">
         <div class="flex items-center gap-2 min-w-0">
@@ -185,7 +175,6 @@
           <span id="allocationStatusText" class="text-white font-medium truncate">Memuat data aparatur...</span>
         </div>
         
-        <!-- Pilihan Durasi Rotasi Transisi (3s, 5s, 8s & Kustom) -->
         <div class="flex items-center gap-1.5 flex-shrink-0">
           <span class="text-slate-400 hidden sm:inline text-[10px]">Durasi Display:</span>
           <div class="flex items-center bg-black/60 border border-emerald-500/25 rounded-lg p-0.5 gap-0.5" id="allocationDurationPicker">
@@ -193,13 +182,12 @@
             <button data-duration="5000" class="dur-preset-btn px-2 py-0.5 rounded text-[10px] transition bg-emerald-600 text-white font-bold shadow-sm shadow-emerald-700/50">5s</button>
             <button data-duration="8000" class="dur-preset-btn px-2 py-0.5 rounded text-[10px] transition text-slate-400 hover:text-white">8s</button>
             
-            <!-- Input Kustom Durasi (Detik) -->
             <div class="flex items-center pl-1 border-l border-emerald-500/30 gap-0.5">
               <input type="number" id="customDurationInput" min="1" max="600" step="0.5" placeholder="Kustom" 
                      class="w-12 bg-[#021810] text-emerald-200 font-mono text-[10px] px-1 py-0.5 rounded border border-emerald-500/40 focus:outline-none focus:border-emerald-300 text-center placeholder:text-slate-500" 
-                     title="Ketik durasi display kustom dalam detik lalu tekan Enter atau tombol Set">
+                     title="Durasi kustom dalam detik">
               <span class="text-[10px] text-slate-400 pr-0.5 font-mono">s</span>
-              <button type="button" id="btnApplyCustomDuration" class="px-1.5 py-0.5 rounded text-[10px] bg-emerald-700 hover:bg-emerald-500 text-white font-bold transition flex items-center gap-0.5 shadow-sm" title="Terapkan Durasi Kustom">
+              <button type="button" id="btnApplyCustomDuration" class="px-1.5 py-0.5 rounded text-[10px] bg-emerald-700 hover:bg-emerald-500 text-white font-bold transition flex items-center gap-0.5 shadow-sm">
                 <i data-lucide="check" class="w-2.5 h-2.5"></i>
                 <span class="hidden xl:inline text-[9px]">Set</span>
               </button>
@@ -208,13 +196,9 @@
         </div>
       </div>
 
-      <!-- Segment Slots Track -->
-      <div id="allocationSegmentsTrack" class="grid w-full gap-1.5 h-1.5 rounded-full overflow-hidden">
-        <!-- Rendered dynamically via JS -->
-      </div>
+      <div id="allocationSegmentsTrack" class="grid w-full gap-1.5 h-1.5 rounded-full overflow-hidden"></div>
     </div>
 
-    <!-- Navigation Bar & Controls -->
     <div class="max-w-7xl w-full mx-auto flex items-center justify-between gap-3 mt-1">
       <div class="flex items-center gap-3 flex-shrink-0 cursor-pointer select-none active:scale-95 transition-transform" id="brandLogoContainer" title="Ketuk 3x untuk Mode Pengeditan">
         <img src="https://i.ibb.co.com/676xL3yn/MI-AL-IRSYAD-AL-ISLAMIYYAH-20260604-173251-0000.png" 
@@ -229,19 +213,15 @@
         </div>
       </div>
 
-      <!-- Department Filter Chips -->
-      <div class="hidden md:flex items-center gap-1 bg-white/5 border border-emerald-500/20 p-1 rounded-2xl backdrop-blur-md overflow-x-auto max-w-[42vw] lg:max-w-[52vw] xl:max-w-[60vw] scrollbar-none flex-shrink" id="filterContainer">
-        <!-- Rendered via JS -->
-      </div>
+      <div class="hidden md:flex items-center gap-1 bg-white/5 border border-emerald-500/20 p-1 rounded-2xl backdrop-blur-md overflow-x-auto max-w-[42vw] lg:max-w-[52vw] xl:max-w-[60vw] scrollbar-none flex-shrink" id="filterContainer"></div>
 
-      <!-- Right Action Hub -->
       <div class="flex items-center gap-2 flex-shrink-0">
         <div id="envBadge" class="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border bg-amber-500/10 text-amber-400 border-amber-500/20">
           <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
           <span id="envBadgeText">Pratinjau Aktif</span>
         </div>
 
-        <button id="btnToggleAutoplay" title="Pause / Lanjutkan Alokasi Transisi" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-emerald-500/50 bg-emerald-600 text-white transition text-xs font-semibold shadow-md shadow-emerald-600/30">
+        <button id="btnToggleAutoplay" title="Pause / Lanjutkan" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-emerald-500/50 bg-emerald-600 text-white transition text-xs font-semibold shadow-md shadow-emerald-600/30">
           <i data-lucide="pause" id="autoplayIcon" class="w-3.5 h-3.5"></i>
           <span class="hidden sm:inline" id="autoplayLabel">Berhenti</span>
         </button>
@@ -259,47 +239,32 @@
   </header>
 
   <main class="relative z-10 flex-1 w-full max-w-[1400px] mx-auto px-2 sm:px-4 flex flex-col items-center justify-center min-h-0 py-1 overflow-hidden">
-    
-    <!-- 3D Viewport Box -->
     <div class="perspective-container relative w-full h-full flex items-center justify-center">
-      
-      <!-- Kartu-kartu Profil Dirender di Sini -->
-      <div id="cardsViewport" class="relative w-full h-full flex items-center justify-center">
-        <!-- Rendered via JS -->
-      </div>
+      <div id="cardsViewport" class="relative w-full h-full flex items-center justify-center"></div>
 
-      <!-- Navigasi Panah Kiri -->
-      <button id="btnPrevCard" title="Sebelumnya (Panah Kiri)" class="hud-element hud-arrow-left absolute left-2 sm:left-4 z-40 p-3 sm:p-4 rounded-2xl glass-subtle text-slate-300 hover:text-white hover:border-emerald-500/50 hover:bg-emerald-900/30 transition transform -translate-y-1/2 top-1/2 shadow-xl shadow-black/50">
+      <button id="btnPrevCard" title="Sebelumnya" class="hud-element hud-arrow-left absolute left-2 sm:left-4 z-40 p-3 sm:p-4 rounded-2xl glass-subtle text-slate-300 hover:text-white hover:border-emerald-500/50 hover:bg-emerald-900/30 transition transform -translate-y-1/2 top-1/2 shadow-xl shadow-black/50">
         <i data-lucide="chevron-left" class="w-6 h-6"></i>
       </button>
 
-      <!-- Navigasi Panah Kanan -->
-      <button id="btnNextCard" title="Selanjutnya (Panah Kanan)" class="hud-element hud-arrow-right absolute right-2 sm:right-4 z-40 p-3 sm:p-4 rounded-2xl glass-subtle text-slate-300 hover:text-white hover:border-emerald-500/50 hover:bg-emerald-900/30 transition transform -translate-y-1/2 top-1/2 shadow-xl shadow-black/50">
+      <button id="btnNextCard" title="Selanjutnya" class="hud-element hud-arrow-right absolute right-2 sm:right-4 z-40 p-3 sm:p-4 rounded-2xl glass-subtle text-slate-300 hover:text-white hover:border-emerald-500/50 hover:bg-emerald-900/30 transition transform -translate-y-1/2 top-1/2 shadow-xl shadow-black/50">
         <i data-lucide="chevron-right" class="w-6 h-6"></i>
       </button>
-
     </div>
   </main>
 
   <footer class="hud-element hud-dock-bottom relative z-40 w-full px-4 pb-3 pt-1 flex-shrink-0">
     <div class="max-w-4xl mx-auto flex items-center justify-between gap-4 glass-subtle px-4 py-2 rounded-2xl border border-emerald-500/20 shadow-2xl">
-      
-      <!-- Counter & Indikator Angka -->
       <div class="flex items-center gap-2 font-mono text-xs text-slate-300">
         <span class="text-emerald-400 font-bold text-sm" id="currentIndexText">00</span>
         <span class="text-slate-600">/</span>
         <span class="text-slate-400" id="totalCountText">00</span>
       </div>
 
-      <!-- Mini Thumbnails Carousel -->
-      <div class="flex items-center gap-2 overflow-x-auto max-w-full py-1 px-2" id="thumbnailDock">
-        <!-- Rendered via JS -->
-      </div>
+      <div class="flex items-center gap-2 overflow-x-auto max-w-full py-1 px-2" id="thumbnailDock"></div>
 
-      <!-- Hint Navigasi Cepat -->
       <div class="hidden lg:flex items-center gap-3 text-[11px] font-mono text-slate-400">
         <span class="flex items-center gap-1"><kbd class="px-1.5 py-0.5 rounded bg-black/60 border border-white/10 text-[10px]">←</kbd><kbd class="px-1.5 py-0.5 rounded bg-black/60 border border-white/10 text-[10px]">→</kbd> Geser</span>
-        <span class="flex items-center gap-1"><kbd class="px-1.5 py-0.5 rounded bg-black/60 border border-white/10 text-[10px]">Spasi 3x</kbd> Admin Mode</span>
+        <span class="flex items-center gap-1"><kbd class="px-1.5 py-0.5 rounded bg-black/60 border border-white/10 text-[10px]">nothing</kbd> Admin Mode</span>
         <span class="flex items-center gap-1"><kbd class="px-1.5 py-0.5 rounded bg-black/60 border border-white/10 text-[10px]">F</kbd> Layar Penuh</span>
       </div>
     </div>
@@ -307,7 +272,6 @@
 
   <div id="profileModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden items-center justify-center p-4">
     <div class="glass-panel w-full max-w-xl max-h-[90vh] overflow-y-auto rounded-3xl p-6 sm:p-8 border border-emerald-500/30 shadow-2xl relative">
-      
       <div class="flex items-center justify-between pb-4 border-b border-emerald-500/20">
         <h3 id="modalTitle" class="text-base font-bold text-white flex items-center gap-2">
           <i data-lucide="user-plus" class="w-5 h-5 text-emerald-400"></i>
@@ -320,12 +284,12 @@
 
       <form id="profileForm" class="mt-4 space-y-4">
         <input type="hidden" id="formProfileId">
+        <input type="hidden" id="formOrderPriority">
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <div class="flex items-center justify-between mb-1">
               <label class="block text-xs font-semibold text-slate-300">Nama Lengkap & Gelar *</label>
-              <!-- Ceklis Nama Panggilan (Kalau Ada) -->
               <label class="inline-flex items-center gap-1.5 cursor-pointer text-[11px] text-emerald-400 hover:text-emerald-300 font-medium select-none">
                 <input type="checkbox" id="checkHasNickname" class="w-3.5 h-3.5 rounded bg-[#051e15] border-emerald-500/40 text-emerald-600 focus:ring-0 cursor-pointer accent-emerald-500">
                 <span>Nama Panggilan?</span>
@@ -334,7 +298,6 @@
             <input type="text" id="formName" required placeholder="Dr. H. Ahmad Dahlan, M.Pd." 
                    class="w-full bg-[#051e15] border border-emerald-500/25 rounded-xl px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-emerald-400">
             
-            <!-- Bidang Input Nama Panggilan (Tampil otomatis saat diceklis) -->
             <div id="containerNickname" class="hidden mt-2">
               <div class="relative">
                 <input type="text" id="formNickname" placeholder="Nama Panggilan / Sapaan (contoh: Ust. Syukron)" 
@@ -351,7 +314,6 @@
           </div>
         </div>
 
-        <!-- Pilihan Multi-Unit / Divisi (Interactive Multi-Select Chips) -->
         <div class="rounded-2xl border border-emerald-500/25 bg-[#031c13]/70 p-3.5 space-y-2.5">
           <div class="flex items-center justify-between">
             <div>
@@ -359,9 +321,13 @@
                 <i data-lucide="layers" class="w-4 h-4 text-emerald-400"></i>
                 <span>Unit / Divisi (Bisa Pilih Lebih dari 1) *</span>
               </label>
-              <p id="deptChipsSubtitle" class="text-[10px] text-slate-400 mt-0.5">Klik unit untuk memilih atau membatalkan pilihan</p>
+              <p id="deptChipsSubtitle" class="text-[10px] text-slate-400 mt-0.5">Klik unit untuk memilih • Tahan & geser untuk mengubah urutan</p>
             </div>
             <div class="flex items-center gap-2">
+              <button type="button" id="btnToggleReorderDeptMode" class="text-[11px] text-amber-300 hover:text-amber-200 font-bold flex items-center gap-1.5 transition px-2.5 py-1 rounded-lg border border-amber-500/50 bg-amber-500/15 hover:bg-amber-500/25 shadow-sm" title="Atur Urutan Hierarki Unit">
+                <i data-lucide="arrow-up-down" class="w-3.5 h-3.5"></i>
+                <span id="btnReorderDeptText">Urutkan</span>
+              </button>
               <button type="button" id="btnToggleCustomDept" class="text-[11px] text-emerald-400 hover:text-emerald-300 font-semibold flex items-center gap-1 transition">
                 <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i>
                 <span>+ Unit Baru</span>
@@ -373,7 +339,6 @@
             </div>
           </div>
 
-          <!-- Input Tambah Unit Kustom Baru -->
           <div id="customDeptInputRow" class="hidden flex items-center gap-2 p-2 rounded-xl bg-black/40 border border-emerald-500/30">
             <input type="text" id="formCustomDepartment" placeholder="Ketik nama unit / divisi baru..." 
                    class="flex-1 bg-[#051e15] border border-emerald-400/40 rounded-lg px-2.5 py-1.5 text-xs text-emerald-200 placeholder:text-slate-500 focus:outline-none focus:border-emerald-300">
@@ -382,10 +347,7 @@
             </button>
           </div>
 
-          <!-- Grid Pilihan Multi-Chip Unit -->
-          <div id="departmentChipsGrid" class="flex flex-wrap gap-1.5 pt-1">
-            <!-- Rendered dynamically via JS -->
-          </div>
+          <div id="departmentChipsGrid" class="flex flex-wrap gap-1.5 pt-1"></div>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -409,7 +371,6 @@
               <span>Foto Portrait Aparatur (Rasio Baku 4:6)</span>
             </label>
             
-            <!-- Switcher Tab: Upload Berkas vs Input URL -->
             <div class="flex items-center bg-black/60 p-0.5 rounded-xl border border-emerald-500/30 text-[11px]">
               <button type="button" id="tabPhotoUpload" class="px-2.5 py-1 rounded-lg font-medium transition bg-emerald-600 text-white shadow-xs flex items-center gap-1">
                 <i data-lucide="upload" class="w-3 h-3"></i>
@@ -422,7 +383,6 @@
             </div>
           </div>
 
-          <!-- Pilihan 1: Area Dropzone Unggah Berkas Gambar -->
           <div id="sectionPhotoUpload" class="space-y-2">
             <input type="file" id="formAvatarFile" accept="image/png,image/jpeg,image/webp,image/jpg" class="hidden">
             <div id="dropzoneAvatar" class="border-2 border-dashed border-emerald-500/35 hover:border-emerald-400/70 bg-[#05261b]/60 hover:bg-[#05261b] transition-all rounded-2xl p-4 text-center cursor-pointer flex flex-col items-center justify-center gap-2 group">
@@ -437,7 +397,6 @@
               </div>
             </div>
 
-            <!-- Pratinjau Berkas Terpilih -->
             <div id="fileUploadPreviewCard" class="hidden items-center justify-between p-2.5 rounded-xl bg-black/40 border border-emerald-500/30">
               <div class="flex items-center gap-2.5 min-w-0">
                 <div class="w-10 aspect-[4/6] rounded-lg overflow-hidden border border-emerald-400/50 bg-teal-950 flex-shrink-0">
@@ -454,7 +413,6 @@
             </div>
           </div>
 
-          <!-- Pilihan 2: Input URL Langsung -->
           <div id="sectionPhotoUrl" class="hidden">
             <input type="url" id="formAvatar" placeholder="https://images.unsplash.com/photo-..." 
                    class="w-full bg-[#051e15] border border-emerald-500/25 rounded-xl px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-emerald-400 font-mono">
@@ -474,7 +432,6 @@
                  class="w-full bg-[#051e15] border border-emerald-500/25 rounded-xl px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-emerald-400">
         </div>
 
-        <!-- Bidang Input Alamat Domisili -->
         <div>
           <label class="block text-xs font-semibold text-slate-300 mb-1">Alamat Domisili / Tempat Tinggal</label>
           <div class="relative">
@@ -524,7 +481,6 @@
     </div>
   </div>
 
-  <!-- MODAL: Konfirmasi Hapus Unit / Divisi -->
   <div id="deleteDeptModal" class="fixed inset-0 z-[60] bg-black/80 backdrop-blur-md hidden items-center justify-center p-4">
     <div class="glass-panel w-full max-w-sm rounded-3xl p-6 border border-rose-500/30 shadow-2xl relative text-center">
       <div class="w-12 h-12 rounded-2xl bg-rose-500/10 border border-rose-500/30 text-rose-400 flex items-center justify-center mx-auto mb-3">
@@ -540,24 +496,21 @@
     </div>
   </div>
 
-  <!-- Floating Toast Notifications Dock -->
   <div id="toastDock" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none max-w-sm"></div>
 
   <script>
     /* =========================================================================
        ZERO-BUILD SINGULARITY ARCHITECTURE - MI AL-IRSYAD AL-ISLAMIYYAH
-       STATUS: PREVIEW SAFE MODE (AUTO RECOVERY & ZERO NETWORK CRASH)
+       STATUS: BULLETPROOF PRODUCTION & PERSISTENT PREVIEW ENGINE
        ========================================================================= */
 
-    // 1. Status Mode: true = Mode Pratinjau Aman (menggunakan Mock Data & LocalStorage tanpa error fetch)
-    // Ubah ke false ketika Anda sudah memasukkan URL & Anon Key Supabase asli.
+    // 1. Status Mode: false = Mode Produksi Live (Supabase), true = Mode Pratinjau Aman (Lokal)
     const is_preview = false;
 
-    // 2. KREDENSIAL SUPABASE (Digunakan saat is_preview = false)
+    // 2. KREDENSIAL SUPABASE
     const SUPABASE_URL = "https://ahzexczjwcikxlobqchh.supabase.co"; 
     const SUPABASE_ANON_KEY = "sb_publishable_yG3SzF_f4vgoHCxu02Dm3Q_Z9gEP33c";
 
-    // Validasi URL Supabase
     function isValidSupabaseUrl(url) {
       if (!url) return false;
       if (url.includes('your-project') || url.includes('..........')) return false;
@@ -569,9 +522,21 @@
       }
     }
 
+    // Helper Pembuat UUID Standar RFC4122 (Aman untuk Kolom UUID & TEXT PostgreSQL)
+    function generateUUID() {
+      if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+        return crypto.randomUUID();
+      }
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        const r = Math.random() * 16 | 0;
+        const v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+      });
+    }
+
     const MOCK_PROFILES = [
       {
-        id: "mi-001",
+        id: "a1b2c3d4-0001-4000-8000-000000000001",
         name: "Drs. H. M. Syukron, M.Pd.I",
         nickname: "Ust. Syukron",
         role: "Kepala Madrasah",
@@ -588,7 +553,7 @@
         order_priority: 1
       },
       {
-        id: "mi-002",
+        id: "a1b2c3d4-0002-4000-8000-000000000002",
         name: "Ust. Ahmad Farhan, S.Pd.I",
         nickname: "Ust. Farhan",
         role: "Waka Bidang Kurikulum",
@@ -605,7 +570,7 @@
         order_priority: 2
       },
       {
-        id: "mi-003",
+        id: "a1b2c3d4-0003-4000-8000-000000000003",
         name: "Dra. Hj. Siti Aminah, M.Pd.",
         nickname: "Usth. Aminah",
         role: "Waka Bidang Kesiswaan",
@@ -622,7 +587,7 @@
         order_priority: 3
       },
       {
-        id: "mi-004",
+        id: "a1b2c3d4-0004-4000-8000-000000000004",
         name: "Muhammad Ridwan, S.Kom.",
         nickname: "Pak Ridwan",
         role: "Kepala Tata Usaha & IT",
@@ -645,8 +610,9 @@
       filteredProfiles: [],
       slides: [],
       departments: [],
-      selectedDepartmentsForForm: [], // Menyimpan unit yang dipilih pada formulir
+      selectedDepartmentsForForm: [],
       isDeptDeleteMode: false,
+      isDeptReorderMode: false,
       pendingDeleteDeptName: null,
       currentIndex: 0,
       isAutoplay: true,
@@ -669,7 +635,7 @@
         try {
           supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         } catch (err) {
-          console.warn("Client Supabase tidak dapat dibuat, kembali ke mode preview aman:", err);
+          console.warn("Client Supabase tidak dapat dibuat, kembali ke mode pratinjau aman:", err);
           supabaseClient = null;
         }
       }
@@ -693,7 +659,7 @@
           return;
         }
       } catch (err) {
-        console.warn("Gagal menyalin menggunakan execCommand:", err);
+        console.warn("Gagal menyalin:", err);
       }
       showToast(`Alamat Email: ${text}`);
     }
@@ -701,19 +667,34 @@
     const Service = {
       async uploadAvatar(file) {
         if (!file) return null;
+
+        // Jika offline atau mode preview: Konversi ke Base64 Data URL agar permanen saat refresh browser
         if (is_preview || !supabaseClient) {
-          return URL.createObjectURL(file);
+          return new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onload = (e) => resolve(e.target.result);
+            reader.onerror = () => resolve(URL.createObjectURL(file));
+            reader.readAsDataURL(file);
+          });
         }
+
         try {
           const fileExt = file.name.split('.').pop() || 'jpg';
           const cleanName = `${Date.now()}_${Math.random().toString(36).substring(2, 8)}.${fileExt}`;
-          const filePath = `avatars/${cleanName}`;
+          const filePath = `${cleanName}`;
 
           const { error: uploadError } = await supabaseClient.storage
             .from('avatars')
             .upload(filePath, file, { cacheControl: '3600', upsert: true });
 
-          if (uploadError) throw uploadError;
+          if (uploadError) {
+            console.warn("Upload Storage gagal, menggunakan Base64 lokal:", uploadError);
+            return new Promise((resolve) => {
+              const reader = new FileReader();
+              reader.onload = (e) => resolve(e.target.result);
+              reader.readAsDataURL(file);
+            });
+          }
 
           const { data: publicUrlData } = supabaseClient.storage
             .from('avatars')
@@ -721,8 +702,12 @@
 
           return publicUrlData.publicUrl;
         } catch (err) {
-          console.warn("Gagal upload Supabase Storage, menggunakan gambar lokal:", err);
-          return URL.createObjectURL(file);
+          console.warn("Gagal upload Supabase Storage, menggunakan fallback Base64:", err);
+          return new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onload = (e) => resolve(e.target.result);
+            reader.readAsDataURL(file);
+          });
         }
       },
 
@@ -793,13 +778,31 @@
         return true;
       },
 
+      async reorderDepartments(orderedNames) {
+        if (!orderedNames || !Array.isArray(orderedNames)) return;
+        localStorage.setItem('mi_alirsyad_depts_v1', JSON.stringify(orderedNames));
+
+        if (!is_preview && supabaseClient) {
+          try {
+            const updates = orderedNames.map((name, idx) => ({
+              name: name,
+              order_index: idx + 1
+            }));
+            await supabaseClient.from('departments').upsert(updates, { onConflict: 'name' });
+          } catch (err) {
+            console.warn("Gagal update urutan departemen ke Supabase:", err);
+          }
+        }
+        return orderedNames;
+      },
+
       async fetchProfiles() {
         const cached = localStorage.getItem('mi_alirsyad_profiles_v1');
         if (is_preview || !supabaseClient) {
           if (cached) {
             try { 
               const parsed = JSON.parse(cached);
-              if (parsed && parsed.length > 0) return parsed;
+              if (parsed && Array.isArray(parsed) && parsed.length > 0) return parsed;
             } catch (e) {}
           }
           localStorage.setItem('mi_alirsyad_profiles_v1', JSON.stringify(MOCK_PROFILES));
@@ -812,12 +815,21 @@
             .select('*')
             .order('order_priority', { ascending: true });
 
-          if (error || !data || data.length === 0) {
+          if (error) {
+            console.error("Gagal mengambil data dari Supabase:", error);
             if (cached) {
               try { return JSON.parse(cached); } catch (e) {}
             }
             return [...MOCK_PROFILES];
           }
+
+          if (!data || data.length === 0) {
+            if (cached) {
+              try { return JSON.parse(cached); } catch (e) {}
+            }
+            return [...MOCK_PROFILES];
+          }
+
           localStorage.setItem('mi_alirsyad_profiles_v1', JSON.stringify(data));
           return data;
         } catch (err) {
@@ -828,25 +840,57 @@
 
       async saveProfile(profileData, isEdit = false) {
         let list = await this.fetchProfiles();
+        
+        // 1. Pastikan ID selalu berformat UUID standar RFC4122 (Aman untuk PostgreSQL)
+        if (!isEdit || !profileData.id) {
+          profileData.id = generateUUID();
+        }
+
+        // 2. Berikan urutan prioritas jika belum ada
+        if (typeof profileData.order_priority !== 'number') {
+          const maxOrder = list.reduce((max, p) => Math.max(max, p.order_priority || 0), 0);
+          profileData.order_priority = maxOrder + 1;
+        }
+
+        // 3. Sinkronisasi Live ke Supabase jika aktif
+        if (!is_preview && supabaseClient) {
+          if (isEdit) {
+            const { data, error } = await supabaseClient
+              .from('profiles')
+              .update(profileData)
+              .eq('id', profileData.id)
+              .select();
+
+            if (error) {
+              console.error("Supabase update error:", error);
+              throw new Error(error.message || "Gagal memperbarui data di Supabase.");
+            }
+            if (data && data[0]) profileData = data[0];
+          } else {
+            const { data, error } = await supabaseClient
+              .from('profiles')
+              .insert([profileData])
+              .select();
+
+            if (error) {
+              console.error("Supabase insert error:", error);
+              if (error.message && error.message.includes('column') && error.message.includes('does not exist')) {
+                throw new Error(`Database belum sinkron: ${error.message}. Jalankan skrip SQL di Supabase SQL Editor.`);
+              }
+              throw new Error(error.message || "Gagal menyimpan data ke Supabase.");
+            }
+            if (data && data[0]) profileData = data[0];
+          }
+        }
+
+        // 4. Perbarui memori lokal setelah dipastikan berhasil
         if (isEdit) {
           list = list.map(item => item.id === profileData.id ? { ...item, ...profileData } : item);
         } else {
-          profileData.id = "local-" + Date.now();
           list.push(profileData);
         }
         localStorage.setItem('mi_alirsyad_profiles_v1', JSON.stringify(list));
 
-        if (!is_preview && supabaseClient) {
-          try {
-            if (isEdit) {
-              await supabaseClient.from('profiles').update(profileData).eq('id', profileData.id);
-            } else {
-              await supabaseClient.from('profiles').insert([profileData]);
-            }
-          } catch (err) {
-            console.warn("Gagal sinkronisasi data ke Supabase:", err);
-          }
-        }
         return profileData;
       },
 
@@ -856,15 +900,43 @@
         localStorage.setItem('mi_alirsyad_profiles_v1', JSON.stringify(list));
 
         if (!is_preview && supabaseClient) {
-          try {
-            await supabaseClient.from('profiles').delete().eq('id', id);
-          } catch (e) {}
+          const { error } = await supabaseClient.from('profiles').delete().eq('id', id);
+          if (error) {
+            console.error("Gagal menghapus di Supabase:", error);
+            throw new Error(error.message);
+          }
         }
         return true;
       }
     };
 
     const UI = {
+      init() {
+        this.updateBadge();
+        this.renderDepartments();
+        this.filterData();
+        this.renderAllocationSegments();
+        this.renderStage();
+        this.updateAutoplayUI();
+      },
+
+      updateBadge() {
+        const badge = document.getElementById('envBadge');
+        const badgeText = document.getElementById('envBadgeText');
+        if (!badge || !badgeText) return;
+
+        if (is_preview) {
+          badge.className = "flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border bg-amber-500/10 text-amber-400 border-amber-500/20";
+          badgeText.textContent = "Pratinjau Aktif";
+        } else if (supabaseClient) {
+          badge.className = "flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border bg-emerald-500/10 text-emerald-400 border-emerald-500/20";
+          badgeText.textContent = "Supabase Live";
+        } else {
+          badge.className = "flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border bg-amber-500/10 text-amber-400 border-amber-500/20";
+          badgeText.textContent = "Kredensial Belum Diisi";
+        }
+      },
+
       getDepartmentsList() {
         const fromState = State.departments || [];
         const fromProfiles = [];
@@ -885,8 +957,9 @@
 
         const depts = (State.departments || []).filter(d => d && d !== 'All');
         const isDeleteMode = Boolean(State.isDeptDeleteMode);
+        const isReorderMode = Boolean(State.isDeptReorderMode);
 
-        container.innerHTML = depts.map(d => {
+        container.innerHTML = depts.map((d, index) => {
           const isSelected = State.selectedDepartmentsForForm.includes(d);
 
           if (isDeleteMode) {
@@ -900,13 +973,35 @@
             `;
           }
 
+          if (isReorderMode) {
+            return `
+              <div draggable="true" data-dept="${d}" class="dept-drag-item inline-flex items-center rounded-xl bg-amber-950/80 border border-amber-400/70 px-2.5 py-1.5 text-xs text-amber-200 gap-2 shadow-md cursor-grab active:cursor-grabbing hover:bg-amber-900/60 transition select-none">
+                <span class="w-5 h-5 rounded-md bg-amber-400 text-slate-950 font-mono font-black flex items-center justify-center text-[10px] shadow-xs">
+                  ${index + 1}
+                </span>
+                <span class="font-bold text-white tracking-wide">${d}</span>
+                <div class="flex items-center gap-0.5 ml-1 pl-1.5 border-l border-amber-500/40">
+                  <button type="button" data-dept="${d}" data-dir="left" class="btn-move-dept p-1 rounded hover:bg-amber-400/20 text-amber-300 hover:text-white transition disabled:opacity-20 disabled:pointer-events-none" ${index === 0 ? 'disabled' : ''} title="Pindah ke Posisi #${index}">
+                    <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                  </button>
+                  <button type="button" data-dept="${d}" data-dir="right" class="btn-move-dept p-1 rounded hover:bg-amber-400/20 text-amber-300 hover:text-white transition disabled:opacity-20 disabled:pointer-events-none" ${index === depts.length - 1 ? 'disabled' : ''} title="Pindah ke Posisi #${index + 2}">
+                    <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                  </button>
+                </div>
+              </div>
+            `;
+          }
+
           return `
-            <div class="group inline-flex items-center rounded-xl transition ${
+            <div draggable="true" data-dept="${d}" class="dept-drag-item group inline-flex items-center rounded-xl transition cursor-grab active:cursor-grabbing ${
               isSelected
                 ? 'bg-emerald-600 text-white border border-emerald-300 shadow-sm shadow-emerald-700/40 ring-1 ring-emerald-400'
                 : 'bg-[#05261b] text-slate-300 border border-emerald-500/25 hover:border-emerald-400/50 hover:text-white'
             }">
-              <button type="button" data-dept="${d}" class="modal-dept-chip px-3 py-1.5 text-xs font-semibold flex items-center gap-1.5 select-none">
+              <span class="pl-2 pr-0.5 text-slate-400/60 group-hover:text-amber-400 transition" title="Tahan dan geser untuk memindahkan urutan">
+                <i data-lucide="grip-vertical" class="w-3.5 h-3.5"></i>
+              </span>
+              <button type="button" data-dept="${d}" class="modal-dept-chip px-2 py-1.5 text-xs font-semibold flex items-center gap-1.5 select-none">
                 <i data-lucide="${isSelected ? 'check-circle-2' : 'circle'}" class="w-3.5 h-3.5 ${isSelected ? 'text-white' : 'text-slate-500'}"></i>
                 <span>${d}</span>
               </button>
@@ -917,28 +1012,8 @@
           `;
         }).join('');
         lucide.createIcons();
-      },
-
-      init() {
-        this.updateBadge();
-        this.renderDepartments();
-        this.filterData();
-        this.renderAllocationSegments();
-        this.renderStage();
-        this.updateAutoplayUI();
-      },
-
-      updateBadge() {
-        const badge = document.getElementById('envBadge');
-        const badgeText = document.getElementById('envBadgeText');
-        if (!badge || !badgeText) return;
-
-        if (is_preview || !supabaseClient) {
-          badge.className = "hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border bg-amber-500/10 text-amber-400 border-amber-500/20";
-          badgeText.textContent = "Pratinjau Aktif";
-        } else {
-          badge.className = "hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border bg-emerald-500/10 text-emerald-400 border-emerald-500/20";
-          badgeText.textContent = "Supabase Live";
+        if (typeof this.bindDragEvents === 'function') {
+          this.bindDragEvents();
         }
       },
 
@@ -1040,7 +1115,6 @@
 
         State.filteredProfiles = list;
 
-        // Pengelompokan Berdasarkan Unit: Jika aparatur memiliki lebih dari 1 unit, mereka akan tampil pada tiap unitnya
         const deptMap = new Map();
         list.forEach(p => {
           const pDepts = (p.departments && p.departments.length > 0) 
@@ -1060,8 +1134,19 @@
           });
         });
 
+        const deptOrder = (State.departments || []).filter(d => d && d !== 'All');
+        const sortedDepts = Array.from(deptMap.keys()).sort((a, b) => {
+          const idxA = deptOrder.indexOf(a);
+          const idxB = deptOrder.indexOf(b);
+          if (idxA === -1 && idxB === -1) return 0;
+          if (idxA === -1) return 1;
+          if (idxB === -1) return -1;
+          return idxA - idxB;
+        });
+
         const slides = [];
-        deptMap.forEach((members, dept) => {
+        sortedDepts.forEach((dept) => {
+          const members = deptMap.get(dept) || [];
           if (members.length <= 1) {
             slides.push({
               id: `slide-${dept}-single`,
@@ -1129,7 +1214,6 @@
           else if (idx === prevIndex && total > 1) posClass = 'card-prev';
           else if (idx === nextIndex && total > 1) posClass = 'card-next';
 
-          // TAMPILAN KARTU TERBAGI 2 ORANG (Pair Card)
           if (slide.type === 'pair' && slide.members.length === 2) {
             const p1 = slide.members[0];
             const p2 = slide.members[1];
@@ -1150,7 +1234,6 @@
 
               return `
                 <div class="flex-1 flex flex-col justify-between p-4 sm:p-5 lg:p-6 rounded-2xl bg-white/75 border border-teal-200/90 shadow-sm relative group hover:border-teal-400 transition-colors">
-                  
                   <div class="flex items-center justify-between pb-2 mb-3 border-b border-teal-100 text-[11px] font-mono">
                     <span class="text-teal-900 font-bold bg-teal-100/90 px-2 py-0.5 rounded-md border border-teal-200 truncate max-w-[200px]">
                       ${item.nip_nuptk && item.nip_nuptk !== '-' ? 'NIP: ' + item.nip_nuptk : 'Aparatur #' + orderNum}
@@ -1181,7 +1264,6 @@
 
                     <div class="flex-1 flex flex-col justify-between w-full min-w-0">
                       <div>
-                        <!-- Unit-unit yang diampu -->
                         <div class="flex flex-wrap gap-1 mb-1.5">
                           ${memberDeptBadges}
                         </div>
@@ -1242,7 +1324,6 @@
 
             return `
               <div class="profile-card absolute w-[96%] sm:w-[760px] md:w-[940px] lg:w-[1140px] xl:w-[1260px] 2xl:w-[1340px] max-h-[calc(100vh-175px)] sm:max-h-[calc(100vh-165px)] overflow-y-auto card-light-theme rounded-3xl p-5 sm:p-7 md:p-8 shadow-2xl flex flex-col justify-between ${posClass}">
-                
                 <div class="flex items-center justify-between pb-3.5 mb-4 border-b border-teal-200/90 text-xs font-mono">
                   <div class="flex items-center gap-3 sm:gap-4">
                     <img src="https://i.ibb.co.com/676xL3yn/MI-AL-IRSYAD-AL-ISLAMIYYAH-20260604-173251-0000.png" 
@@ -1277,8 +1358,9 @@
             `;
           }
 
-          // TAMPILAN KARTU TUNGGAL (Single Card)
           const item = slide.members[0];
+          if (!item) return '';
+
           const skillsBadges = (item.skills || []).slice(0, 5).map(skill => `
             <span class="px-3 sm:px-3.5 py-1.5 rounded-xl bg-white border border-teal-300 text-xs sm:text-sm text-teal-950 font-bold tracking-wide shadow-sm hover:border-teal-500 transition-colors">
               ${skill}
@@ -1294,7 +1376,6 @@
 
           return `
             <div class="profile-card absolute w-[96%] sm:w-[740px] md:w-[900px] lg:w-[1040px] xl:w-[1180px] 2xl:w-[1260px] max-h-[calc(100vh-175px)] sm:max-h-[calc(100vh-165px)] overflow-y-auto card-light-theme rounded-3xl p-5 sm:p-7 md:p-9 lg:p-10 shadow-2xl flex flex-col justify-between ${posClass}">
-              
               <div class="flex items-center justify-between pb-4 mb-4 sm:mb-6 border-b border-teal-200/90 text-xs font-mono">
                 <div class="flex items-center gap-3.5 sm:gap-4">
                   <img src="https://i.ibb.co.com/676xL3yn/MI-AL-IRSYAD-AL-ISLAMIYYAH-20260604-173251-0000.png" 
@@ -1311,6 +1392,12 @@
                     ${(State.allocatedDuration / 1000).toFixed(1)}s / Rotasi
                   </span>
                   <div class="admin-control flex items-center gap-1.5">
+                    <button class="btn-move-card p-2 rounded-xl text-slate-500 hover:text-teal-800 hover:bg-teal-100 transition" data-id="${item.id}" data-dir="up" title="Geser Urutan Naik">
+                      <i data-lucide="arrow-up" class="w-4 h-4"></i>
+                    </button>
+                    <button class="btn-move-card p-2 rounded-xl text-slate-500 hover:text-teal-800 hover:bg-teal-100 transition" data-id="${item.id}" data-dir="down" title="Geser Urutan Turun">
+                      <i data-lucide="arrow-down" class="w-4 h-4"></i>
+                    </button>
                     <button class="btn-edit-card p-2 rounded-xl text-slate-500 hover:text-teal-800 hover:bg-teal-100 transition" data-id="${item.id}" title="Edit Data">
                       <i data-lucide="edit-3" class="w-4 h-4"></i>
                     </button>
@@ -1401,7 +1488,6 @@
                     </div>
                   </div>
                 </div>
-
               </div>
             </div>
           `;
@@ -1446,6 +1532,12 @@
 
           const item = slide.members[0];
           if (!item) return '';
+
+          const skillsBadges = (item.skills || []).slice(0, 5).map(skill => `
+            <span class="px-3 sm:px-3.5 py-1.5 rounded-xl bg-white border border-teal-300 text-xs sm:text-sm text-teal-950 font-bold tracking-wide shadow-sm hover:border-teal-500 transition-colors">
+              ${skill}
+            </span>
+          `).join('');
           return `
             <button data-index="${idx}" class="thumb-btn relative rounded-xl overflow-hidden transition-all duration-300 flex-shrink-0 ${
               isActive 
@@ -1492,10 +1584,15 @@
         this.resetPhotoUploadUI();
 
         State.isDeptDeleteMode = false;
+        State.isDeptReorderMode = false;
         const btnDeleteDeptText = document.getElementById('btnDeleteDeptModeText');
         if (btnDeleteDeptText) btnDeleteDeptText.textContent = 'Hapus Unit';
+        const btnReorderDeptText = document.getElementById('btnReorderDeptText');
+        if (btnReorderDeptText) btnReorderDeptText.textContent = 'Urutkan';
+        const btnToggleReorderDept = document.getElementById('btnToggleReorderDeptMode');
+        if (btnToggleReorderDept) btnToggleReorderDept.className = 'text-[11px] text-amber-300 hover:text-amber-200 font-bold flex items-center gap-1.5 transition px-2.5 py-1 rounded-lg border border-amber-500/50 bg-amber-500/15 hover:bg-amber-500/25 shadow-sm';
         const deptSubtitle = document.getElementById('deptChipsSubtitle');
-        if (deptSubtitle) deptSubtitle.textContent = 'Klik unit untuk memilih atau membatalkan pilihan';
+        if (deptSubtitle) deptSubtitle.textContent = 'Klik unit untuk memilih • Tahan & geser untuk mengubah urutan';
 
         if (customDeptRow) customDeptRow.classList.add('hidden');
         if (customDeptInput) customDeptInput.value = '';
@@ -1503,6 +1600,8 @@
         if (isEdit && profile) {
           title.innerHTML = `<i data-lucide="edit-3" class="w-5 h-5 text-emerald-400"></i> <span>Edit Data Aparatur</span>`;
           document.getElementById('formProfileId').value = profile.id;
+          const orderInput = document.getElementById('formOrderPriority');
+          if (orderInput) orderInput.value = profile.order_priority || '';
           document.getElementById('formName').value = profile.name;
           
           if (profile.nickname && profile.nickname.trim() !== '') {
@@ -1517,7 +1616,6 @@
 
           document.getElementById('formRole').value = profile.role;
           
-          // Inisialisasi pilihan unit dari array departments atau string department lama
           if (profile.departments && Array.isArray(profile.departments) && profile.departments.length > 0) {
             State.selectedDepartmentsForForm = [...profile.departments];
           } else if (profile.department) {
@@ -1555,38 +1653,6 @@
         modal.classList.remove('hidden');
         modal.classList.add('flex');
         lucide.createIcons();
-      },
-
-      async deleteSelectedDepartment() {
-        const select = document.getElementById('formDepartment');
-        if (!select) return;
-
-        const currentVal = select.value;
-        if (!currentVal || currentVal === '__custom__') {
-          showToast("Pilih unit yang valid untuk dihapus!", "error");
-          return;
-        }
-
-        const inUseCount = (State.profiles || []).filter(p => p.department && p.department.toLowerCase() === currentVal.toLowerCase()).length;
-        if (inUseCount > 0) {
-          showToast(`Unit "${currentVal}" masih digunakan oleh ${inUseCount} orang pengurus.`, "error");
-          return;
-        }
-
-        try {
-          await Service.deleteDepartment(currentVal);
-          State.departments = await Service.fetchDepartments();
-          if (State.activeDepartment.toLowerCase() === currentVal.toLowerCase()) {
-            State.activeDepartment = 'All';
-          }
-          this.updateDepartmentSelectOptions();
-          this.renderDepartments();
-          this.filterData();
-          this.renderStage();
-          showToast(`Unit "${currentVal}" berhasil dihapus.`);
-        } catch (err) {
-          showToast("Gagal menghapus unit: " + err.message, "error");
-        }
       },
 
       setPhotoInputMode(mode) {
@@ -1877,14 +1943,6 @@
         UI.openModal(false);
       });
 
-      const btnDeleteDept = document.getElementById('btnDeleteCurrentDept');
-      if (btnDeleteDept) {
-        btnDeleteDept.addEventListener('click', (e) => {
-          e.preventDefault();
-          UI.deleteSelectedDepartment();
-        });
-      }
-
       document.getElementById('tabPhotoUpload').addEventListener('click', () => {
         UI.setPhotoInputMode('upload');
       });
@@ -1893,7 +1951,6 @@
         UI.setPhotoInputMode('url');
       });
 
-      // Handler Ceklis Nama Panggilan
       const checkNickname = document.getElementById('checkHasNickname');
       const containerNickname = document.getElementById('containerNickname');
       const inputNickname = document.getElementById('formNickname');
@@ -1910,7 +1967,6 @@
         });
       }
 
-      // Handler Dropzone Upload Avatar
       const dropzone = document.getElementById('dropzoneAvatar');
       const fileInput = document.getElementById('formAvatarFile');
       const btnRemoveFile = document.getElementById('btnRemoveUploadedFile');
@@ -1930,7 +1986,6 @@
           }
         });
 
-        // Efek seret dan letak berkas (Drag and Drop)
         dropzone.addEventListener('dragover', (e) => {
           e.preventDefault();
           dropzone.classList.add('border-emerald-400', 'bg-emerald-950/40');
@@ -1976,39 +2031,155 @@
         btnCancelModal.addEventListener('click', () => UI.closeModal());
       }
 
-      // Toggle Mode Hapus Unit
       const btnToggleDeleteDept = document.getElementById('btnToggleDeleteDeptMode');
       const deptSubtitle = document.getElementById('deptChipsSubtitle');
       const btnDeleteDeptText = document.getElementById('btnDeleteDeptModeText');
+
+      const btnToggleReorderDept = document.getElementById('btnToggleReorderDeptMode');
+      const btnReorderDeptText = document.getElementById('btnReorderDeptText');
+
+      if (btnToggleReorderDept) {
+        btnToggleReorderDept.addEventListener('click', (e) => {
+          e.stopPropagation();
+          State.isDeptReorderMode = !State.isDeptReorderMode;
+          State.isDeptDeleteMode = false;
+          if (btnDeleteDeptText) btnDeleteDeptText.textContent = 'Hapus Unit';
+          if (btnToggleDeleteDept) btnToggleDeleteDept.className = 'text-[11px] text-rose-400 hover:text-rose-300 font-semibold flex items-center gap-1 transition px-2 py-0.5 rounded-lg border border-rose-500/30 hover:bg-rose-500/10';
+
+          if (State.isDeptReorderMode) {
+            btnReorderDeptText.textContent = 'Selesai';
+            btnToggleReorderDept.className = 'text-[11px] text-amber-950 font-bold flex items-center gap-1 transition px-2.5 py-0.5 bg-amber-400 border border-amber-300 rounded-lg shadow-sm';
+            if (deptSubtitle) deptSubtitle.innerHTML = '<span class="text-amber-300 font-semibold animate-pulse">Mode Urutkan Unit: Klik ◀ / ▶ atau seret chip untuk mengatur nomor posisi hierarki unit</span>';
+          } else {
+            btnReorderDeptText.textContent = 'Urutkan';
+            btnToggleReorderDept.className = 'text-[11px] text-amber-400 hover:text-amber-300 font-semibold flex items-center gap-1 transition px-2 py-0.5 rounded-lg border border-amber-500/30 hover:bg-amber-500/10';
+            if (deptSubtitle) deptSubtitle.textContent = 'Klik unit untuk memilih • Tahan & geser untuk mengubah urutan';
+          }
+          UI.renderModalDepartmentChips();
+        });
+      }
 
       if (btnToggleDeleteDept) {
         btnToggleDeleteDept.addEventListener('click', (e) => {
           e.stopPropagation();
           State.isDeptDeleteMode = !State.isDeptDeleteMode;
+          State.isDeptReorderMode = false;
+          if (btnReorderDeptText) btnReorderDeptText.textContent = 'Urutkan';
+          if (btnToggleReorderDept) btnToggleReorderDept.className = 'text-[11px] text-amber-400 hover:text-amber-300 font-semibold flex items-center gap-1 transition px-2 py-0.5 rounded-lg border border-amber-500/30 hover:bg-amber-500/10';
+
           if (State.isDeptDeleteMode) {
             btnDeleteDeptText.textContent = 'Selesai';
             btnToggleDeleteDept.className = 'text-[11px] text-emerald-400 hover:text-emerald-300 font-semibold flex items-center gap-1 transition px-2 py-0.5 bg-emerald-950/80 border border-emerald-500/40 rounded-lg';
             if (deptSubtitle) deptSubtitle.innerHTML = '<span class="text-rose-400 font-medium animate-pulse">Mode Hapus Unit: Klik tombol (×) atau ikon tempat sampah pada unit yang ingin dihapus</span>';
           } else {
             btnDeleteDeptText.textContent = 'Hapus Unit';
-            btnToggleDeleteDept.className = 'text-[11px] text-rose-400 hover:text-rose-300 font-semibold flex items-center gap-1 transition';
-            if (deptSubtitle) deptSubtitle.textContent = 'Klik unit untuk memilih atau membatalkan pilihan';
+            btnToggleDeleteDept.className = 'text-[11px] text-rose-400 hover:text-rose-300 font-semibold flex items-center gap-1 transition px-2 py-0.5 rounded-lg border border-rose-500/30 hover:bg-rose-500/10';
+            if (deptSubtitle) deptSubtitle.textContent = 'Klik unit untuk memilih • Tahan & geser untuk mengubah urutan';
           }
           UI.renderModalDepartmentChips();
         });
       }
 
-      // Event klik pemilihan multi-unit chip & hapus chip di modal
+      async function handleMoveDepartment(deptName, direction) {
+        if (!deptName) return;
+        const list = (State.departments || []).filter(d => d && d !== 'All');
+        const idx = list.indexOf(deptName);
+        if (idx === -1) return;
+
+        const targetIdx = direction === 'left' ? idx - 1 : idx + 1;
+        if (targetIdx < 0 || targetIdx >= list.length) return;
+
+        // Tukar posisi elemen
+        const temp = list[idx];
+        list[idx] = list[targetIdx];
+        list[targetIdx] = temp;
+
+        State.departments = list;
+        await Service.reorderDepartments(list);
+        UI.renderModalDepartmentChips();
+        UI.renderDepartments();
+        UI.filterData();
+        UI.renderStage();
+        showToast(`Unit "${deptName}" dipindahkan ke posisi #${targetIdx + 1}`);
+      }
+
+      function bindDepartmentDragAndDrop() {
+        const container = document.getElementById('departmentChipsGrid');
+        if (!container) return;
+
+        const items = container.querySelectorAll('.dept-drag-item');
+        items.forEach(item => {
+          item.addEventListener('dragstart', (e) => {
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/plain', item.dataset.dept);
+            item.classList.add('opacity-40', 'scale-95');
+          });
+
+          item.addEventListener('dragend', () => {
+            item.classList.remove('opacity-40', 'scale-95');
+            container.querySelectorAll('.dept-drag-item').forEach(c => {
+              c.classList.remove('ring-2', 'ring-amber-400', 'bg-amber-900/40');
+            });
+          });
+
+          item.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+            item.classList.add('ring-2', 'ring-amber-400');
+          });
+
+          item.addEventListener('dragleave', () => {
+            item.classList.remove('ring-2', 'ring-amber-400');
+          });
+
+          item.addEventListener('drop', async (e) => {
+            e.preventDefault();
+            item.classList.remove('ring-2', 'ring-amber-400');
+            const draggedDept = e.dataTransfer.getData('text/plain');
+            const targetDept = item.dataset.dept;
+
+            if (!draggedDept || !targetDept || draggedDept === targetDept) return;
+
+            const list = (State.departments || []).filter(d => d && d !== 'All');
+            const fromIndex = list.indexOf(draggedDept);
+            const toIndex = list.indexOf(targetDept);
+
+            if (fromIndex === -1 || toIndex === -1) return;
+
+            list.splice(fromIndex, 1);
+            list.splice(toIndex, 0, draggedDept);
+
+            State.departments = list;
+            await Service.reorderDepartments(list);
+            UI.renderModalDepartmentChips();
+            UI.renderDepartments();
+            UI.filterData();
+            UI.renderStage();
+            showToast(`Urutan diperbarui: "${draggedDept}" digeser ke posisi #${toIndex + 1}`);
+          });
+        });
+      }
+
+      UI.bindDragEvents = bindDepartmentDragAndDrop;
+
       const chipsContainer = document.getElementById('departmentChipsGrid');
       if (chipsContainer) {
         chipsContainer.addEventListener('click', (e) => {
+          const moveBtn = e.target.closest('.btn-move-dept');
+          if (moveBtn) {
+            e.stopPropagation();
+            const dept = moveBtn.dataset.dept;
+            const dir = moveBtn.dataset.dir;
+            handleMoveDepartment(dept, dir);
+            return;
+          }
+
           const deleteBtn = e.target.closest('.btn-delete-dept-item');
           if (deleteBtn) {
             e.stopPropagation();
             const targetDept = deleteBtn.dataset.dept;
             if (!targetDept) return;
 
-            // Validasi: Periksa apakah unit masih dipakai oleh pengurus
             const inUseCount = (State.profiles || []).filter(p => {
               const pDepts = (p.departments && p.departments.length > 0) ? p.departments : [p.department || 'Umum'];
               return pDepts.some(item => item.toLowerCase() === targetDept.toLowerCase());
@@ -2046,7 +2217,6 @@
         });
       }
 
-      // Handler Modal Konfirmasi Hapus Unit
       const btnCancelDeleteDept = document.getElementById('btnCancelDeleteDept');
       const btnExecuteDeleteDept = document.getElementById('btnExecuteDeleteDept');
       const deleteDeptModal = document.getElementById('deleteDeptModal');
@@ -2089,7 +2259,6 @@
         });
       }
 
-      // Toggle form penambahan unit kustom
       const btnToggleCustom = document.getElementById('btnToggleCustomDept');
       const customDeptRow = document.getElementById('customDeptInputRow');
       const customDeptInput = document.getElementById('formCustomDepartment');
@@ -2124,7 +2293,6 @@
         });
       }
 
-      // Handler submit formulir profil
       document.getElementById('profileForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         const id = document.getElementById('formProfileId').value;
@@ -2166,6 +2334,12 @@
           const hasNickname = document.getElementById('checkHasNickname').checked;
           const resolvedNickname = hasNickname ? document.getElementById('formNickname').value.trim() : '';
 
+          const existingProfile = isEdit ? State.profiles.find(p => p.id === id) : null;
+          const formOrderInput = document.getElementById('formOrderPriority');
+          const resolvedOrder = existingProfile && typeof existingProfile.order_priority === 'number'
+            ? existingProfile.order_priority
+            : (formOrderInput && formOrderInput.value ? parseInt(formOrderInput.value, 10) : null);
+
           const payload = {
             name: document.getElementById('formName').value.trim(),
             nickname: resolvedNickname,
@@ -2174,6 +2348,7 @@
             departments: selectedDepts,
             nip_nuptk: document.getElementById('formNip').value.trim() || '-',
             education: document.getElementById('formEducation').value.trim() || 'S1',
+            order_priority: resolvedOrder,
             avatar_url: resolvedAvatarUrl,
             bio: document.getElementById('formBio').value.trim(),
             skills: skillsArray,
@@ -2184,14 +2359,32 @@
 
           if (isEdit) payload.id = id;
 
-          await Service.saveProfile(payload, isEdit);
+          // 1. Simpan profil (melempar error jika Supabase menolak data)
+          const savedItem = await Service.saveProfile(payload, isEdit);
+
+          // 2. Muat ulang daftar profil terbaru
           State.profiles = await Service.fetchProfiles();
+          
+          // 3. Susun ulang filter sesuai hierarki
           UI.renderDepartments();
           UI.filterData();
+
+          // 4. Pastikan kamera tetap berada di kartu aparatur yang sedang diedit/ditambah
+          if (savedItem && savedItem.id) {
+            const targetSlideIndex = State.slides.findIndex(s => 
+              s.members && s.members.some(m => m.id === savedItem.id)
+            );
+            if (targetSlideIndex !== -1) {
+              State.currentIndex = targetSlideIndex;
+              State.currentElapsed = 0;
+            }
+          }
+
           UI.renderStage();
           UI.closeModal();
-          showToast(isEdit ? "Data aparatur berhasil diperbarui" : "Aparatur baru berhasil ditambahkan");
+          showToast(isEdit ? "Data aparatur berhasil diperbarui (Urutan terkunci)!" : "Aparatur baru berhasil ditambahkan!");
         } catch (err) {
+          console.error("Kesalahan penyimpanan data:", err);
           showToast("Gagal menyimpan data: " + err.message, "error");
         } finally {
           if (btnSave && btnLabel) {
@@ -2204,7 +2397,72 @@
         }
       });
 
+      // Handler Geser Urutan Hierarki (Move Up / Move Down)
+      async function handleMoveProfileOrder(profileId, direction) {
+        if (!profileId) return;
+        const currentList = [...State.profiles].sort((a, b) => (a.order_priority || 0) - (b.order_priority || 0));
+        const idx = currentList.findIndex(p => p.id === profileId);
+        if (idx === -1) return;
+
+        const targetIdx = direction === 'up' ? idx - 1 : idx + 1;
+        if (targetIdx < 0) {
+          showToast("Aparatur ini sudah berada di posisi urutan paling awal", "info");
+          return;
+        }
+        if (targetIdx >= currentList.length) {
+          showToast("Aparatur ini sudah berada di posisi urutan paling akhir", "info");
+          return;
+        }
+
+        const currentProfile = currentList[idx];
+        const swapProfile = currentList[targetIdx];
+
+        // Tukar nomor order_priority
+        const tempOrder = currentProfile.order_priority || (idx + 1);
+        currentProfile.order_priority = swapProfile.order_priority || (targetIdx + 1);
+        swapProfile.order_priority = tempOrder;
+
+        // Pastikan tidak ada urutan bernomor sama
+        if (currentProfile.order_priority === swapProfile.order_priority) {
+          if (direction === 'up') {
+            currentProfile.order_priority = Math.max(1, currentProfile.order_priority - 1);
+          } else {
+            currentProfile.order_priority = currentProfile.order_priority + 1;
+          }
+        }
+
+        try {
+          await Service.saveProfile(currentProfile, true);
+          await Service.saveProfile(swapProfile, true);
+          State.profiles = await Service.fetchProfiles();
+          UI.filterData();
+
+          // Arahkan fokus ke slide yang baru digeser
+          const newSlideIndex = State.slides.findIndex(s => 
+            s.members && s.members.some(m => m.id === currentProfile.id)
+          );
+          if (newSlideIndex !== -1) {
+            State.currentIndex = newSlideIndex;
+            State.currentElapsed = 0;
+          }
+
+          UI.renderStage();
+          showToast(`Urutan ${currentProfile.name} berhasil digeser ke #${currentProfile.order_priority}!`);
+        } catch (err) {
+          showToast("Gagal memindahkan urutan: " + err.message, "error");
+        }
+      }
+
       document.getElementById('cardsViewport').addEventListener('click', (e) => {
+        const moveBtn = e.target.closest('.btn-move-card');
+        if (moveBtn) {
+          e.stopPropagation();
+          const cardId = moveBtn.dataset.id;
+          const dir = moveBtn.dataset.dir;
+          handleMoveProfileOrder(cardId, dir);
+          return;
+        }
+
         const emailBtn = e.target.closest('.btn-copy-email');
         if (emailBtn) {
           e.stopPropagation();
