@@ -351,26 +351,38 @@
           </div>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div>
-            <div class="flex items-center justify-between mb-1">
-              <label class="block text-xs font-semibold text-slate-300">Unit / Divisi *</label>
-              <div class="flex items-center gap-2">
-                <button type="button" id="btnToggleCustomDept" class="text-[10px] text-emerald-400 hover:text-emerald-300 transition font-medium flex items-center gap-0.5">
-                  <i data-lucide="plus" class="w-3 h-3"></i> Unit Baru
-                </button>
-                <button type="button" id="btnDeleteCurrentDept" class="text-[10px] text-rose-400 hover:text-rose-300 transition font-medium flex items-center gap-0.5" title="Hapus Unit yang Dipilih">
-                  <i data-lucide="trash-2" class="w-3 h-3"></i> Hapus
-                </button>
-              </div>
+        <!-- Pilihan Multi-Unit / Divisi (Interactive Multi-Select Chips) -->
+        <div class="rounded-2xl border border-emerald-500/25 bg-[#031c13]/70 p-3.5 space-y-2.5">
+          <div class="flex items-center justify-between">
+            <div>
+              <label class="block text-xs font-bold text-emerald-300 flex items-center gap-1.5">
+                <i data-lucide="layers" class="w-4 h-4 text-emerald-400"></i>
+                <span>Unit / Divisi (Bisa Pilih Lebih dari 1) *</span>
+              </label>
+              <p class="text-[10px] text-slate-400 mt-0.5">Klik unit untuk memilih atau membatalkan pilihan</p>
             </div>
-            <select id="formDepartment" required class="w-full bg-[#051e15] border border-emerald-500/25 rounded-xl px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-emerald-400">
-              <!-- Rendered dynamically via JS -->
-            </select>
-            <input type="text" id="formCustomDepartment" placeholder="Ketik nama unit / divisi baru..." 
-                   class="hidden mt-2 w-full bg-[#051e15] border border-emerald-400/50 rounded-xl px-3 py-2 text-xs text-emerald-200 placeholder:text-slate-500 focus:outline-none focus:border-emerald-300">
+            <button type="button" id="btnToggleCustomDept" class="text-[11px] text-emerald-400 hover:text-emerald-300 font-semibold flex items-center gap-1 transition">
+              <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i>
+              <span>+ Unit Baru</span>
+            </button>
           </div>
 
+          <!-- Input Tambah Unit Kustom Baru -->
+          <div id="customDeptInputRow" class="hidden flex items-center gap-2 p-2 rounded-xl bg-black/40 border border-emerald-500/30">
+            <input type="text" id="formCustomDepartment" placeholder="Ketik nama unit / divisi baru..." 
+                   class="flex-1 bg-[#051e15] border border-emerald-400/40 rounded-lg px-2.5 py-1.5 text-xs text-emerald-200 placeholder:text-slate-500 focus:outline-none focus:border-emerald-300">
+            <button type="button" id="btnAddCustomDeptConfirm" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold transition flex items-center gap-1">
+              <i data-lucide="plus" class="w-3 h-3"></i> Tambah
+            </button>
+          </div>
+
+          <!-- Grid Pilihan Multi-Chip Unit -->
+          <div id="departmentChipsGrid" class="flex flex-wrap gap-1.5 pt-1">
+            <!-- Rendered dynamically via JS -->
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label class="block text-xs font-semibold text-slate-300 mb-1">NIP / NUPTK</label>
             <input type="text" id="formNip" placeholder="19780415 200312..." 
@@ -456,6 +468,16 @@
                  class="w-full bg-[#051e15] border border-emerald-500/25 rounded-xl px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-emerald-400">
         </div>
 
+        <!-- Bidang Input Alamat Domisili -->
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">Alamat Domisili / Tempat Tinggal</label>
+          <div class="relative">
+            <input type="text" id="formAddress" placeholder="Jl. Veteran No. 45, Banjarmasin" 
+                   class="w-full bg-[#051e15] border border-emerald-500/25 rounded-xl px-3 py-2 pl-8 text-xs text-slate-100 focus:outline-none focus:border-emerald-400">
+            <i data-lucide="map-pin" class="w-3.5 h-3.5 text-emerald-400 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+          </div>
+        </div>
+
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label class="block text-xs font-semibold text-slate-300 mb-1">Email Resmi</label>
@@ -532,11 +554,13 @@
         nickname: "Ust. Syukron",
         role: "Kepala Madrasah",
         department: "Pimpinan",
+        departments: ["Pimpinan", "Pendidik"],
         nip_nuptk: "196805121994031002",
         education: "S2 Manajemen Pendidikan",
         avatar_url: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80",
         bio: "Memimpin arah strategis madrasah, pengembangan kurikulum terpadu Al-Irsyad, serta integrasi nilai akhlakul karimah dan sains modern.",
         skills: ["Kepemimpinan", "Supervisi Akademik", "Kemitraan"],
+        address: "Jl. S. Parman No. 24, Banjarmasin Barat",
         email: "kepala@mialirsyad.sch.id",
         phone: "081234567890",
         order_priority: 1
@@ -547,11 +571,13 @@
         nickname: "Ust. Farhan",
         role: "Waka Bidang Kurikulum",
         department: "Kurikulum",
+        departments: ["Kurikulum", "Pendidik"],
         nip_nuptk: "198207152009121004",
         education: "S1 Pendidikan Bahasa Arab",
         avatar_url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80",
         bio: "Mengawal kurikulum Merdeka Berbasis Karakter Islam, peningkatan capaian literasi Al-Qur'an, dan standar penilaian mutu santri.",
         skills: ["Kurikulum Merdeka", "Tahsin Al-Qur'an", "Perencanaan Akademik"],
+        address: "Jl. Cempaka Putih No. 15, Banjarmasin Timur",
         email: "kurikulum@mialirsyad.sch.id",
         phone: "081234567891",
         order_priority: 2
@@ -562,11 +588,13 @@
         nickname: "Usth. Aminah",
         role: "Waka Bidang Kesiswaan",
         department: "Kesiswaan",
+        departments: ["Kesiswaan", "Bimbingan Konseling"],
         nip_nuptk: "197503192005012003",
         education: "S2 Bimbingan & Konseling",
         avatar_url: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=80",
         bio: "Pembinaan karakter santri, kepemimpinan siswa, ekstrakurikuler kepanduan Hisbul Wathan, dan prestasi olimpiade sains.",
         skills: ["Karakter Santri", "Olimpiade", "Konseling"],
+        address: "Jl. Mayjen Sutoyo S No. 8, Banjarmasin Tengah",
         email: "kesiswaan@mialirsyad.sch.id",
         phone: "081234567892",
         order_priority: 3
@@ -577,11 +605,13 @@
         nickname: "Pak Ridwan",
         role: "Kepala Tata Usaha & IT",
         department: "Tata Usaha",
+        departments: ["Tata Usaha", "Sarpras"],
         nip_nuptk: "198811042015041001",
         education: "S1 Sistem Informasi",
         avatar_url: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=80",
         bio: "Menyelenggarakan sistem administrasi digital madrasah, infrastruktur CBT, serta pengelolaan data EMIS dan simpatika Kemenag.",
         skills: ["EMIS Kemenag", "Infrastruktur Jaringan", "Database Digital"],
+        address: "Kompleks Kenanga Indah No. 4B, Banjarmasin",
         email: "tu@mialirsyad.sch.id",
         phone: "081234567893",
         order_priority: 4
@@ -593,6 +623,7 @@
       filteredProfiles: [],
       slides: [],
       departments: [],
+      selectedDepartmentsForForm: [], // Menyimpan unit yang dipilih pada formulir
       currentIndex: 0,
       isAutoplay: true,
       isAdminMode: false,
@@ -812,40 +843,37 @@
     const UI = {
       getDepartmentsList() {
         const fromState = State.departments || [];
-        const fromProfiles = (State.profiles || []).map(p => p.department).filter(Boolean);
-        const combined = Array.from(new Set([...fromState, ...fromProfiles]));
+        const fromProfiles = [];
+        (State.profiles || []).forEach(p => {
+          if (p.departments && Array.isArray(p.departments)) {
+            fromProfiles.push(...p.departments);
+          } else if (p.department) {
+            fromProfiles.push(p.department);
+          }
+        });
+        const combined = Array.from(new Set([...fromState, ...fromProfiles].filter(Boolean)));
         return ['All', ...combined];
       },
 
-      updateDepartmentSelectOptions(selectedDept = '') {
-        const select = document.getElementById('formDepartment');
-        const customInput = document.getElementById('formCustomDepartment');
-        if (!select) return;
+      renderModalDepartmentChips() {
+        const container = document.getElementById('departmentChipsGrid');
+        if (!container) return;
 
         const depts = (State.departments || []).filter(d => d && d !== 'All');
-
-        if (selectedDept && !depts.includes(selectedDept)) {
-          depts.push(selectedDept);
-        }
-
-        if (depts.length === 0) {
-          select.innerHTML = `
-            <option value="" disabled selected>Belum ada unit (+ Unit Baru)</option>
-            <option value="__custom__">+ Tambah Unit Kustom...</option>
+        container.innerHTML = depts.map(d => {
+          const isSelected = State.selectedDepartmentsForForm.includes(d);
+          return `
+            <button type="button" data-dept="${d}" class="modal-dept-chip px-3 py-1.5 rounded-xl text-xs font-semibold transition flex items-center gap-1.5 select-none ${
+              isSelected
+                ? 'bg-emerald-600 text-white border border-emerald-300 shadow-sm shadow-emerald-700/40 ring-1 ring-emerald-400'
+                : 'bg-[#05261b] text-slate-300 border border-emerald-500/25 hover:border-emerald-400/50 hover:text-white'
+            }">
+              <i data-lucide="${isSelected ? 'check-circle-2' : 'circle'}" class="w-3.5 h-3.5 ${isSelected ? 'text-white' : 'text-slate-500'}"></i>
+              <span>${d}</span>
+            </button>
           `;
-        } else {
-          select.innerHTML = depts.map(d => `<option value="${d}">${d}</option>`).join('') + `
-            <option value="__custom__">+ Tambah Unit Kustom...</option>
-          `;
-        }
-
-        if (selectedDept) {
-          select.value = selectedDept;
-          if (customInput) customInput.classList.add('hidden');
-        } else if (depts.length > 0) {
-          select.value = depts[0];
-          if (customInput) customInput.classList.add('hidden');
-        }
+        }).join('');
+        lucide.createIcons();
       },
 
       init() {
@@ -948,7 +976,10 @@
         let list = [...State.profiles];
         
         if (State.activeDepartment !== 'All') {
-          list = list.filter(p => (p.department || '').toLowerCase() === State.activeDepartment.toLowerCase());
+          list = list.filter(p => {
+            const depts = (p.departments && p.departments.length > 0) ? p.departments : [p.department || 'Umum'];
+            return depts.some(d => d.toLowerCase() === State.activeDepartment.toLowerCase());
+          });
         }
 
         if (State.searchQuery.trim() !== '') {
@@ -958,19 +989,32 @@
             p.role.toLowerCase().includes(q) ||
             (p.nickname && p.nickname.toLowerCase().includes(q)) ||
             (p.department && p.department.toLowerCase().includes(q)) ||
+            (p.departments && p.departments.some(d => d.toLowerCase().includes(q))) ||
+            (p.address && p.address.toLowerCase().includes(q)) ||
             (p.skills && p.skills.some(s => s.toLowerCase().includes(q)))
           );
         }
 
         State.filteredProfiles = list;
 
+        // Pengelompokan Berdasarkan Unit: Jika aparatur memiliki lebih dari 1 unit, mereka akan tampil pada tiap unitnya
         const deptMap = new Map();
         list.forEach(p => {
-          const dept = p.department || 'Umum';
-          if (!deptMap.has(dept)) {
-            deptMap.set(dept, []);
-          }
-          deptMap.get(dept).push(p);
+          const pDepts = (p.departments && p.departments.length > 0) 
+            ? p.departments 
+            : [p.department || 'Umum'];
+
+          pDepts.forEach(dept => {
+            if (State.activeDepartment !== 'All' && dept.toLowerCase() !== State.activeDepartment.toLowerCase()) {
+              return;
+            }
+            if (!deptMap.has(dept)) {
+              deptMap.set(dept, []);
+            }
+            if (!deptMap.get(dept).some(existing => existing.id === p.id)) {
+              deptMap.get(dept).push(p);
+            }
+          });
         });
 
         const slides = [];
@@ -1054,6 +1098,13 @@
                 </span>
               `).join('');
 
+              const deptsArray = (item.departments && item.departments.length > 0) ? item.departments : [item.department || 'Umum'];
+              const memberDeptBadges = deptsArray.map(d => `
+                <span class="px-2 py-0.5 rounded-md bg-teal-700 text-white text-[10px] font-mono font-bold">
+                  ${d}
+                </span>
+              `).join(' ');
+
               return `
                 <div class="flex-1 flex flex-col justify-between p-4 sm:p-5 lg:p-6 rounded-2xl bg-white/75 border border-teal-200/90 shadow-sm relative group hover:border-teal-400 transition-colors">
                   
@@ -1087,6 +1138,11 @@
 
                     <div class="flex-1 flex flex-col justify-between w-full min-w-0">
                       <div>
+                        <!-- Unit-unit yang diampu -->
+                        <div class="flex flex-wrap gap-1 mb-1.5">
+                          ${memberDeptBadges}
+                        </div>
+
                         <div class="flex flex-wrap items-baseline gap-1.5 mb-0.5">
                           <h3 class="text-lg sm:text-xl md:text-2xl font-black text-slate-900 tracking-tight leading-tight line-clamp-2">
                             ${item.name}
@@ -1105,9 +1161,15 @@
                         <p class="text-xs sm:text-sm text-slate-700 leading-relaxed mb-3 font-medium line-clamp-3">
                           ${item.bio || 'Menjalankan tugas pokok dan fungsi kepemimpinan pendidikan madrasah.'}
                         </p>
-                        <div class="flex flex-wrap gap-1.5 mb-3">
+                        <div class="flex flex-wrap gap-1.5 mb-2.5">
                           ${skillsBadges}
                         </div>
+                        ${item.address ? `
+                          <div class="flex items-center gap-1.5 text-[11px] text-teal-950 bg-white/90 border border-teal-200/90 px-2.5 py-1 rounded-lg mb-2 shadow-2xs" title="${item.address}">
+                            <i data-lucide="map-pin" class="w-3.5 h-3.5 text-emerald-600 flex-shrink-0"></i>
+                            <span class="truncate font-medium"><span class="font-bold text-teal-900">Alamat:</span> ${item.address}</span>
+                          </div>
+                        ` : ''}
                       </div>
                     </div>
                   </div>
@@ -1180,6 +1242,13 @@
             </span>
           `).join('');
 
+          const deptsArray = (item.departments && item.departments.length > 0) ? item.departments : [item.department || 'Umum'];
+          const singleCardDeptBadges = deptsArray.map(d => `
+            <span class="text-xs sm:text-sm font-mono tracking-wider uppercase text-white font-bold px-3 py-1 bg-teal-600 rounded-lg border border-teal-700 shadow-xs">
+              ${d}
+            </span>
+          `).join('');
+
           return `
             <div class="profile-card absolute w-[96%] sm:w-[740px] md:w-[900px] lg:w-[1040px] xl:w-[1180px] 2xl:w-[1260px] max-h-[calc(100vh-175px)] sm:max-h-[calc(100vh-165px)] overflow-y-auto card-light-theme rounded-3xl p-5 sm:p-7 md:p-9 lg:p-10 shadow-2xl flex flex-col justify-between ${posClass}">
               
@@ -1226,10 +1295,8 @@
 
                 <div class="flex-1 flex flex-col justify-between w-full">
                   <div>
-                    <div class="flex flex-wrap items-center gap-2.5 mb-2.5">
-                      <span class="text-xs sm:text-sm font-mono tracking-wider uppercase text-white font-bold px-3 py-1 bg-teal-600 rounded-lg border border-teal-700">
-                        ${item.department}
-                      </span>
+                    <div class="flex flex-wrap items-center gap-2 mb-2.5">
+                      ${singleCardDeptBadges}
                       ${item.nip_nuptk && item.nip_nuptk !== '-' ? `
                         <span class="text-xs sm:text-sm font-mono text-slate-800 px-3 py-1 bg-white rounded-lg border border-teal-200/90 font-semibold">
                           NIP/NUPTK: ${item.nip_nuptk}
@@ -1257,9 +1324,16 @@
                       ${item.bio || 'Melaksanakan tugas pokok dan fungsi kepemimpinan pendidikan madrasah.'}
                     </p>
 
-                    <div class="flex flex-wrap gap-2 mb-5 sm:mb-6">
+                    <div class="flex flex-wrap gap-2 mb-3 sm:mb-4">
                       ${skillsBadges}
                     </div>
+
+                    ${item.address ? `
+                      <div class="flex items-center gap-2 text-xs sm:text-sm text-teal-950 bg-white/90 border border-teal-200 px-3 py-1.5 sm:py-2 rounded-xl mb-4 sm:mb-5 shadow-2xs" title="${item.address}">
+                        <i data-lucide="map-pin" class="w-4 h-4 text-emerald-600 flex-shrink-0"></i>
+                        <span class="truncate font-medium"><span class="font-bold text-teal-900">Alamat:</span> ${item.address}</span>
+                      </div>
+                    ` : ''}
                   </div>
 
                   <div class="pt-4 border-t border-teal-200/90 flex items-center justify-between mt-auto gap-3">
@@ -1364,6 +1438,7 @@
         const modal = document.getElementById('profileModal');
         const title = document.getElementById('modalTitle');
         const form = document.getElementById('profileForm');
+        const customDeptRow = document.getElementById('customDeptInputRow');
         const customDeptInput = document.getElementById('formCustomDepartment');
         const checkNickname = document.getElementById('checkHasNickname');
         const containerNickname = document.getElementById('containerNickname');
@@ -1373,10 +1448,8 @@
         State.selectedAvatarFile = null;
         this.resetPhotoUploadUI();
 
-        if (customDeptInput) {
-          customDeptInput.classList.add('hidden');
-          customDeptInput.value = '';
-        }
+        if (customDeptRow) customDeptRow.classList.add('hidden');
+        if (customDeptInput) customDeptInput.value = '';
 
         if (isEdit && profile) {
           title.innerHTML = `<i data-lucide="edit-3" class="w-5 h-5 text-emerald-400"></i> <span>Edit Data Aparatur</span>`;
@@ -1394,12 +1467,22 @@
           }
 
           document.getElementById('formRole').value = profile.role;
-          this.updateDepartmentSelectOptions(profile.department);
+          
+          // Inisialisasi pilihan unit dari array departments atau string department lama
+          if (profile.departments && Array.isArray(profile.departments) && profile.departments.length > 0) {
+            State.selectedDepartmentsForForm = [...profile.departments];
+          } else if (profile.department) {
+            State.selectedDepartmentsForForm = [profile.department];
+          } else {
+            State.selectedDepartmentsForForm = ['Yayasan'];
+          }
+
           document.getElementById('formNip').value = profile.nip_nuptk || '';
           document.getElementById('formEducation').value = profile.education || '';
           document.getElementById('formAvatar').value = profile.avatar_url || '';
           document.getElementById('formBio').value = profile.bio || '';
           document.getElementById('formSkills').value = (profile.skills || []).join(', ');
+          document.getElementById('formAddress').value = profile.address || '';
           document.getElementById('formEmail').value = profile.email || '';
           document.getElementById('formPhone').value = profile.phone || '';
 
@@ -1414,10 +1497,12 @@
           checkNickname.checked = false;
           containerNickname.classList.add('hidden');
           formNickname.value = '';
-          this.updateDepartmentSelectOptions('Yayasan');
+          document.getElementById('formAddress').value = '';
+          State.selectedDepartmentsForForm = ['Yayasan'];
           this.setPhotoInputMode('upload');
         }
 
+        this.renderModalDepartmentChips();
         modal.classList.remove('hidden');
         modal.classList.add('flex');
         lucide.createIcons();
@@ -1796,6 +1881,7 @@
           }
         });
 
+        // Efek seret dan letak berkas (Drag and Drop)
         dropzone.addEventListener('dragover', (e) => {
           e.preventDefault();
           dropzone.classList.add('border-emerald-400', 'bg-emerald-950/40');
@@ -1831,18 +1917,81 @@
         });
       }
 
-      document.getElementById('btnCloseProfileModal').addEventListener('click', () => {
-        UI.closeModal();
-      });
+      const btnCloseModal = document.getElementById('btnCloseProfileModal');
+      if (btnCloseModal) {
+        btnCloseModal.addEventListener('click', () => UI.closeModal());
+      }
 
-      document.getElementById('btnCancelModal').addEventListener('click', () => {
-        UI.closeModal();
-      });
+      const btnCancelModal = document.getElementById('btnCancelModal');
+      if (btnCancelModal) {
+        btnCancelModal.addEventListener('click', () => UI.closeModal());
+      }
 
+      // Event klik pemilihan multi-unit chip di modal
+      const chipsContainer = document.getElementById('departmentChipsGrid');
+      if (chipsContainer) {
+        chipsContainer.addEventListener('click', (e) => {
+          const btn = e.target.closest('.modal-dept-chip');
+          if (!btn) return;
+          const dept = btn.dataset.dept;
+          if (State.selectedDepartmentsForForm.includes(dept)) {
+            if (State.selectedDepartmentsForForm.length === 1) {
+              showToast("Pilih minimal 1 unit untuk pengurus!", "error");
+              return;
+            }
+            State.selectedDepartmentsForForm = State.selectedDepartmentsForForm.filter(d => d !== dept);
+          } else {
+            State.selectedDepartmentsForForm.push(dept);
+          }
+          UI.renderModalDepartmentChips();
+        });
+      }
+
+      // Toggle form penambahan unit kustom
+      const btnToggleCustom = document.getElementById('btnToggleCustomDept');
+      const customDeptRow = document.getElementById('customDeptInputRow');
+      const customDeptInput = document.getElementById('formCustomDepartment');
+      const btnAddCustomDeptConfirm = document.getElementById('btnAddCustomDeptConfirm');
+
+      if (btnToggleCustom && customDeptRow) {
+        btnToggleCustom.addEventListener('click', () => {
+          customDeptRow.classList.toggle('hidden');
+          if (!customDeptRow.classList.contains('hidden') && customDeptInput) {
+            customDeptInput.focus();
+          }
+        });
+      }
+
+      if (btnAddCustomDeptConfirm && customDeptInput) {
+        btnAddCustomDeptConfirm.addEventListener('click', async () => {
+          const newName = customDeptInput.value.trim();
+          if (!newName) {
+            showToast("Ketik nama unit baru terlebih dahulu!", "error");
+            return;
+          }
+          await Service.saveDepartment(newName);
+          State.departments = await Service.fetchDepartments();
+          if (!State.selectedDepartmentsForForm.includes(newName)) {
+            State.selectedDepartmentsForForm.push(newName);
+          }
+          customDeptInput.value = '';
+          customDeptRow.classList.add('hidden');
+          UI.renderModalDepartmentChips();
+          UI.renderDepartments();
+          showToast(`Unit "${newName}" berhasil ditambahkan & dipilih.`);
+        });
+      }
+
+      // Handler submit formulir profil
       document.getElementById('profileForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         const id = document.getElementById('formProfileId').value;
         const isEdit = Boolean(id);
+
+        if (State.selectedDepartmentsForForm.length === 0) {
+          showToast("Pilih minimal satu unit / divisi!", "error");
+          return;
+        }
 
         const btnSave = document.getElementById('btnSaveProfile');
         const btnLabel = document.getElementById('saveBtnLabel');
@@ -1856,11 +2005,8 @@
           lucide.createIcons();
         }
 
-        const selectDept = document.getElementById('formDepartment').value;
-        const customDept = document.getElementById('formCustomDepartment').value.trim();
-        const finalDepartment = (selectDept === '__custom__' || !document.getElementById('formCustomDepartment').classList.contains('hidden')) && customDept
-          ? customDept 
-          : (selectDept === '__custom__' ? 'Umum' : selectDept);
+        const selectedDepts = [...State.selectedDepartmentsForForm];
+        const primaryDept = selectedDepts[0] || 'Umum';
 
         const skillsStr = document.getElementById('formSkills').value;
         const skillsArray = skillsStr.split(',').map(s => s.trim()).filter(Boolean);
@@ -1868,11 +2014,6 @@
         let resolvedAvatarUrl = document.getElementById('formAvatar').value.trim();
 
         try {
-          if (finalDepartment && !State.departments.includes(finalDepartment)) {
-            await Service.saveDepartment(finalDepartment);
-            State.departments = await Service.fetchDepartments();
-          }
-
           if (State.photoInputMode === 'upload' && State.selectedAvatarFile) {
             const uploadedUrl = await Service.uploadAvatar(State.selectedAvatarFile);
             if (uploadedUrl) {
@@ -1887,12 +2028,14 @@
             name: document.getElementById('formName').value.trim(),
             nickname: resolvedNickname,
             role: document.getElementById('formRole').value.trim(),
-            department: finalDepartment,
+            department: primaryDept,
+            departments: selectedDepts,
             nip_nuptk: document.getElementById('formNip').value.trim() || '-',
             education: document.getElementById('formEducation').value.trim() || 'S1',
             avatar_url: resolvedAvatarUrl,
             bio: document.getElementById('formBio').value.trim(),
             skills: skillsArray,
+            address: document.getElementById('formAddress').value.trim(),
             email: document.getElementById('formEmail').value.trim(),
             phone: document.getElementById('formPhone').value.trim()
           };
@@ -1918,37 +2061,6 @@
           }
         }
       });
-
-      const deptSelect = document.getElementById('formDepartment');
-      const customDeptInput = document.getElementById('formCustomDepartment');
-      const btnToggleCustomDept = document.getElementById('btnToggleCustomDept');
-
-      if (deptSelect && customDeptInput) {
-        deptSelect.addEventListener('change', () => {
-          if (deptSelect.value === '__custom__') {
-            customDeptInput.classList.remove('hidden');
-            customDeptInput.focus();
-          } else {
-            customDeptInput.classList.add('hidden');
-          }
-        });
-      }
-
-      if (btnToggleCustomDept && customDeptInput && deptSelect) {
-        btnToggleCustomDept.addEventListener('click', () => {
-          const isHidden = customDeptInput.classList.contains('hidden');
-          if (isHidden) {
-            customDeptInput.classList.remove('hidden');
-            deptSelect.value = '__custom__';
-            customDeptInput.focus();
-          } else {
-            customDeptInput.classList.add('hidden');
-            if (deptSelect.value === '__custom__') {
-              deptSelect.value = 'Yayasan';
-            }
-          }
-        });
-      }
 
       document.getElementById('cardsViewport').addEventListener('click', (e) => {
         const emailBtn = e.target.closest('.btn-copy-email');
