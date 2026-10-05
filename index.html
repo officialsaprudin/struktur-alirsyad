@@ -1420,9 +1420,11 @@
                              alt="${item.name}" 
                              onerror="this.src='https://placehold.co/400x600/0f766e/ffffff?text=${encodeURIComponent(item.name)}'"
                              class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500 ease-out select-none">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent pointer-events-none"></div>
                       </div>
-                      <span class="absolute top-1 left-1 flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-teal-950/90 border border-amber-400/50 text-[8px] sm:text-[9px] text-amber-300 font-mono font-bold shadow">
-                        ${item.education || 'Pendidik'}
+                      <span class="absolute bottom-1.5 left-1/2 -translate-x-1/2 flex items-center justify-center gap-1 px-1.5 py-0.5 rounded-full bg-teal-950/90 backdrop-blur-md border border-amber-400/60 text-[8px] sm:text-[9px] text-amber-300 font-mono font-bold shadow max-w-[94%] truncate" title="${item.education || 'Pendidik'}">
+                        <span class="w-1 h-1 rounded-full bg-amber-400 flex-shrink-0"></span>
+                        <span class="truncate">${item.education || 'Pendidik'}</span>
                       </span>
                     </div>
 
@@ -1567,11 +1569,11 @@
                          alt="${item.name}" 
                          onerror="this.src='https://placehold.co/400x600/0f766e/ffffff?text=${encodeURIComponent(item.name)}'"
                          class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700 ease-out select-none">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent sm:hidden"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent pointer-events-none"></div>
                   </div>
-                  <span class="absolute top-2 left-2 flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-teal-950/90 backdrop-blur-md border border-amber-400/50 text-[9px] sm:text-[10px] text-amber-300 font-mono font-bold shadow-md">
-                    <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
-                    ${item.education || 'Pendidik'}
+                  <span class="absolute bottom-2 left-1/2 -translate-x-1/2 flex items-center justify-center gap-1.5 px-2.5 py-0.5 rounded-full bg-teal-950/90 backdrop-blur-md border border-amber-400/60 text-[9px] sm:text-[10px] text-amber-300 font-mono font-bold shadow-md max-w-[92%] truncate" title="${item.education || 'Pendidik'}">
+                    <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse flex-shrink-0"></span>
+                    <span class="truncate">${item.education || 'Pendidik'}</span>
                   </span>
                 </div>
 
