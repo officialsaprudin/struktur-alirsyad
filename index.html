@@ -58,7 +58,7 @@
     :root {
       --card-scale: 1;
       --card-base-w: 960px;
-      --card-base-h: 520px;
+      --card-base-h: 530px;
     }
 
     /* 3D Showcase Perspective Box */
@@ -66,15 +66,19 @@
       perspective: 1600px;
     }
 
-    /* Smooth Gradient Masking to avoid cut-off edges on left and right */
+    /* Gradient Masking to avoid cut-off edges on left and right */
     .stage-viewport-mask {
       -webkit-mask-image: linear-gradient(to right, transparent 0%, black 7%, black 93%, transparent 100%);
       mask-image: linear-gradient(to right, transparent 0%, black 7%, black 93%, transparent 100%);
     }
 
+    /* Profile Card 3D Styling with Centering */
     .profile-card {
+      position: absolute;
+      top: 50%;
+      left: 50%;
       width: var(--card-base-w, 960px);
-      max-width: 96vw;
+      max-width: 95vw;
       transform-origin: center center;
       transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), 
                   opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), 
@@ -84,7 +88,7 @@
     }
 
     .card-prev {
-      transform: translateX(-56%) scale(calc(var(--card-scale, 1) * 0.78)) rotateY(20deg) translateZ(-80px);
+      transform: translate(-50%, -50%) translateX(-54%) scale(calc(var(--card-scale, 1) * 0.78)) rotateY(20deg) translateZ(-80px);
       opacity: 0.16;
       filter: blur(5px);
       pointer-events: none;
@@ -92,15 +96,15 @@
     }
 
     .card-active {
-      transform: translateX(0) scale(var(--card-scale, 1)) rotateY(0deg) translateZ(0);
+      transform: translate(-50%, -50%) scale(var(--card-scale, 1)) rotateY(0deg) translateZ(0);
       opacity: 1;
       filter: blur(0px);
       z-index: 30;
-      box-shadow: 0 30px 60px -12px rgba(13, 148, 136, 0.40), 0 10px 25px rgba(0, 0, 0, 0.30);
+      box-shadow: 0 30px 60px -12px rgba(13, 148, 136, 0.38), 0 10px 25px rgba(0, 0, 0, 0.32);
     }
 
     .card-next {
-      transform: translateX(56%) scale(calc(var(--card-scale, 1) * 0.78)) rotateY(-20deg) translateZ(-80px);
+      transform: translate(-50%, -50%) translateX(54%) scale(calc(var(--card-scale, 1) * 0.78)) rotateY(-20deg) translateZ(-80px);
       opacity: 0.16;
       filter: blur(5px);
       pointer-events: none;
@@ -108,29 +112,29 @@
     }
 
     .card-hidden {
-      transform: scale(calc(var(--card-scale, 1) * 0.55)) translateY(60px) translateZ(-100px);
+      transform: translate(-50%, -50%) scale(calc(var(--card-scale, 1) * 0.55)) translateY(60px) translateZ(-100px);
       opacity: 0;
       pointer-events: none;
       z-index: 0;
     }
 
-    /* Bright Tosca-White Card Theme with High Contrast Typography */
+    /* Bright Tosca-White Card Theme */
     .card-light-theme {
       background: linear-gradient(145deg, #ffffff 0%, #f0fdfa 42%, #ccfbf1 100%);
       border: 2px solid rgba(20, 184, 166, 0.55);
       box-shadow: 0 25px 50px -12px rgba(13, 148, 136, 0.28), 0 0 0 1px rgba(255, 255, 255, 0.95) inset;
     }
 
-    /* Emerald & Obsidian Glass Background */
+    /* Glass Panels */
     .glass-panel {
-      background: rgba(3, 20, 14, 0.88);
+      background: rgba(3, 20, 14, 0.90);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border: 1px solid rgba(16, 185, 129, 0.22);
     }
 
     .glass-subtle {
-      background: rgba(6, 32, 22, 0.68);
+      background: rgba(6, 32, 22, 0.72);
       backdrop-filter: blur(14px);
       border: 1px solid rgba(16, 185, 129, 0.16);
     }
@@ -201,7 +205,6 @@
     <span>Klik di mana saja untuk mengunci Layar Penuh Otomatis</span>
   </div>
 
-  <!-- TOP FLOATING HEADER & ALLOCATION TIMELINE -->
   <header class="hud-element relative z-40 w-full px-3 sm:px-6 lg:px-8 pt-5 sm:pt-6 pb-1.5 flex-shrink-0 flex flex-col gap-1.5">
     
     <!-- Linimasa Alokasi Transisi Setiap Kartu -->
@@ -640,7 +643,8 @@
         address: "Jl. Veteran No. 45, Banjarmasin",
         email: "kepala@mialirsyad.sch.id",
         phone: "081234567890",
-        order_priority: 1
+        order_priority: 1,
+        display_duration: 6
       },
       {
         id: "mock-2",
@@ -657,7 +661,8 @@
         address: "Jl. Sulawesi No. 15, Banjarmasin",
         email: "kurikulum@mialirsyad.sch.id",
         phone: "081345678901",
-        order_priority: 2
+        order_priority: 2,
+        display_duration: 5
       },
       {
         id: "mock-3",
@@ -674,7 +679,8 @@
         address: "Jl. Melati No. 8, Banjarmasin",
         email: "kesiswaan@mialirsyad.sch.id",
         phone: "081298765432",
-        order_priority: 3
+        order_priority: 3,
+        display_duration: 5
       },
       {
         id: "mock-4",
@@ -691,7 +697,8 @@
         address: "Jl. Pramuka Gg. Melati No. 12",
         email: "tu@mialirsyad.sch.id",
         phone: "082155667788",
-        order_priority: 4
+        order_priority: 4,
+        display_duration: 5
       }
     ];
 
@@ -965,32 +972,36 @@
                      (window.innerWidth >= 1280 && window.innerHeight >= 720 && !('ontouchstart' in window) && !navigator.maxTouchPoints);
 
         let baseW = 960;
-        let baseH = 520;
+        let baseH = 530;
 
         if (isMobile) {
           baseW = Math.min(availW - 14, 400);
-          baseH = 560;
+          baseH = 570;
         } else {
           const activeSlide = State.slides && State.slides[State.currentIndex];
           if (activeSlide && activeSlide.type === 'pair') {
             baseW = Math.min(availW * 0.94, 1100);
-            baseH = 540;
+            baseH = 550;
           } else {
             baseW = Math.min(availW * 0.88, 960);
-            baseH = 520;
+            baseH = 530;
           }
         }
 
-        const scaleX = (availW * (isMobile ? 0.98 : 0.92)) / baseW;
-        const scaleY = (availH * (isMobile ? 0.98 : 0.92)) / baseH;
+        // TV Safe Zone: Memberikan vertical buffer agar tidak terpotong overscan TV
+        const horizFactor = isMobile ? 0.98 : (isTV ? 0.88 : 0.92);
+        const vertFactor = isMobile ? 0.98 : (isTV ? 0.83 : 0.89);
+
+        const scaleX = (availW * horizFactor) / baseW;
+        const scaleY = (availH * vertFactor) / baseH;
         let baseScale = Math.min(scaleX, scaleY);
 
         if (isMobile) {
-          baseScale = Math.min(Math.max(baseScale, 0.70), 1.05);
+          baseScale = Math.min(Math.max(baseScale, 0.65), 1.05);
         } else if (isTV) {
-          baseScale = Math.min(Math.max(baseScale, 0.85), 1.75);
+          baseScale = Math.min(Math.max(baseScale, 0.75), 1.55);
         } else {
-          baseScale = Math.min(Math.max(baseScale, 0.72), 1.30);
+          baseScale = Math.min(Math.max(baseScale, 0.68), 1.25);
         }
 
         let finalScale = baseScale;
@@ -1006,7 +1017,7 @@
           finalScale = baseScale; // 'auto'
         }
 
-        finalScale = Math.min(Math.max(finalScale, 0.45), 2.20);
+        finalScale = Math.min(Math.max(finalScale, 0.40), 2.20);
 
         document.documentElement.style.setProperty('--card-scale', finalScale.toFixed(3));
         document.documentElement.style.setProperty('--card-base-w', `${Math.round(baseW)}px`);
@@ -1735,10 +1746,12 @@
           document.getElementById('formNip').value = profile.nip_nuptk || '';
           document.getElementById('formEducation').value = profile.education || '';
           document.getElementById('formAddress').value = profile.address || '';
+          
           const durInput = document.getElementById('formDisplayDuration');
           if (durInput) {
             durInput.value = (profile.display_duration && profile.display_duration > 0) ? profile.display_duration : '';
           }
+
           document.getElementById('formAvatar').value = profile.avatar_url || '';
           document.getElementById('formBio').value = profile.bio || '';
           document.getElementById('formSkills').value = (profile.skills || []).join(', ');
@@ -1751,8 +1764,10 @@
           title.innerHTML = `<i data-lucide="user-plus" class="w-5 h-5 text-emerald-400"></i> <span>Tambah Pengurus / Guru</span>`;
           document.getElementById('formProfileId').value = '';
           document.getElementById('formOrderPriority').value = 0;
+          
           const durInput = document.getElementById('formDisplayDuration');
           if (durInput) durInput.value = '';
+
           checkNickname.checked = false;
           secNickname.classList.add('hidden');
           State.selectedFormDepartments = State.departments.length > 0 ? [State.departments[0]] : ['Umum'];
