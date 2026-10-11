@@ -2804,6 +2804,42 @@
             return;
           }
 
+          const btnReorderUp = e.target.closest('.btn-tier-reorder-up');
+          if (btnReorderUp) {
+            e.stopPropagation();
+            const idx = parseInt(btnReorderUp.dataset.index, 10);
+            if (!isNaN(idx) && idx > 0) {
+              const temp = State.orgTiers[idx];
+              State.orgTiers[idx] = State.orgTiers[idx - 1];
+              State.orgTiers[idx - 1] = temp;
+              if (State.orgTiers[0]) State.orgTiers[0].is_parallel = false;
+              await Service.saveOrgTiers(State.orgTiers);
+              UI.openBaganSettingsModal();
+              UI.filterData();
+              UI.renderStage();
+              showToast(`Tingkatan "${temp.title}" berhasil dinaikkan ke atas`);
+            }
+            return;
+          }
+
+          const btnReorderDown = e.target.closest('.btn-tier-reorder-down');
+          if (btnReorderDown) {
+            e.stopPropagation();
+            const idx = parseInt(btnReorderDown.dataset.index, 10);
+            if (!isNaN(idx) && idx < State.orgTiers.length - 1) {
+              const temp = State.orgTiers[idx];
+              State.orgTiers[idx] = State.orgTiers[idx + 1];
+              State.orgTiers[idx + 1] = temp;
+              if (State.orgTiers[0]) State.orgTiers[0].is_parallel = false;
+              await Service.saveOrgTiers(State.orgTiers);
+              UI.openBaganSettingsModal();
+              UI.filterData();
+              UI.renderStage();
+              showToast(`Tingkatan "${temp.title}" berhasil diturunkan ke bawah`);
+            }
+            return;
+          }
+
           const btnEditTier = e.target.closest('.btn-tier-edit');
           if (btnEditTier) {
             e.stopPropagation();
