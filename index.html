@@ -1618,8 +1618,8 @@
                     </div>
                     <div class="min-w-0 text-left flex-1">
                       <p class="text-[9px] uppercase tracking-wider text-teal-700 font-extrabold font-mono leading-none">Jabatan / Amanah</p>
-                      <p class="text-xs sm:text-sm font-black text-slate-900 tracking-tight truncate leading-tight mt-0.5">${p.role}</p>
-                      <div class="flex items-center gap-1 mt-1">
+                      <p class="text-xs sm:text-sm font-black text-slate-900 tracking-tight leading-snug mt-0.5 break-words">${p.role}</p>
+                      <div class="flex items-center gap-1 mt-1 flex-wrap">
                         <span class="px-1.5 py-0.2 rounded bg-teal-100 text-teal-950 text-[9px] font-bold border border-teal-300 font-mono">${p.department}</span>
                         ${State.isAdminMode ? '<span class="px-1.5 py-0.2 rounded bg-amber-100 text-amber-900 text-[8px] font-bold border border-amber-300">Sembunyi</span>' : ''}
                       </div>
@@ -1634,9 +1634,9 @@
                        onerror="this.onerror=null; this.src='https://placehold.co/400x600/032014/34d399?text=MI+AL-IRSYAD';"
                        class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl object-cover object-top border border-teal-300 shadow-sm flex-shrink-0" alt="${p.name}">
                   <div class="min-w-0 text-left flex-1">
-                    <p class="text-xs sm:text-sm font-black text-slate-950 tracking-tight truncate leading-tight">${p.name}</p>
-                    <p class="text-[10px] sm:text-[11px] font-extrabold ${roleTextClass} truncate leading-tight mt-0.5">${p.role}</p>
-                    <div class="flex items-center gap-1 mt-1">
+                    <p class="text-xs sm:text-sm font-black text-slate-950 tracking-tight leading-snug break-words">${p.name}</p>
+                    <p class="text-[10px] sm:text-[11px] font-extrabold ${roleTextClass} leading-snug mt-0.5 break-words">${p.role}</p>
+                    <div class="flex items-center gap-1 mt-1 flex-wrap">
                       <span class="px-1.5 py-0.5 rounded bg-teal-100 text-teal-950 text-[9px] font-bold border border-teal-300 font-mono">${p.department}</span>
                     </div>
                   </div>
