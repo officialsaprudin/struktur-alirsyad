@@ -381,6 +381,10 @@
             <div class="flex items-center justify-between mb-1">
               <label class="block text-xs font-semibold text-slate-300">Nama Lengkap & Gelar *</label>
               <div class="flex items-center gap-2.5">
+                <label class="flex items-center gap-1 cursor-pointer text-[11px] text-teal-300 hover:text-teal-200" title="Turunkan kartu ke baris kedua jika bidang terlalu banyak">
+                  <input type="checkbox" id="checkIsLowered" class="rounded bg-[#051e15] border-teal-500/40 text-teal-500 focus:ring-0 w-3.5 h-3.5 cursor-pointer accent-teal-500">
+                  <span>Turunkan?</span>
+                </label>
                 <label class="flex items-center gap-1 cursor-pointer text-[11px] text-amber-300 hover:text-amber-200" title="Sembunyikan kartu ini dari tayangan publik/TV">
                   <input type="checkbox" id="checkIsHidden" class="rounded bg-[#051e15] border-amber-500/40 text-amber-500 focus:ring-0 w-3.5 h-3.5 cursor-pointer accent-amber-500">
                   <span>Sembunyikan?</span>
@@ -621,10 +625,16 @@
           </div>
         </div>
         <div class="flex items-center justify-between pt-1">
-          <label class="flex items-center gap-1.5 cursor-pointer text-xs text-amber-300">
-            <input type="checkbox" id="tierInputParallel" class="rounded bg-[#032014] border-amber-500/40 text-amber-500 w-3.5 h-3.5 accent-amber-500">
-            <span>Posisikan Sejajar dengan Tingkat Sebelumnya</span>
-          </label>
+          <div class="flex items-center gap-3">
+            <label class="flex items-center gap-1.5 cursor-pointer text-xs text-amber-300">
+              <input type="checkbox" id="tierInputParallel" class="rounded bg-[#032014] border-amber-500/40 text-amber-500 w-3.5 h-3.5 accent-amber-500">
+              <span>Posisikan Sejajar</span>
+            </label>
+            <label class="flex items-center gap-1.5 cursor-pointer text-xs text-teal-300" title="Tingkatan Mitra / Konsultatif (contoh: Komite Madrasah). Dihubungkan garis koordinasi ke samping dan TIDAK memiliki garis komando ke bawah.">
+              <input type="checkbox" id="tierInputMitra" class="rounded bg-[#032014] border-teal-500/40 text-teal-500 w-3.5 h-3.5 accent-teal-500">
+              <span>Status Mitra / Konsultatif (Tanpa Garis ke Bawah)</span>
+            </label>
+          </div>
           <button type="button" id="btnSaveTier" class="px-4 py-1.5 rounded-xl bg-teal-600 hover:bg-teal-500 text-white text-xs font-semibold shadow transition">
             <span id="tierSaveBtnLabel">Simpan Tingkatan</span>
           </button>
@@ -677,9 +687,12 @@
   <div id="toastDock" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none max-w-sm"></div>
 
   <script>
-    // SAKELAR LINGKUNGAN PRODUKSI
+    // =========================================================================
+    // SAKELAR LINGKUNGAN PRODUKSI (ZERO-BUILD ARCHITECTURE)
+    // Ubah is_preview = false dan masukkan URL & Anon Key Supabase Anda
+    // =========================================================================
     const is_preview = false;
-    const SUPABASE_URL = "https://ahzexczjwcikxlobqchh.supabase.co";
+    const SUPABASE_URL = "https://ahzexczjwcikxlobqchh.supabase.co"; 
     const SUPABASE_ANON_KEY = "sb_publishable_yG3SzF_f4vgoHCxu02Dm3Q_Z9gEP33c";
 
     function isValidSupabaseUrl(url) {
@@ -712,7 +725,8 @@
         order_priority: 1,
         display_duration: 6,
         org_tier: "yayasan",
-        is_hidden: false
+        is_hidden: false,
+        is_lowered: false
       },
       {
         id: "mock-1",
@@ -732,7 +746,29 @@
         order_priority: 2,
         display_duration: 6,
         org_tier: "pimpinan",
-        is_hidden: false
+        is_hidden: false,
+        is_lowered: false
+      },
+      {
+        id: "mock-komite",
+        name: "H. Muhammad Ridwan, S.E.",
+        nickname: "Pak Haji Ridwan",
+        role: "Ketua Komite Madrasah",
+        department: "Komite",
+        departments: ["Komite"],
+        nip_nuptk: "-",
+        education: "S1 Manajemen Ekonomi",
+        avatar_url: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=800&q=80",
+        bio: "Membangun kemitraan strategis antara wali santri, masyarakat, dan madrasah dalam peningkatan mutu pendidikan.",
+        skills: ["Kemitraan", "Aspirasi Wali", "Pertimbangan Kebijakan"],
+        address: "Jl. Melati Indah No. 10",
+        email: "komite@mialirsyad.sch.id",
+        phone: "081299887766",
+        order_priority: 3,
+        display_duration: 5,
+        org_tier: "komite",
+        is_hidden: false,
+        is_lowered: false
       },
       {
         id: "mock-4",
@@ -749,10 +785,11 @@
         address: "Jl. Pramuka Gg. Melati No. 12",
         email: "tu@mialirsyad.sch.id",
         phone: "082155667788",
-        order_priority: 3,
+        order_priority: 4,
         display_duration: 5,
         org_tier: "tu",
-        is_hidden: false
+        is_hidden: false,
+        is_lowered: false
       },
       {
         id: "mock-2",
@@ -769,10 +806,11 @@
         address: "Jl. Sulawesi No. 15, Banjarmasin",
         email: "kurikulum@mialirsyad.sch.id",
         phone: "081345678901",
-        order_priority: 4,
+        order_priority: 5,
         display_duration: 5,
         org_tier: "wakamad",
-        is_hidden: false
+        is_hidden: false,
+        is_lowered: false
       },
       {
         id: "mock-3",
@@ -789,10 +827,11 @@
         address: "Jl. Melati No. 8, Banjarmasin",
         email: "kesiswaan@mialirsyad.sch.id",
         phone: "081298765432",
-        order_priority: 5,
+        order_priority: 6,
         display_duration: 5,
         org_tier: "wakamad",
-        is_hidden: false
+        is_hidden: false,
+        is_lowered: true
       },
       {
         id: "mock-5",
@@ -809,20 +848,21 @@
         address: "Jl. Cempaka Putih No. 3",
         email: "fathur@mialirsyad.sch.id",
         phone: "081233445566",
-        order_priority: 6,
+        order_priority: 7,
         display_duration: 5,
         org_tier: "guru",
-        is_hidden: false
+        is_hidden: false,
+        is_lowered: false
       }
     ];
 
-    // Tata Kelola Baku Hierarki (Wakamad secara baku SEJAJAR dengan Tata Usaha)
     const DEFAULT_ORG_TIERS = [
-      { id: 'yayasan', title: 'Yayasan / Pembina', badgeClass: 'bg-amber-600', borderColor: 'border-amber-500', roleColor: 'text-amber-800', is_parallel: false },
-      { id: 'pimpinan', title: 'Kepala Madrasah', badgeClass: 'bg-emerald-700', borderColor: 'border-emerald-500', roleColor: 'text-emerald-800', is_parallel: false },
-      { id: 'tu', title: 'Tata Usaha & IT', badgeClass: 'bg-teal-700', borderColor: 'border-teal-500', roleColor: 'text-teal-800', is_parallel: false },
-      { id: 'wakamad', title: 'Wakamad & Bidang Urusan', badgeClass: 'bg-teal-800', borderColor: 'border-teal-600', roleColor: 'text-teal-900', is_parallel: true },
-      { id: 'guru', title: 'Dewan Guru & Tenaga Pendidik', badgeClass: 'bg-slate-800', borderColor: 'border-slate-500', roleColor: 'text-slate-800', is_parallel: false }
+      { id: 'yayasan', title: 'Yayasan / Pembina', badgeClass: 'bg-amber-600', borderColor: 'border-amber-500', roleColor: 'text-amber-800', is_parallel: false, is_mitra: false },
+      { id: 'pimpinan', title: 'Kepala Madrasah', badgeClass: 'bg-emerald-700', borderColor: 'border-emerald-500', roleColor: 'text-emerald-800', is_parallel: false, is_mitra: false },
+      { id: 'komite', title: 'Komite Madrasah', badgeClass: 'bg-amber-700', borderColor: 'border-amber-600', roleColor: 'text-amber-900', is_parallel: true, is_mitra: true },
+      { id: 'tu', title: 'Tata Usaha & IT', badgeClass: 'bg-teal-700', borderColor: 'border-teal-500', roleColor: 'text-teal-800', is_parallel: false, is_mitra: false },
+      { id: 'wakamad', title: 'Wakamad & Bidang Urusan', badgeClass: 'bg-teal-800', borderColor: 'border-teal-600', roleColor: 'text-teal-900', is_parallel: true, is_mitra: false },
+      { id: 'guru', title: 'Dewan Guru & Tenaga Pendidik', badgeClass: 'bg-slate-800', borderColor: 'border-slate-500', roleColor: 'text-slate-800', is_parallel: false, is_mitra: false }
     ];
 
     const SafeStorage = {
@@ -1065,7 +1105,8 @@
             badgeClass: t.badge_class || 'bg-teal-700',
             borderColor: t.border_color || 'border-teal-500',
             roleColor: t.role_color || 'text-teal-800',
-            is_parallel: Boolean(t.is_parallel)
+            is_parallel: Boolean(t.is_parallel),
+            is_mitra: Boolean(t.is_mitra)
           }));
         } catch (err) {
           return [...DEFAULT_ORG_TIERS];
@@ -1085,6 +1126,7 @@
               border_color: t.borderColor,
               role_color: t.roleColor,
               is_parallel: Boolean(t.is_parallel),
+              is_mitra: Boolean(t.is_mitra),
               order_index: idx + 1
             }));
             await supabaseClient.from('org_tiers').upsert(records, { onConflict: 'tier_key' });
@@ -1303,7 +1345,6 @@
       showToast(`Email: ${text}`, "success");
     }
 
-    // Helper untuk mengelompokkan tingkatan yang berstatus SEJAJAR (Parallel)
     function groupTiersIntoHierarchyRows(tiersList) {
       const rows = [];
       let i = 0;
@@ -1460,7 +1501,7 @@
           });
         }
 
-        // Pimpinan / Yayasan / Kepala Madrasah SELALU 1 ORANG PER KARTU (Single Card)
+        // Dewan Pembina & Kepala Madrasah SELALU dipisah 1 kartu per orang (Single Card)
         const isLeadershipTier = (deptName, memberList) => {
           const d = (deptName || '').toLowerCase();
           const isDeptLeader = d.includes('yayasan') || d.includes('pembina') || d.includes('pimpinan') || d.includes('kepala');
@@ -1666,81 +1707,120 @@
             const hierarchyRows = groupTiersIntoHierarchyRows(currentTiers);
 
             const renderedHierarchyHtml = hierarchyRows.map((row, rIdx) => {
+              // KASUS 1: BARIS TUNGGAL BIASA
               if (row.length === 1) {
                 const singleTier = row[0];
                 return `
                   ${renderSingleTierBlock(singleTier)}
                   ${rIdx < hierarchyRows.length - 1 ? '<div class="bagan-tree-connector-v h-7 sm:h-9 flex-shrink-0 relative z-10"></div>' : ''}
                 `;
-              } else {
-                const n = row.length;
+              }
 
-                const columnsHtml = row.map((tier, cIdx) => {
-                  const tierMembers = State.profiles.filter(p => (p.org_tier || 'guru') === tier.id);
+              // KASUS 2: BARIS KEPALA MADRASAH + MITRA (KOMITE MADRASAH)
+              // Kepala Madrasah tepat di sumbu tengah, Komite di kanan dengan garis koordinasi murni
+              const hasMitraTier = row.some(t => t.is_mitra);
+              if (hasMitraTier) {
+                const leaderTier = row.find(t => !t.is_mitra) || row[0];
+                const mitraTier = row.find(t => t.is_mitra);
 
-                  // Segmen bus horizontal atas (edge-to-edge mulus tanpa celah)
-                  let topBusLineStyle = '';
-                  if (cIdx === 0) {
-                    topBusLineStyle = '<div class="absolute top-0 right-0 left-1/2 h-[2.5px] bg-[#0d9488] z-0"></div>';
-                  } else if (cIdx === n - 1) {
-                    topBusLineStyle = '<div class="absolute top-0 left-0 right-1/2 h-[2.5px] bg-[#0d9488] z-0"></div>';
-                  } else {
-                    topBusLineStyle = '<div class="absolute top-0 left-0 right-0 h-[2.5px] bg-[#0d9488] z-0"></div>';
-                  }
-
-                  // Segmen bus horizontal bawah (edge-to-edge mulus tanpa celah)
-                  let bottomBusLineStyle = '';
-                  if (cIdx === 0) {
-                    bottomBusLineStyle = '<div class="absolute bottom-0 right-0 left-1/2 h-[2.5px] bg-[#0d9488] z-0"></div>';
-                  } else if (cIdx === n - 1) {
-                    bottomBusLineStyle = '<div class="absolute bottom-0 left-0 right-1/2 h-[2.5px] bg-[#0d9488] z-0"></div>';
-                  } else {
-                    bottomBusLineStyle = '<div class="absolute bottom-0 left-0 right-0 h-[2.5px] bg-[#0d9488] z-0"></div>';
-                  }
-                  
-                  return `
-                    <div class="w-[245px] sm:w-[265px] md:w-[275px] flex-shrink-0 flex flex-col items-center h-full relative px-1.5 sm:px-2.5">
-                      <!-- 1. Bus Horizontal Atas Segmen Kolom Ini -->
-                      ${topBusLineStyle}
-
-                      <!-- 2. Cabang Vertikal Turun Menuju Lencana & Kartu -->
-                      <div class="bagan-tree-connector-v h-5 flex-shrink-0 relative z-10"></div>
-
-                      <!-- 3. Lencana Tingkatan Sejajar Sumbu Kolom -->
-                      <div class="px-3.5 py-1 rounded-full ${tier.badgeClass} text-white text-[10px] sm:text-xs font-black shadow-md uppercase tracking-wider flex items-center gap-1 my-1 flex-shrink-0 z-10">
-                        <i data-lucide="layers" class="w-3.5 h-3.5"></i>
-                        <span>${tier.title}</span>
-                      </div>
-
-                      <!-- 4. Konektor Vertikal ke Kartu -->
-                      <div class="bagan-tree-connector-v h-2.5 flex-shrink-0"></div>
-
-                      <!-- 5. Daftar Kartu Anggota Kolom (Tersusun Bebas Tumpang Tindih) -->
-                      <div class="flex flex-col items-center justify-start gap-2.5 w-full">
-                        ${tierMembers.length > 0 
-                          ? tierMembers.map(p => renderBaganNode(p, tier.borderColor, tier.roleColor)).join('<div class="bagan-tree-connector-v h-2.5 flex-shrink-0"></div>') 
-                          : '<p class="text-[10px] text-teal-400/60 italic py-0.5">Belum ada pengurus</p>'}
-                      </div>
-
-                      <!-- 6. Garis Vertikal Adaptif (Mengisi Selisih Tinggi Antar-Kolom) -->
-                      <div class="bagan-tree-connector-v flex-1 min-h-[16px]"></div>
-
-                      <!-- 7. Cabang Vertikal Turun Menuju Bus Bawah -->
-                      <div class="bagan-tree-connector-v h-5 flex-shrink-0 relative z-10"></div>
-
-                      <!-- 8. Bus Horizontal Bawah Segmen Kolom Ini -->
-                      ${bottomBusLineStyle}
-                    </div>
-                  `;
-                }).join('');
+                const leaderMembers = State.profiles.filter(p => (p.org_tier || 'guru') === leaderTier.id);
+                const mitraMembers = State.profiles.filter(p => (p.org_tier || 'guru') === mitraTier.id);
 
                 return `
-                  <div class="w-fit min-w-min max-w-full relative flex items-stretch justify-center mx-auto overflow-x-visible">
-                    ${columnsHtml}
+                  <div class="w-fit min-w-min max-w-full relative flex items-center justify-center mx-auto overflow-x-visible py-1">
+                    <!-- Sisi Kiri Penyeimbang: Memastikan Kepala Madrasah Tepat di Tengah Sumbu Vertikal Pohon -->
+                    <div class="w-[272px] sm:w-[311px] md:w-[319px] flex-shrink-0 pointer-events-none opacity-0" aria-hidden="true"></div>
+
+                    <!-- 1. Kolom Pimpinan Utama: KEPALA MADRASAH (Tepat 100% di Sumbu Vertikal Tengah) -->
+                    <div class="flex flex-col items-center flex-shrink-0 relative z-10 w-[240px] sm:w-[255px]">
+                      <div class="px-3.5 py-1 rounded-full ${leaderTier.badgeClass} text-white text-[10px] sm:text-xs font-black shadow-md uppercase tracking-wider flex items-center gap-1 mb-1.5 flex-shrink-0">
+                        <i data-lucide="layers" class="w-3.5 h-3.5"></i>
+                        <span>${leaderTier.title}</span>
+                      </div>
+                      <div class="flex flex-wrap items-center justify-center gap-2.5 w-full">
+                        ${leaderMembers.length > 0 
+                          ? leaderMembers.map(p => renderBaganNode(p, leaderTier.borderColor, leaderTier.roleColor)).join('') 
+                          : '<p class="text-[10px] text-teal-400/60 italic py-0.5">Belum ada pengurus</p>'}
+                      </div>
+                    </div>
+
+                    <!-- 2. Garis Koordinasi Horizontal Murni (Polos, Tanpa Tulisan Mitra) -->
+                    <div class="w-8 sm:w-14 md:w-16 h-[2.5px] bg-[#0d9488] flex-shrink-0"></div>
+
+                    <!-- 3. Kolom Mitra: KOMITE MADRASAH (Di Samping Kanan, MUTLAK Tanpa Garis ke Bawah) -->
+                    <div class="flex flex-col items-center flex-shrink-0 relative z-10 w-[240px] sm:w-[255px]">
+                      <div class="px-3.5 py-1 rounded-full ${mitraTier.badgeClass} text-white text-[10px] sm:text-xs font-black shadow-md uppercase tracking-wider flex items-center gap-1 mb-1.5 flex-shrink-0">
+                        <i data-lucide="handshake" class="w-3.5 h-3.5"></i>
+                        <span>${mitraTier.title}</span>
+                      </div>
+                      <div class="flex flex-wrap items-center justify-center gap-2.5 w-full">
+                        ${mitraMembers.length > 0 
+                          ? mitraMembers.map(p => renderBaganNode(p, mitraTier.borderColor, mitraTier.roleColor)).join('') 
+                          : '<p class="text-[10px] text-teal-400/60 italic py-0.5">Belum ada komite</p>'}
+                      </div>
+                    </div>
                   </div>
+                  <!-- Garis Komando Lurus ke Bawah HANYA Turun Dari Kepala Madrasah Ke Tingkat Berikutnya -->
                   ${rIdx < hierarchyRows.length - 1 ? '<div class="bagan-tree-connector-v h-7 sm:h-9 flex-shrink-0 relative z-10"></div>' : ''}
                 `;
               }
+
+              // KASUS 3: BARIS TINGKATAN OPERASIONAL SEJAJAR (Tata Usaha & Wakamad / Urusan Staggered)
+              const n = row.length;
+              const leftOffset = (100 / (2 * n)).toFixed(2);
+              const topBusLine = `<div class="absolute top-0 h-[2.5px] bg-[#0d9488] z-0" style="left: calc(${leftOffset}%); right: calc(${leftOffset}%);"></div>`;
+
+              const columnsHtml = row.map((tier) => {
+                const tierMembers = State.profiles.filter(p => (p.org_tier || 'guru') === tier.id);
+                const normalMembers = tierMembers.filter(m => !m.is_lowered);
+                const loweredMembers = tierMembers.filter(m => m.is_lowered);
+
+                return `
+                  <div class="w-[245px] sm:w-[265px] md:w-[275px] flex-shrink-0 flex flex-col items-center h-full relative px-1.5 sm:px-2.5">
+                    <!-- Cabang Vertikal Turun Menuju Lencana & Kartu -->
+                    <div class="bagan-tree-connector-v h-5 flex-shrink-0 relative z-10"></div>
+
+                    <!-- Lencana Tingkatan Sejajar Sumbu Kolom -->
+                    <div class="px-3.5 py-1 rounded-full ${tier.badgeClass} text-white text-[10px] sm:text-xs font-black shadow-md uppercase tracking-wider flex items-center gap-1 my-1 flex-shrink-0 z-10">
+                      <i data-lucide="layers" class="w-3.5 h-3.5"></i>
+                      <span>${tier.title}</span>
+                    </div>
+
+                    <!-- Konektor Vertikal ke Kartu Normal (Baris 1) -->
+                    <div class="bagan-tree-connector-v h-2.5 flex-shrink-0"></div>
+
+                    <!-- Kartu Anggota Baris 1 (Atas) -->
+                    <div class="flex flex-col items-center justify-start gap-2.5 w-full">
+                      ${normalMembers.length > 0 
+                        ? normalMembers.map(p => renderBaganNode(p, tier.borderColor, tier.roleColor)).join('<div class="bagan-tree-connector-v h-2.5 flex-shrink-0"></div>') 
+                        : (loweredMembers.length === 0 ? '<p class="text-[10px] text-teal-400/60 italic py-0.5">Belum ada pengurus</p>' : '')}
+                    </div>
+
+                    <!-- Kartu Anggota Baris 2 (Diturunkan / Staggered) dengan Garis Sambung Vertikal -->
+                    ${loweredMembers.length > 0 ? `
+                      <div class="bagan-tree-connector-v h-6 flex-shrink-0"></div>
+                      <div class="flex flex-col items-center justify-start gap-2.5 w-full pt-1">
+                        ${loweredMembers.map(p => renderBaganNode(p, tier.borderColor, tier.roleColor)).join('<div class="bagan-tree-connector-v h-2.5 flex-shrink-0"></div>')}
+                      </div>
+                    ` : ''}
+                  </div>
+                `;
+              }).join('');
+
+              return `
+                <div class="w-fit min-w-min max-w-full relative flex items-start justify-center mx-auto overflow-x-visible">
+                  <!-- Garis Komando Pusat Dari Kepala Madrasah Terus Turun ke Bawah -->
+                  <div class="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-[2.5px] bg-[#0d9488] z-0"></div>
+
+                  <!-- Garis Bus Cabang Horizontal Atas (Membagi ke TU & Wakamad) -->
+                  ${topBusLine}
+
+                  <!-- Kolom Tingkatan Sejajar (Bawahnya Bersih, TIDAK Menghubungkan Garis ke Guru) -->
+                  ${columnsHtml}
+                </div>
+                <!-- Garis Komando Sumbu Tengah Mengalir Terus ke Tingkat Bawah (Dewan Guru) -->
+                ${rIdx < hierarchyRows.length - 1 ? '<div class="bagan-tree-connector-v h-7 sm:h-9 flex-shrink-0 relative z-10"></div>' : ''}
+              `;
             }).join('');
 
             return `
@@ -2114,6 +2194,7 @@
         const checkNickname = document.getElementById('checkHasNickname');
         const secNickname = document.getElementById('sectionNickname');
         const checkIsHidden = document.getElementById('checkIsHidden');
+        const checkIsLowered = document.getElementById('checkIsLowered');
         const selectOrgTier = document.getElementById('formOrgTier');
 
         if (selectOrgTier) {
@@ -2138,6 +2219,7 @@
           document.getElementById('formRole').value = profile.role;
           
           if (checkIsHidden) checkIsHidden.checked = Boolean(profile.is_hidden);
+          if (checkIsLowered) checkIsLowered.checked = Boolean(profile.is_lowered);
 
           if (profile.nickname) {
             checkNickname.checked = true;
@@ -2179,6 +2261,7 @@
             else selectOrgTier.selectedIndex = 0;
           }
           if (checkIsHidden) checkIsHidden.checked = false;
+          if (checkIsLowered) checkIsLowered.checked = false;
 
           const durInput = document.getElementById('formDisplayDuration');
           if (durInput) durInput.value = '';
@@ -2334,6 +2417,11 @@
                       </div>
                     </div>
                     <div class="flex items-center gap-0.5 flex-shrink-0 ml-1.5">
+                      <button type="button" class="btn-tier-member-toggle-lowered px-1.5 py-0.5 text-[9px] font-mono font-bold rounded border transition ${
+                        p.is_lowered ? 'bg-teal-700 text-white border-teal-400' : 'bg-black/60 text-slate-400 border-white/10 hover:text-white'
+                      }" data-id="${p.id}" title="${p.is_lowered ? 'Kembalikan ke Baris Atas' : 'Turunkan ke Baris Bawah'}">
+                        ${p.is_lowered ? 'Bawah' : 'Atas'}
+                      </button>
                       <button type="button" class="btn-tier-member-edit p-1 hover:bg-amber-900/60 rounded text-amber-300 hover:text-amber-200 transition" data-id="${p.id}" title="Edit Data & Bidang Aparatur Ini">
                         <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
                       </button>
@@ -2621,6 +2709,7 @@
       const tierInputTitle = document.getElementById('tierInputTitle');
       const tierInputColor = document.getElementById('tierInputColor');
       const tierInputParallel = document.getElementById('tierInputParallel');
+      const tierInputMitra = document.getElementById('tierInputMitra');
       const editTierId = document.getElementById('editTierId');
       const btnCancelTierEdit = document.getElementById('btnCancelTierEdit');
       const btnSaveTier = document.getElementById('btnSaveTier');
@@ -2642,6 +2731,7 @@
           tierInputTitle.value = '';
           tierInputColor.value = 'teal';
           if (tierInputParallel) tierInputParallel.checked = false;
+          if (tierInputMitra) tierInputMitra.checked = false;
           tierEditorTitle.innerHTML = `<i data-lucide="plus-circle" class="w-3.5 h-3.5 text-teal-400"></i> Tambah Tingkatan Baru`;
           tierSaveBtnLabel.textContent = 'Tambah Tingkatan';
           tierEditorContainer.classList.remove('hidden');
@@ -2660,6 +2750,7 @@
           const colorKey = tierInputColor.value || 'teal';
           const style = colorPaletteMap[colorKey] || colorPaletteMap.teal;
           const isParallel = Boolean(tierInputParallel?.checked);
+          const isMitra = Boolean(tierInputMitra?.checked);
           const editingId = editTierId.value;
 
           let tiers = [...State.orgTiers];
@@ -2672,6 +2763,7 @@
               target.borderColor = style.border;
               target.roleColor = style.role;
               target.is_parallel = isParallel;
+              target.is_mitra = isMitra;
             }
             showToast(`Tingkatan "${title}" berhasil diperbarui`);
           } else {
@@ -2682,7 +2774,8 @@
               badgeClass: style.badge,
               borderColor: style.border,
               roleColor: style.role,
-              is_parallel: isParallel
+              is_parallel: isParallel,
+              is_mitra: isMitra
             });
             showToast(`Tingkatan baru "${title}" berhasil ditambahkan`);
           }
@@ -2711,34 +2804,6 @@
             return;
           }
 
-          const reorderUp = e.target.closest('.btn-tier-reorder-up');
-          if (reorderUp) {
-            e.stopPropagation();
-            const idx = parseInt(reorderUp.dataset.index, 10);
-            if (idx > 0) {
-              const temp = State.orgTiers[idx];
-              State.orgTiers[idx] = State.orgTiers[idx - 1];
-              State.orgTiers[idx - 1] = temp;
-              await Service.saveOrgTiers(State.orgTiers);
-              UI.openBaganSettingsModal();
-            }
-            return;
-          }
-
-          const reorderDown = e.target.closest('.btn-tier-reorder-down');
-          if (reorderDown) {
-            e.stopPropagation();
-            const idx = parseInt(reorderDown.dataset.index, 10);
-            if (idx < State.orgTiers.length - 1) {
-              const temp = State.orgTiers[idx];
-              State.orgTiers[idx] = State.orgTiers[idx + 1];
-              State.orgTiers[idx + 1] = temp;
-              await Service.saveOrgTiers(State.orgTiers);
-              UI.openBaganSettingsModal();
-            }
-            return;
-          }
-
           const btnEditTier = e.target.closest('.btn-tier-edit');
           if (btnEditTier) {
             e.stopPropagation();
@@ -2748,6 +2813,7 @@
               editTierId.value = targetTier.id;
               tierInputTitle.value = targetTier.title;
               if (tierInputParallel) tierInputParallel.checked = Boolean(targetTier.is_parallel);
+              if (tierInputMitra) tierInputMitra.checked = Boolean(targetTier.is_mitra);
               
               let foundColor = 'teal';
               for (const [key, val] of Object.entries(colorPaletteMap)) {
@@ -2802,6 +2868,23 @@
             const target = State.profiles.find(p => p.id === editMember.dataset.id);
             if (target) {
               UI.openModal(true, target);
+            }
+            return;
+          }
+
+          const toggleLoweredMember = e.target.closest('.btn-tier-member-toggle-lowered');
+          if (toggleLoweredMember) {
+            e.stopPropagation();
+            const id = toggleLoweredMember.dataset.id;
+            const target = State.profiles.find(p => p.id === id);
+            if (target) {
+              target.is_lowered = !target.is_lowered;
+              await Service.saveProfile(target, true);
+              State.profiles = await Service.fetchProfiles();
+              UI.openBaganSettingsModal();
+              UI.filterData();
+              UI.renderStage();
+              showToast(target.is_lowered ? `Posisi ${target.name} diturunkan ke Baris 2 (Sejajar)` : `Posisi ${target.name} dikembalikan ke Baris 1 (Atas)`);
             }
             return;
           }
@@ -3074,6 +3157,7 @@
             address: document.getElementById('formAddress').value.trim() || null,
             display_duration: resolvedDisplayDuration,
             is_hidden: Boolean(document.getElementById('checkIsHidden')?.checked),
+            is_lowered: Boolean(document.getElementById('checkIsLowered')?.checked),
             avatar_url: resolvedAvatarUrl,
             bio: document.getElementById('formBio').value.trim(),
             skills: skillsArray,
