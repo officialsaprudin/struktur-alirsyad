@@ -729,7 +729,7 @@
     const is_preview = false;
     const SUPABASE_URL = "https://ahzexczjwcikxlobqchh.supabase.co"; 
     const SUPABASE_ANON_KEY = "sb_publishable_yG3SzF_f4vgoHCxu02Dm3Q_Z9gEP33c";
-
+    
     function isValidSupabaseUrl(url) {
       if (!url) return false;
       if (url.includes("your-supabase-project") || url.includes("...")) return false;
@@ -2092,12 +2092,12 @@
           `).join('');
 
           return `
-            <div class="profile-card absolute card-light-theme rounded-2xl sm:rounded-3xl p-3.5 sm:p-5 md:p-6 shadow-2xl flex flex-col justify-between ${posClass}">
-              <div class="flex items-center justify-between pb-2 mb-2 sm:mb-2.5 border-b border-teal-200/90 text-xs font-mono flex-shrink-0">
+            <div class="profile-card absolute card-light-theme rounded-2xl sm:rounded-3xl p-3.5 sm:p-4 md:p-5 shadow-2xl flex flex-col justify-between ${posClass}">
+              <div class="flex items-center justify-between pb-1.5 mb-1.5 sm:mb-2 border-b border-teal-200/90 text-xs font-mono flex-shrink-0">
                 <div class="flex items-center gap-2 sm:gap-3">
                   <img src="https://i.ibb.co.com/676xL3yn/MI-AL-IRSYAD-AL-ISLAMIYYAH-20260604-173251-0000.png" 
                        alt="Logo MI Al-Irsyad Al-Islamiyyah" 
-                       class="w-9 h-9 sm:w-11 sm:h-11 md:w-12 md:h-12 object-contain filter drop-shadow-[0_4px_14px_rgba(13,148,136,0.35)] flex-shrink-0 select-none">
+                       class="w-8 h-8 sm:w-10 sm:h-10 md:w-11 md:h-11 object-contain filter drop-shadow-[0_4px_14px_rgba(13,148,136,0.35)] flex-shrink-0 select-none">
                   <div class="flex flex-col justify-center">
                     <span class="text-teal-950 font-black tracking-wider text-xs sm:text-sm md:text-base font-sans uppercase leading-tight">MI AL-IRSYAD AL-ISLAMIYYAH</span>
                   </div>
@@ -2124,8 +2124,8 @@
                 </div>
               </div>
 
-              <div class="flex flex-col sm:flex-row gap-3.5 sm:gap-5 md:gap-6 items-center sm:items-stretch flex-1 min-h-0 overflow-hidden">
-                <div class="relative w-[110px] sm:w-[155px] md:w-[190px] lg:w-[215px] xl:w-[235px] flex-shrink-0 group mx-auto sm:mx-0">
+              <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 md:gap-5 items-center sm:items-stretch flex-1 min-h-0 overflow-hidden">
+                <div class="relative w-[110px] sm:w-[140px] md:w-[170px] lg:w-[195px] xl:w-[210px] flex-shrink-0 group mx-auto sm:mx-0">
                   <div class="w-full aspect-[4/6] rounded-xl sm:rounded-2xl overflow-hidden relative border-2 border-teal-300/80 shadow-md bg-teal-50">
                     <img src="${item.avatar_url || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=800&q=80'}" 
                          onerror="this.onerror=null; this.src='https://placehold.co/400x600/032014/34d399?text=MI+AL-IRSYAD';"
@@ -2193,7 +2193,7 @@
                       ` : ''}
                       ${item.phone ? `
                         <a href="https://wa.me/${item.phone.replace(/[^0-9]/g, '')}" target="_blank" rel="noopener noreferrer" class="px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white transition text-[10px] sm:text-xs border border-emerald-700 font-bold flex items-center gap-1 sm:gap-1.5 shadow-2xs" title="WhatsApp">
-                          <i data-lucide="phone" class="w-3 h-3 text-white"></i>
+                          <i data-lucide="phone" class="w-2.5 h-2.5 text-white"></i>
                           <span>WhatsApp</span>
                         </a>
                       ` : ''}
