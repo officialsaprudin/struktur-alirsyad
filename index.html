@@ -737,6 +737,7 @@
     const SUPABASE_URL = "https://ahzexczjwcikxlobqchh.supabase.co"; 
     const SUPABASE_ANON_KEY = "sb_publishable_yG3SzF_f4vgoHCxu02Dm3Q_Z9gEP33c";
 
+
     function isValidSupabaseUrl(url) {
       if (!url) return false;
       if (url.includes("your-supabase-project") || url.includes("...")) return false;
@@ -2610,6 +2611,23 @@
       }, 3000);
     }
 
+    function toggleMenuHUD(forceShow = null) {
+      const isCurrentlyHidden = document.body.classList.contains('hud-hidden');
+      const shouldShow = forceShow !== null ? forceShow : isCurrentlyHidden;
+
+      if (shouldShow) {
+        document.body.classList.remove('hud-hidden');
+        showToast("Bilah Pengaturan Ditampilkan (Tekan Panah Bawah di Remote untuk Tutup)");
+      } else {
+        document.body.classList.add('hud-hidden');
+        showToast("Bilah Pengaturan Disembunyikan");
+      }
+      setTimeout(() => FitScaleEngine.update(), 60);
+
+      const tvMenuBtnText = document.getElementById('tvMenuBtnText');
+      if (tvMenuBtnText) tvMenuBtnText.textContent = shouldShow ? "Tutup" : "Menu";
+    }
+
     function toggleAdminMode() {
       State.isAdminMode = !State.isAdminMode;
       if (State.isAdminMode) {
@@ -2848,6 +2866,15 @@
 
       const btnCloseBagan = document.getElementById('btnCloseBaganSettings');
       if (btnCloseBagan) btnCloseBagan.addEventListener('click', () => UI.closeBaganSettingsModal());
+
+      // Tombol Menu Cepat Android TV / Mouse
+      const btnTvMenuTrigger = document.getElementById('btnTvMenuTrigger');
+      if (btnTvMenuTrigger) {
+        btnTvMenuTrigger.addEventListener('click', (e) => {
+          e.stopPropagation();
+          toggleMenuHUD();
+        });
+      }
 
       const btnSaveBagan = document.getElementById('btnSaveBaganSettings');
       if (btnSaveBagan) {
@@ -3488,28 +3515,72 @@
       });
 
       let spacePressHistory = [];
+      let enterPressHistory = [];
+
       window.addEventListener('keydown', (e) => {
-        // Toggle HUD Header & Footer dengan Ctrl + Spasi (atau Cmd + Spasi di Mac)
+        // 1. Dukungan Tombol Menu Fisik Remote Android TV (keyCode 82 / 93)
+        if (e.key === 'Menu' || e.key === 'ContextMenu' || e.keyCode === 82 || e.keyCode === 93) {
+          e.preventDefault();
+          e.stopPropagation();
+          toggleMenuHUD();
+          return;
+        }
+
+        // 2. Dukungan D-Pad Remote TV: Tekan Panah Atas (▲) untuk Buka Menu
+        if ((e.key === 'ArrowUp' || e.key === 'Up' || e.keyCode === 38) && !['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) {
+          if (document.body.classList.contains('hud-hidden')) {
+            e.preventDefault();
+            e.stopPropagation();
+            toggleMenuHUD(true);
+            return;
+          }
+        }
+
+        // 3. Dukungan D-Pad Remote TV: Tekan Panah Bawah (▼) untuk Tutup Menu
+        if ((e.key === 'ArrowDown' || e.key === 'Down' || e.keyCode === 40) && !['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) {
+          if (!document.body.classList.contains('hud-hidden')) {
+            e.preventDefault();
+            e.stopPropagation();
+            toggleMenuHUD(false);
+            return;
+          }
+        }
+
+        // 4. Toggle HUD Header & Footer dengan Ctrl + Spasi (Keyboard PC / Mac)
         if ((e.ctrlKey || e.metaKey) && (e.key === ' ' || e.code === 'Space')) {
           e.preventDefault();
           e.stopPropagation();
-          document.body.classList.toggle('hud-hidden');
-          setTimeout(() => FitScaleEngine.update(), 60);
-          showToast(
-            document.body.classList.contains('hud-hidden')
-              ? "Bilah Menu Disembunyikan (Ctrl+Spasi)"
-              : "Bilah Menu Ditampilkan (Ctrl+Spasi)"
-          );
+          toggleMenuHUD();
           return;
         }
 
         if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) return;
 
+        // Navigasi Slide Kartu via Remote TV / Keyboard
         if (e.key === 'ArrowRight' || e.key === 'Right') {
           nextCard();
         } else if (e.key === 'ArrowLeft' || e.key === 'Left') {
           prevCard();
-        } else if (e.key === ' ' || e.code === 'Space' || e.key === 'Enter') {
+        } else if (e.key === 'Enter') {
+          // Tombol OK / Center di Remote Android TV
+          e.preventDefault();
+          const now = Date.now();
+          enterPressHistory.push(now);
+          enterPressHistory = enterPressHistory.filter(t => now - t <= 1200);
+
+          if (enterPressHistory.length >= 3) {
+            enterPressHistory = [];
+            toggleAdminMode();
+            return;
+          } else if (enterPressHistory.length === 2) {
+            toggleMenuHUD();
+            return;
+          }
+
+          State.isAutoplay = !State.isAutoplay;
+          UI.updateAutoplayUI();
+          showToast(State.isAutoplay ? "Rotasi otomatis aktif" : "Rotasi otomatis dijeda");
+        } else if (e.key === ' ' || e.code === 'Space') {
           e.preventDefault();
           const now = Date.now();
           spacePressHistory.push(now);
