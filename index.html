@@ -51,7 +51,7 @@
     :root {
       --card-scale: 1;
       --card-base-w: 1040px;
-      --card-base-h: 540px;
+      --card-base-h: 495px;
       --card-font-scale: 1;
     }
 
@@ -84,9 +84,8 @@
       top: 50%;
       left: 50%;
       width: var(--card-base-w, 1040px);
-      height: var(--card-base-h, 540px);
+      height: var(--card-base-h, 495px);
       max-width: 98vw;
-      max-height: 96vh;
       box-sizing: border-box;
       transform-origin: center center;
       transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), 
@@ -179,7 +178,7 @@
     }
 
     .hud-element {
-      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     }
     body.is-idle .hud-element {
       opacity: 0 !important;
@@ -197,6 +196,13 @@
     }
     body.is-idle {
       cursor: none;
+    }
+
+    /* Penanganan Mode Layar Penuh Bebas Menu (Ctrl+Spasi) */
+    body.hud-hidden header.hud-element,
+    body.hud-hidden footer.hud-element,
+    body.hud-hidden #fullscreenHint {
+      display: none !important;
     }
 
     body:not(.is-admin) .admin-control {
@@ -222,7 +228,7 @@
   </style>
 </head>
 
-<body class="bg-[#02110a] text-slate-100 h-screen w-screen overflow-hidden font-sans flex flex-col selection:bg-emerald-600 selection:text-white relative select-none">
+<body class="bg-[#02110a] text-slate-100 h-screen w-screen overflow-hidden font-sans flex flex-col selection:bg-emerald-600 selection:text-white relative select-none hud-hidden">
 
   <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
     <div id="ambientBackdrop1" class="absolute -top-32 left-1/4 w-[650px] h-[650px] bg-emerald-600/15 rounded-full blur-[150px] transition-all duration-1000"></div>
@@ -232,7 +238,7 @@
 
   <div id="fullscreenHint" class="hud-element fixed top-1.5 left-1/2 -translate-x-1/2 z-50 pointer-events-auto flex items-center gap-2 px-3 py-0.5 rounded-full bg-emerald-950/90 border border-emerald-500/40 backdrop-blur-md text-[10px] sm:text-[11px] text-emerald-200 transition-all duration-500 cursor-pointer shadow-xl shadow-emerald-950/60">
     <i data-lucide="sparkles" class="w-3 h-3 text-amber-400 animate-spin"></i>
-    <span>Klik di mana saja untuk mengunci Layar Penuh Otomatis</span>
+    <span>Klik di mana saja untuk Layar Penuh (Tekan Ctrl+Spasi untuk Menu)</span>
   </div>
 
   <header class="hud-element relative z-40 w-full px-3 sm:px-6 lg:px-8 pt-5 sm:pt-6 pb-1.5 flex-shrink-0 flex flex-col gap-1.5">
@@ -278,7 +284,7 @@
                   <i data-lucide="minus" class="w-2.5 h-2.5"></i>
                 </button>
                 <span id="currentFontScaleText" class="text-[9px] text-emerald-300 font-mono px-0.5 min-w-[34px] text-center select-none">100%</span>
-                <button type="button" id="btnFontIncrease" class="w-4 h-4 rounded text-[10px] text-slate-300 hover:text-white hover:bg-emerald-800/80 flex items-center justify-center transition" title="Perbesar Font (+5%)">
+                <button type="button" id="btnFontIncrease" class="w-4 h-4 rounded text-[10px] text-slate-300 hover:text-white hover:bg-emerald-800/80 flex items-center justify-center transition" title="Perbesar Font (+5% hingga 300%)">
                   <i data-lucide="plus" class="w-2.5 h-2.5"></i>
                 </button>
               </div>
@@ -389,6 +395,7 @@
 
       <div class="hidden lg:flex items-center gap-2.5 text-[10px] font-mono text-slate-400 flex-shrink-0">
         <span class="flex items-center gap-1"><kbd class="px-1.5 py-0.5 rounded bg-black/60 border border-white/10 text-[9px]">←</kbd><kbd class="px-1.5 py-0.5 rounded bg-black/60 border border-white/10 text-[9px]">→</kbd> Geser</span>
+        <span class="flex items-center gap-1"><kbd class="px-1.5 py-0.5 rounded bg-black/60 border border-white/10 text-[9px]">Ctrl+Spasi</kbd> Menu</span>
         <span class="flex items-center gap-1"><kbd class="px-1.5 py-0.5 rounded bg-black/60 border border-white/10 text-[9px]">Spasi 3x</kbd> Admin</span>
       </div>
     </div>
@@ -837,7 +844,7 @@
         nip_nuptk: "19820510 200801 1 009",
         education: "S1 Ilmu Al-Qur'an & Tafsir",
         avatar_url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80",
-        bio: "Kurikulum MI Al-Irsyad dirancang sebagai ruang pemuliaan fitrah santri melalui perpaduan nilai Islam Syaikh Ahmad Surkati dan kehangatan Kurikulum Berbasis Cinta Kemenag.",
+        bio: "Kurikulum MI Al-Irsyad Al-Islamiyyah Banjarmasin dirancang sebagai ruang pemuliaan fitrah thullab melalui perpaduan spirit pemurnian nilai Islam Syaikh Ahmad Surkati dan kehangatan Kurikulum Berbasis Cinta Kemenag. Kami menempatkan mahabbah lillah dan pembiasaan ibadah harian sebagai denyut utama interaksi belajar-mengajar.",
         skills: ["Kurikulum", "Al-Quran Hadis", "IT"],
         address: "Jl. Sulawesi No. 15, Banjarmasin",
         email: "kurikulum@mialirsyad.sch.id",
@@ -1279,37 +1286,38 @@
                      (window.innerWidth >= 1280 && window.innerHeight >= 720 && !('ontouchstart' in window) && !navigator.maxTouchPoints);
 
         let baseW = 1040;
-        let baseH = 540;
+        let baseH = 495;
 
         if (isMobilePortrait) {
           baseW = 420;
           baseH = 630;
         } else if (activeSlide && activeSlide.type === 'pair') {
           baseW = isTV ? 1340 : 1200;
-          baseH = isTV ? 600 : 540;
+          baseH = isTV ? 495 : 425;
         } else if (isTV) {
           baseW = 1240;
-          baseH = 580;
+          baseH = 540;
         } else if (isMobileLandscape) {
           baseW = 880;
           baseH = 410;
         } else {
           baseW = 1040;
-          baseH = 530;
+          baseH = 495;
         }
 
+        const isHudHidden = document.body.classList.contains('hud-hidden');
         let targetFactorW = 0.96;
-        let targetFactorH = 0.95;
+        let targetFactorH = isHudHidden ? 0.92 : 0.86;
 
         if (isTV) {
           targetFactorW = 0.95;
-          targetFactorH = 0.93;
+          targetFactorH = isHudHidden ? 0.94 : 0.88;
         } else if (isMobilePortrait) {
           targetFactorW = 0.96;
-          targetFactorH = 0.96;
+          targetFactorH = isHudHidden ? 0.96 : 0.92;
         } else if (isMobileLandscape) {
           targetFactorW = 0.96;
-          targetFactorH = 0.92;
+          targetFactorH = 0.90;
         }
 
         const targetW = availW * targetFactorW;
@@ -1331,7 +1339,7 @@
 
         const zoomText = document.getElementById('currentZoomText');
         if (zoomText) {
-          if (State.cardSizeMode === 'auto') zoomText.textContent = 'Full';
+          if (State.cardSizeMode === 'auto') zoomText.textContent = 'Fit';
           else zoomText.textContent = `${Math.round((finalScale / baseScale) * 100)}%`;
         }
       }
@@ -1729,7 +1737,6 @@
           if (slide.type === 'bagan') {
             const currentTiers = (State.orgTiers && State.orgTiers.length > 0) ? State.orgTiers : DEFAULT_ORG_TIERS;
 
-            // Render simpul: Jika di-hide, tampilkan HANYA jabatannya saja!
             const renderBaganNode = (p, borderClass, roleTextClass) => {
               if (p.is_hidden) {
                 return `
@@ -1787,7 +1794,6 @@
             const hierarchyRows = groupTiersIntoHierarchyRows(currentTiers);
 
             const renderedHierarchyHtml = hierarchyRows.map((row, rIdx) => {
-              // KASUS 1: BARIS TUNGGAL BIASA
               if (row.length === 1) {
                 const singleTier = row[0];
                 return `
@@ -1796,8 +1802,6 @@
                 `;
               }
 
-              // KASUS 2: BARIS KEPALA MADRASAH + MITRA (KOMITE MADRASAH)
-              // Kepala Madrasah tepat di sumbu tengah, Komite di kanan dengan garis koordinasi murni
               const hasMitraTier = row.some(t => t.is_mitra);
               if (hasMitraTier) {
                 const leaderTier = row.find(t => !t.is_mitra) || row[0];
@@ -1808,10 +1812,8 @@
 
                 return `
                   <div class="w-fit min-w-min max-w-full relative flex items-center justify-center mx-auto overflow-x-visible py-0.5">
-                    <!-- Sisi Kiri Penyeimbang: Memastikan Kepala Madrasah Tepat di Tengah Sumbu Vertikal Pohon -->
                     <div class="w-[272px] sm:w-[311px] md:w-[319px] flex-shrink-0 pointer-events-none opacity-0" aria-hidden="true"></div>
 
-                    <!-- 1. Kolom Pimpinan Utama: KEPALA MADRASAH (Tepat 100% di Sumbu Vertikal Tengah) -->
                     <div class="flex flex-col items-center flex-shrink-0 relative z-10 w-[240px] sm:w-[255px]">
                       <div class="px-3.5 py-0.5 rounded-full ${leaderTier.badgeClass} text-white text-[10px] sm:text-xs font-black shadow-md uppercase tracking-wider flex items-center gap-1 mb-1 flex-shrink-0">
                         <i data-lucide="layers" class="w-3.5 h-3.5"></i>
@@ -1824,10 +1826,8 @@
                       </div>
                     </div>
 
-                    <!-- 2. Garis Koordinasi Horizontal Murni (Polos, Tanpa Tulisan Mitra) -->
                     <div class="w-8 sm:w-14 md:w-16 h-[2.5px] bg-[#0d9488] flex-shrink-0"></div>
 
-                    <!-- 3. Kolom Mitra: KOMITE MADRASAH (Di Samping Kanan, MUTLAK Tanpa Garis ke Bawah) -->
                     <div class="flex flex-col items-center flex-shrink-0 relative z-10 w-[240px] sm:w-[255px]">
                       <div class="px-3.5 py-0.5 rounded-full ${mitraTier.badgeClass} text-white text-[10px] sm:text-xs font-black shadow-md uppercase tracking-wider flex items-center gap-1 mb-1 flex-shrink-0">
                         <i data-lucide="handshake" class="w-3.5 h-3.5"></i>
@@ -1840,12 +1840,10 @@
                       </div>
                     </div>
                   </div>
-                  <!-- Garis Komando Lurus ke Bawah HANYA Turun Dari Kepala Madrasah Ke Tingkat Berikutnya -->
                   ${rIdx < hierarchyRows.length - 1 ? '<div class="bagan-tree-connector-v h-5 sm:h-6 flex-shrink-0 relative z-10"></div>' : ''}
                 `;
               }
 
-              // KASUS 3: BARIS TINGKATAN OPERASIONAL SEJAJAR (Tata Usaha & Wakamad / Urusan Staggered)
               const n = row.length;
               const leftOffset = (100 / (2 * n)).toFixed(2);
               const topBusLine = `<div class="absolute top-0 h-[2.5px] bg-[#0d9488] z-0" style="left: calc(${leftOffset}%); right: calc(${leftOffset}%);"></div>`;
@@ -1857,26 +1855,21 @@
 
                 return `
                   <div class="w-[245px] sm:w-[265px] md:w-[275px] flex-shrink-0 flex flex-col items-center h-full relative px-1 sm:px-2">
-                    <!-- Cabang Vertikal Turun Menuju Lencana & Kartu -->
                     <div class="bagan-tree-connector-v h-4 flex-shrink-0 relative z-10"></div>
 
-                    <!-- Lencana Tingkatan Sejajar Sumbu Kolom -->
                     <div class="px-3.5 py-0.5 rounded-full ${tier.badgeClass} text-white text-[10px] sm:text-xs font-black shadow-md uppercase tracking-wider flex items-center gap-1 my-0.5 flex-shrink-0 z-10">
                       <i data-lucide="layers" class="w-3.5 h-3.5"></i>
                       <span>${tier.title}</span>
                     </div>
 
-                    <!-- Konektor Vertikal ke Kartu Normal (Baris 1) -->
                     <div class="bagan-tree-connector-v h-2 flex-shrink-0"></div>
 
-                    <!-- Kartu Anggota Baris 1 (Atas) -->
                     <div class="flex flex-col items-center justify-start gap-2 w-full">
                       ${normalMembers.length > 0 
                         ? normalMembers.map(p => renderBaganNode(p, tier.borderColor, tier.roleColor)).join('<div class="bagan-tree-connector-v h-2 flex-shrink-0"></div>') 
                         : (loweredMembers.length === 0 ? '<p class="text-[10px] text-teal-400/60 italic py-0.5">Belum ada pengurus</p>' : '')}
                     </div>
 
-                    <!-- Kartu Anggota Baris 2 (Diturunkan / Staggered) dengan Garis Sambung Vertikal -->
                     ${loweredMembers.length > 0 ? `
                       <div class="bagan-tree-connector-v h-4 sm:h-5 flex-shrink-0"></div>
                       <div class="flex flex-col items-center justify-start gap-2 w-full pt-0.5">
@@ -1889,16 +1882,10 @@
 
               return `
                 <div class="w-fit min-w-min max-w-full relative flex items-start justify-center mx-auto overflow-x-visible">
-                  <!-- Garis Komando Pusat Dari Kepala Madrasah Terus Turun ke Bawah -->
                   <div class="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-[2.5px] bg-[#0d9488] z-0"></div>
-
-                  <!-- Garis Bus Cabang Horizontal Atas (Membagi ke TU & Wakamad) -->
                   ${topBusLine}
-
-                  <!-- Kolom Tingkatan Sejajar (Bawahnya Bersih, TIDAK Menghubungkan Garis ke Guru) -->
                   ${columnsHtml}
                 </div>
-                <!-- Garis Komando Sumbu Tengah Mengalir Terus ke Tingkat Bawah (Dewan Guru) -->
                 ${rIdx < hierarchyRows.length - 1 ? '<div class="bagan-tree-connector-v h-5 sm:h-6 flex-shrink-0 relative z-10"></div>' : ''}
               `;
             }).join('');
@@ -1949,7 +1936,6 @@
                     </div>
                   </div>
 
-                  <!-- Baris Informasi Utama: Foto & Identitas -->
                   <div class="flex flex-row gap-3 items-start flex-shrink-0">
                     <div class="relative w-[95px] sm:w-[105px] md:w-[115px] flex-shrink-0">
                       <div class="w-full aspect-[4/6] rounded-xl overflow-hidden relative border-2 border-teal-300 shadow-sm bg-teal-50">
@@ -2005,7 +1991,6 @@
                     </div>
                   </div>
 
-                  <!-- Panel Tupoksi & Komitmen Layanan (Mengisi Ruang Tengah Dinamis) -->
                   <div class="flex-1 min-h-[68px] p-2.5 rounded-xl bg-gradient-to-br from-teal-50/90 via-emerald-50/60 to-teal-100/40 border border-teal-200/90 shadow-2xs flex flex-col justify-center gap-1">
                     <div class="flex items-center justify-between text-[10px] font-bold uppercase tracking-wider text-teal-900 font-mono">
                       <span class="flex items-center gap-1">
@@ -2019,7 +2004,6 @@
                     </p>
                   </div>
 
-                  <!-- Baris Bawah: Status & Aksi Kontak Penuh -->
                   <div class="pt-1.5 border-t border-teal-100 flex items-center justify-between gap-2 flex-shrink-0">
                     <div class="flex items-center gap-1.5 text-[10px] font-mono font-bold text-teal-900">
                       <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
@@ -2180,11 +2164,11 @@
                     ` : ''}
                   </div>
 
-                  <div class="pt-1.5 sm:pt-2 border-t border-teal-200/90 flex items-center justify-between gap-2.5 mt-auto flex-shrink-0">
-                    <div class="flex items-center min-w-0 flex-1">
-                      <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-950/90 backdrop-blur-md border border-amber-400/60 text-[9px] sm:text-[11px] text-amber-300 font-mono font-bold shadow-md whitespace-nowrap overflow-hidden text-ellipsis" title="${item.education || 'Pendidik'}">
+                  <div class="pt-1.5 sm:pt-2 border-t border-teal-200/90 flex items-center justify-between gap-2 mt-auto flex-shrink-0 flex-wrap sm:flex-nowrap">
+                    <div class="flex items-center min-w-0 flex-shrink">
+                      <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-950/90 backdrop-blur-md border border-amber-400/60 text-[9px] sm:text-[11px] text-amber-300 font-mono font-bold shadow-md whitespace-nowrap" title="${item.education || 'Pendidik'}">
                         <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse flex-shrink-0"></span>
-                        <span class="truncate">${item.education || 'Pendidik'}</span>
+                        <span class="truncate max-w-[200px] sm:max-w-[260px] md:max-w-none">${item.education || 'Pendidik'}</span>
                       </span>
                     </div>
 
@@ -3206,7 +3190,7 @@
           if (moveDown) {
             e.stopPropagation();
             const idx = parseInt(moveDown.dataset.index, 10);
-            if (idx < State.departments.length - 1) {
+            if (!isNaN(idx) && idx < State.departments.length - 1) {
               const temp = State.departments[idx];
               State.departments[idx] = State.departments[idx + 1];
               State.departments[idx + 1] = temp;
@@ -3492,6 +3476,20 @@
 
       let spacePressHistory = [];
       window.addEventListener('keydown', (e) => {
+        // Toggle HUD Header & Footer dengan Ctrl + Spasi (atau Cmd + Spasi di Mac)
+        if ((e.ctrlKey || e.metaKey) && (e.key === ' ' || e.code === 'Space')) {
+          e.preventDefault();
+          e.stopPropagation();
+          document.body.classList.toggle('hud-hidden');
+          setTimeout(() => FitScaleEngine.update(), 60);
+          showToast(
+            document.body.classList.contains('hud-hidden')
+              ? "Bilah Menu Disembunyikan (Ctrl+Spasi)"
+              : "Bilah Menu Ditampilkan (Ctrl+Spasi)"
+          );
+          return;
+        }
+
         if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) return;
 
         if (e.key === 'ArrowRight' || e.key === 'Right') {
