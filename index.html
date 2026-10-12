@@ -53,6 +53,12 @@
       --card-base-w: 1040px;
       --card-base-h: 495px;
       --card-font-scale: 1;
+      --pair-tupoksi-font-scale: 1;
+    }
+
+    .pair-tupoksi-text {
+      font-size: calc(11px * var(--pair-tupoksi-font-scale, 1) * var(--card-font-scale, 1)) !important;
+      line-height: 1.45 !important;
     }
 
     .profile-card:not(.profile-card-bagan) {
@@ -241,6 +247,14 @@
     <span>Klik di mana saja untuk Layar Penuh (Tekan Ctrl+Spasi untuk Menu)</span>
   </div>
 
+  <!-- Tombol Mengambang Pintasan Menu Smart TV & Layar Sentuh -->
+  <button id="btnTvFloatingMenu" type="button" 
+          class="fixed top-2 sm:top-3 right-2 sm:right-3 z-50 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-950/90 hover:bg-emerald-800 border border-emerald-400/60 shadow-xl shadow-black/60 text-emerald-100 hover:text-white transition-all transform active:scale-95 cursor-pointer backdrop-blur-md text-xs font-semibold" 
+          title="Buka / Tutup Bilah Pengaturan (Bisa juga tekan tombol M atau Esc)">
+    <i data-lucide="settings" id="tvFloatingMenuIcon" class="w-3.5 h-3.5 text-amber-400 animate-[spin_12s_linear_infinite]"></i>
+    <span id="tvFloatingMenuText" class="text-[11px] font-sans font-bold">Pengaturan</span>
+  </button>
+
   <header class="hud-element relative z-40 w-full px-3 sm:px-6 lg:px-8 pt-5 sm:pt-6 pb-1.5 flex-shrink-0 flex flex-col gap-1.5">
     
     <div class="max-w-5xl w-full mx-auto flex flex-col gap-1">
@@ -288,6 +302,19 @@
                   <i data-lucide="plus" class="w-2.5 h-2.5"></i>
                 </button>
               </div>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-1 flex-shrink-0">
+            <span class="text-slate-400 hidden xl:inline text-[10px]">Tupoksi 2K:</span>
+            <div class="flex items-center bg-black/60 border border-teal-500/30 rounded-lg p-0.5 gap-0.5" id="pairTupoksiFontPicker">
+              <button type="button" id="btnPairTupoksiDecrease" class="w-4 h-4 rounded text-[10px] text-slate-300 hover:text-white hover:bg-teal-800/80 flex items-center justify-center transition" title="Perkecil Font Tupoksi 2 Kartu (-5%)">
+                <i data-lucide="minus" class="w-2.5 h-2.5"></i>
+              </button>
+              <span id="currentPairTupoksiScaleText" class="text-[9px] text-teal-300 font-mono px-0.5 min-w-[34px] text-center select-none">100%</span>
+              <button type="button" id="btnPairTupoksiIncrease" class="w-4 h-4 rounded text-[10px] text-slate-300 hover:text-white hover:bg-teal-800/80 flex items-center justify-center transition" title="Perbesar Font Tupoksi 2 Kartu (+5%)">
+                <i data-lucide="plus" class="w-2.5 h-2.5"></i>
+              </button>
             </div>
           </div>
 
@@ -734,7 +761,7 @@
     // Ubah is_preview = false dan masukkan URL & Anon Key Supabase Anda
     // =========================================================================
     const is_preview = false;
-    const SUPABASE_URL = "https://ahzexczjwcikxlobqchh.supabase.co"; 
+     const SUPABASE_URL = "https://ahzexczjwcikxlobqchh.supabase.co"; 
     const SUPABASE_ANON_KEY = "sb_publishable_yG3SzF_f4vgoHCxu02Dm3Q_Z9gEP33c";
 
     function isValidSupabaseUrl(url) {
@@ -938,7 +965,8 @@
       selectedFormDepartments: [],
       cardSizeMode: SafeStorage.getItem('mi_alirsyad_card_size_mode') || 'auto',
       customScalePercent: parseFloat(SafeStorage.getItem('mi_alirsyad_card_scale_pct')) || 100,
-      cardFontScalePercent: parseFloat(SafeStorage.getItem('mi_alirsyad_font_scale_pct')) || 100
+      cardFontScalePercent: parseFloat(SafeStorage.getItem('mi_alirsyad_font_scale_pct')) || 100,
+      pairTupoksiScalePercent: parseFloat(SafeStorage.getItem('mi_alirsyad_pair_tupoksi_scale')) || 100
     };
 
     let supabaseClient = null;
@@ -2016,17 +2044,27 @@
                     </div>
                   </div>
 
-                  <div class="flex-1 min-h-[68px] p-2.5 rounded-xl bg-gradient-to-br from-teal-50/90 via-emerald-50/60 to-teal-100/40 border border-teal-200/90 shadow-2xs flex flex-col justify-center gap-1">
-                    <div class="flex items-center justify-between text-[10px] font-bold uppercase tracking-wider text-teal-900 font-mono">
-                      <span class="flex items-center gap-1">
-                        <i data-lucide="quote" class="w-3 h-3 text-teal-600 flex-shrink-0"></i>
-                        Tupoksi & Komitmen Layanan
+                  <div class="flex-1 min-h-[75px] max-h-[140px] p-2.5 rounded-xl bg-gradient-to-br from-teal-50/90 via-emerald-50/60 to-teal-100/40 border border-teal-200/90 shadow-2xs flex flex-col justify-start gap-1 overflow-hidden">
+                    <div class="flex items-center justify-between text-[10px] font-bold uppercase tracking-wider text-teal-900 font-mono pb-1 border-b border-teal-200/60 flex-shrink-0">
+                      <span class="flex items-center gap-1.5 font-black">
+                        <i data-lucide="quote" class="w-3.5 h-3.5 text-teal-700 flex-shrink-0"></i>
+                        <span class="truncate max-w-[130px] sm:max-w-none">Tupoksi & Komitmen Layanan</span>
                       </span>
-                      <span class="text-[8px] px-1.5 py-0.2 rounded-full bg-teal-100 text-teal-800 border border-teal-300 font-semibold">Resmi</span>
+                      <div class="flex items-center gap-0.5 bg-teal-900/10 hover:bg-teal-900/20 border border-teal-700/20 rounded-full px-1 py-0.5 opacity-35 hover:opacity-100 transition-opacity select-none shadow-none" title="Ubah ukuran font Tupoksi">
+                        <button type="button" class="btn-tupoksi-quick-minus w-4 h-4 rounded-full hover:bg-teal-800/20 text-teal-900 flex items-center justify-center transition" title="Perkecil Font Tupoksi (-5%)">
+                          <i data-lucide="minus" class="w-2.5 h-2.5 pointer-events-none"></i>
+                        </button>
+                        <span class="pair-tupoksi-indicator px-0.5 text-[9px] font-mono font-bold text-teal-900 select-none min-w-[28px] text-center">${State.pairTupoksiScalePercent}%</span>
+                        <button type="button" class="btn-tupoksi-quick-plus w-4 h-4 rounded-full hover:bg-teal-800/20 text-teal-900 flex items-center justify-center transition" title="Perbesar Font Tupoksi (+5%)">
+                          <i data-lucide="plus" class="w-2.5 h-2.5 pointer-events-none"></i>
+                        </button>
+                      </div>
                     </div>
-                    <p class="text-[10px] sm:text-[11px] text-slate-700 italic leading-relaxed font-medium break-words">
-                      "${item.bio || 'Mewujudkan tata kelola madrasah unggul yang mengedepankan keteladanan akhlak islami, disiplin, dan dedikasi santri.'}"
-                    </p>
+                    <div class="flex-1 overflow-y-auto scrollbar-none py-0.5">
+                      <p class="pair-tupoksi-text text-slate-700 italic leading-relaxed font-medium break-words">
+                        "${item.bio || 'Mewujudkan tata kelola madrasah unggul yang mengedepankan keteladanan akhlak islami, disiplin, dan dedikasi santri.'}"
+                      </p>
+                    </div>
                   </div>
 
                   <div class="pt-1.5 border-t border-teal-100 flex items-center justify-between gap-2 flex-shrink-0">
@@ -2715,8 +2753,40 @@
         }
       });
 
+      FitScaleEngine.update();
+
       if (showNotification) {
         showToast(`Ukuran font kartu: ${pct}%`);
+      }
+    }
+
+    function setPairTupoksiFontScale(pct, showNotification = true) {
+      pct = Math.max(50, Math.min(pct, 250));
+      State.pairTupoksiScalePercent = pct;
+      SafeStorage.setItem('mi_alirsyad_pair_tupoksi_scale', pct);
+
+      document.documentElement.style.setProperty('--pair-tupoksi-font-scale', (pct / 100).toFixed(2));
+
+      const textEl = document.getElementById('currentPairTupoksiScaleText');
+      if (textEl) textEl.textContent = `${pct}%`;
+
+      document.querySelectorAll('.pair-tupoksi-indicator').forEach(el => {
+        el.textContent = `${pct}%`;
+      });
+
+      document.querySelectorAll('#pairTupoksiFontPicker .tupoksi-preset-btn').forEach(btn => {
+        const scaleVal = parseInt(btn.dataset.scale, 10);
+        if (scaleVal === pct) {
+          btn.className = "tupoksi-preset-btn px-1.5 py-0.5 rounded text-[10px] transition bg-teal-600 text-white font-bold shadow-sm shadow-teal-700/50";
+        } else {
+          btn.className = "tupoksi-preset-btn px-1.5 py-0.5 rounded text-[10px] transition text-slate-400 hover:text-white";
+        }
+      });
+
+      FitScaleEngine.update();
+
+      if (showNotification) {
+        showToast(`Ukuran font Tupoksi (2 Kartu): ${pct}%`);
       }
     }
 
@@ -2824,6 +2894,32 @@
           setCardFontScale(State.cardFontScalePercent + 5);
         });
       }
+
+      // Event listener pengontrol Font Tupoksi Khusus 2 Kartu
+      const btnPairTupoksiDecrease = document.getElementById('btnPairTupoksiDecrease');
+      const btnPairTupoksiIncrease = document.getElementById('btnPairTupoksiIncrease');
+
+      if (btnPairTupoksiDecrease) {
+        btnPairTupoksiDecrease.addEventListener('click', (e) => {
+          e.stopPropagation();
+          setPairTupoksiFontScale(State.pairTupoksiScalePercent - 5);
+        });
+      }
+
+      if (btnPairTupoksiIncrease) {
+        btnPairTupoksiIncrease.addEventListener('click', (e) => {
+          e.stopPropagation();
+          setPairTupoksiFontScale(State.pairTupoksiScalePercent + 5);
+        });
+      }
+
+      document.querySelectorAll('#pairTupoksiFontPicker .tupoksi-preset-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const scale = parseInt(btn.dataset.scale, 10);
+          if (!isNaN(scale)) setPairTupoksiFontScale(scale);
+        });
+      });
 
       function setDuration(durMs, isCustom = false) {
         if (isNaN(durMs) || durMs < 1000) durMs = 1000;
@@ -3470,6 +3566,20 @@
       });
 
       document.getElementById('cardsViewport').addEventListener('click', async (e) => {
+        const minusTupoksi = e.target.closest('.btn-tupoksi-quick-minus');
+        if (minusTupoksi) {
+          e.stopPropagation();
+          setPairTupoksiFontScale(State.pairTupoksiScalePercent - 5);
+          return;
+        }
+
+        const plusTupoksi = e.target.closest('.btn-tupoksi-quick-plus');
+        if (plusTupoksi) {
+          e.stopPropagation();
+          setPairTupoksiFontScale(State.pairTupoksiScalePercent + 5);
+          return;
+        }
+
         const gotoNode = e.target.closest('[data-goto-id]');
         if (gotoNode) {
           e.stopPropagation();
@@ -3709,6 +3819,7 @@
       State.profiles = await Service.fetchProfiles();
 
       setCardFontScale(State.cardFontScalePercent, false);
+      setPairTupoksiFontScale(State.pairTupoksiScalePercent, false);
       UI.init();
       startTicker();
       lucide.createIcons();
