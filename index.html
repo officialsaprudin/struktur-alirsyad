@@ -737,7 +737,6 @@
     const SUPABASE_URL = "https://ahzexczjwcikxlobqchh.supabase.co"; 
     const SUPABASE_ANON_KEY = "sb_publishable_yG3SzF_f4vgoHCxu02Dm3Q_Z9gEP33c";
 
-
     function isValidSupabaseUrl(url) {
       if (!url) return false;
       if (url.includes("your-supabase-project") || url.includes("...")) return false;
@@ -2637,21 +2636,23 @@
 
       if (shouldShow) {
         document.body.classList.remove('hud-hidden');
-        showToast("Bilah Pengaturan Ditampilkan (Tekan M / Esc / Panah Bawah untuk Tutup)");
+        showToast("Bilah Pengaturan Ditampilkan");
       } else {
         document.body.classList.add('hud-hidden');
         showToast("Bilah Pengaturan Disembunyikan");
       }
       setTimeout(() => FitScaleEngine.update(), 60);
 
-      const tvMenuBtnText = document.getElementById('tvMenuBtnText');
-      if (tvMenuBtnText) tvMenuBtnText.textContent = shouldShow ? "Tutup" : "Menu";
-
       const floatingText = document.getElementById('tvFloatingMenuText');
       const floatingIcon = document.getElementById('tvFloatingMenuIcon');
       if (floatingText && floatingIcon) {
-        floatingText.textContent = shouldShow ? "Tutup" : "Menu";
+        floatingText.textContent = shouldShow ? "Tutup" : "Pengaturan";
         floatingIcon.setAttribute('data-lucide', shouldShow ? "x" : "settings");
+        if (shouldShow) {
+          floatingIcon.classList.remove('animate-[spin_12s_linear_infinite]');
+        } else {
+          floatingIcon.classList.add('animate-[spin_12s_linear_infinite]');
+        }
         lucide.createIcons();
       }
     }
