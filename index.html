@@ -65,16 +65,16 @@
       --cfs: var(--card-font-scale, 1);
     }
     .profile-card:not(.profile-card-bagan) .text-\[8px\],
-    .profile-card:not(.profile-card-bagan) .text-\[9px\] { font-size: calc(9px * var(--cfs, 1)) !important; }
-    .profile-card:not(.profile-card-bagan) .text-\[10px\] { font-size: calc(10px * var(--cfs, 1)) !important; }
-    .profile-card:not(.profile-card-bagan) .text-\[11px\] { font-size: calc(11px * var(--cfs, 1)) !important; }
-    .profile-card:not(.profile-card-bagan) .text-xs { font-size: calc(12px * var(--cfs, 1)) !important; }
-    .profile-card:not(.profile-card-bagan) .text-sm { font-size: calc(14px * var(--cfs, 1)) !important; }
-    .profile-card:not(.profile-card-bagan) .text-base { font-size: calc(16px * var(--cfs, 1)) !important; }
-    .profile-card:not(.profile-card-bagan) .text-lg { font-size: calc(18px * var(--cfs, 1)) !important; }
-    .profile-card:not(.profile-card-bagan) .text-xl { font-size: calc(20px * var(--cfs, 1)) !important; }
-    .profile-card:not(.profile-card-bagan) .text-2xl { font-size: calc(24px * var(--cfs, 1)) !important; }
-    .profile-card:not(.profile-card-bagan) .text-3xl { font-size: calc(30px * var(--cfs, 1)) !important; }
+    .profile-card:not(.profile-card-bagan) .text-\[9px\] { font-size: calc(9px * var(--cfs, 1)) !important; line-height: 1.35 !important; }
+    .profile-card:not(.profile-card-bagan) .text-\[10px\] { font-size: calc(10px * var(--cfs, 1)) !important; line-height: 1.35 !important; }
+    .profile-card:not(.profile-card-bagan) .text-\[11px\] { font-size: calc(11px * var(--cfs, 1)) !important; line-height: 1.4 !important; }
+    .profile-card:not(.profile-card-bagan) .text-xs { font-size: calc(12px * var(--cfs, 1)) !important; line-height: 1.4 !important; }
+    .profile-card:not(.profile-card-bagan) .text-sm { font-size: calc(14px * var(--cfs, 1)) !important; line-height: 1.4 !important; }
+    .profile-card:not(.profile-card-bagan) .text-base { font-size: calc(16px * var(--cfs, 1)) !important; line-height: 1.4 !important; }
+    .profile-card:not(.profile-card-bagan) .text-lg { font-size: calc(18px * var(--cfs, 1)) !important; line-height: 1.4 !important; }
+    .profile-card:not(.profile-card-bagan) .text-xl { font-size: calc(20px * var(--cfs, 1)) !important; line-height: 1.4 !important; }
+    .profile-card:not(.profile-card-bagan) .text-2xl { font-size: calc(24px * var(--cfs, 1)) !important; line-height: 1.35 !important; }
+    .profile-card:not(.profile-card-bagan) .text-3xl { font-size: calc(30px * var(--cfs, 1)) !important; line-height: 1.3 !important; }
 
     .perspective-container {
       perspective: 1600px;
@@ -204,7 +204,7 @@
       cursor: none;
     }
 
-    /* Penanganan Mode Layar Penuh Bebas Menu (Ctrl+Spasi) */
+    /* Penanganan Mode Layar Penuh Bebas Menu */
     body.hud-hidden header.hud-element,
     body.hud-hidden footer.hud-element,
     body.hud-hidden #fullscreenHint {
@@ -250,7 +250,7 @@
   <!-- Tombol Mengambang Pintasan Menu Smart TV & Layar Sentuh -->
   <button id="btnTvFloatingMenu" type="button" 
           class="fixed top-2 sm:top-3 right-2 sm:right-3 z-50 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-950/90 hover:bg-emerald-800 border border-emerald-400/60 shadow-xl shadow-black/60 text-emerald-100 hover:text-white transition-all transform active:scale-95 cursor-pointer backdrop-blur-md text-xs font-semibold" 
-          title="Buka / Tutup Bilah Pengaturan (Bisa juga tekan tombol M atau Esc)">
+          title="Buka / Tutup Bilah Pengaturan (Bisa juga tekan tombol Esc atau Ctrl+Spasi)">
     <i data-lucide="settings" id="tvFloatingMenuIcon" class="w-3.5 h-3.5 text-amber-400 animate-[spin_12s_linear_infinite]"></i>
     <span id="tvFloatingMenuText" class="text-[11px] font-sans font-bold">Pengaturan</span>
   </button>
@@ -372,7 +372,7 @@
           <span class="hidden sm:inline" id="autoplayLabel">Berhenti</span>
         </button>
 
-        <button id="btnToggleFullscreen" title="Layar Penuh (F)" class="p-2 rounded-xl text-slate-300 hover:text-white glass-subtle hover:border-emerald-500/50 transition">
+        <button id="btnToggleFullscreen" title="Layar Penuh" class="p-2 rounded-xl text-slate-300 hover:text-white glass-subtle hover:border-emerald-500/50 transition">
           <i data-lucide="maximize" id="fullscreenIcon" class="w-4 h-4"></i>
         </button>
 
@@ -761,7 +761,7 @@
     // Ubah is_preview = false dan masukkan URL & Anon Key Supabase Anda
     // =========================================================================
     const is_preview = false;
-     const SUPABASE_URL = "https://ahzexczjwcikxlobqchh.supabase.co"; 
+    const SUPABASE_URL = "https://ahzexczjwcikxlobqchh.supabase.co"; 
     const SUPABASE_ANON_KEY = "sb_publishable_yG3SzF_f4vgoHCxu02Dm3Q_Z9gEP33c";
 
     function isValidSupabaseUrl(url) {
@@ -2774,15 +2774,6 @@
         el.textContent = `${pct}%`;
       });
 
-      document.querySelectorAll('#pairTupoksiFontPicker .tupoksi-preset-btn').forEach(btn => {
-        const scaleVal = parseInt(btn.dataset.scale, 10);
-        if (scaleVal === pct) {
-          btn.className = "tupoksi-preset-btn px-1.5 py-0.5 rounded text-[10px] transition bg-teal-600 text-white font-bold shadow-sm shadow-teal-700/50";
-        } else {
-          btn.className = "tupoksi-preset-btn px-1.5 py-0.5 rounded text-[10px] transition text-slate-400 hover:text-white";
-        }
-      });
-
       FitScaleEngine.update();
 
       if (showNotification) {
@@ -2913,14 +2904,6 @@
         });
       }
 
-      document.querySelectorAll('#pairTupoksiFontPicker .tupoksi-preset-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          const scale = parseInt(btn.dataset.scale, 10);
-          if (!isNaN(scale)) setPairTupoksiFontScale(scale);
-        });
-      });
-
       function setDuration(durMs, isCustom = false) {
         if (isNaN(durMs) || durMs < 1000) durMs = 1000;
         State.allocatedDuration = durMs;
@@ -3015,14 +2998,6 @@
           } else {
             lastStageTap = now;
           }
-        });
-      }
-
-      const btnTvMenuTrigger = document.getElementById('btnTvMenuTrigger');
-      if (btnTvMenuTrigger) {
-        btnTvMenuTrigger.addEventListener('click', (e) => {
-          e.stopPropagation();
-          toggleMenuHUD();
         });
       }
 
@@ -3682,26 +3657,22 @@
       let enterPressHistory = [];
 
       window.addEventListener('keydown', (e) => {
-        const isInputFocused = ['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName);
+        // Perlindungan mutlak: hentikan pemrosesan pintasan jika kursor berada di kolom input/textarea/select
+        const activeTag = document.activeElement ? document.activeElement.tagName : '';
+        const isInputFocused = ['INPUT', 'TEXTAREA', 'SELECT'].includes(activeTag) || 
+                              (document.activeElement && document.activeElement.isContentEditable);
+        if (isInputFocused) return;
 
-        // 1. Dukungan Tombol Menu Fisik Remote Android TV (keyCode 82 / 93)
-        if (e.key === 'Menu' || e.key === 'ContextMenu' || e.keyCode === 82 || e.keyCode === 93) {
+        // 1. Dukungan Tombol Menu Fisik Remote Android TV atau Tombol Escape Keyboard
+        if (e.key === 'Menu' || e.key === 'ContextMenu' || e.keyCode === 82 || e.keyCode === 93 || e.key === 'Escape') {
           e.preventDefault();
           e.stopPropagation();
           toggleMenuHUD();
           return;
         }
 
-        // 2. Tombol Huruf 'M' atau 'Escape' pada Keyboard Eksternal (Satu Tombol Saja)
-        if (!isInputFocused && (e.key.toLowerCase() === 'm' || e.key === 'Escape' || e.keyCode === 27 || e.keyCode === 77)) {
-          e.preventDefault();
-          e.stopPropagation();
-          toggleMenuHUD();
-          return;
-        }
-
-        // 3. Dukungan D-Pad Remote TV: Tekan Panah Atas (▲) untuk Buka Menu
-        if ((e.key === 'ArrowUp' || e.key === 'Up' || e.keyCode === 38 || e.keyCode === 19) && !isInputFocused) {
+        // 2. Dukungan D-Pad Remote TV: Tekan Panah Atas (▲) untuk Buka Menu
+        if (e.key === 'ArrowUp' || e.key === 'Up' || e.keyCode === 38 || e.keyCode === 19) {
           if (document.body.classList.contains('hud-hidden')) {
             e.preventDefault();
             e.stopPropagation();
@@ -3710,8 +3681,8 @@
           }
         }
 
-        // 4. Dukungan D-Pad Remote TV: Tekan Panah Bawah (▼) untuk Tutup Menu
-        if ((e.key === 'ArrowDown' || e.key === 'Down' || e.keyCode === 40 || e.keyCode === 20) && !isInputFocused) {
+        // 3. Dukungan D-Pad Remote TV: Tekan Panah Bawah (▼) untuk Tutup Menu
+        if (e.key === 'ArrowDown' || e.key === 'Down' || e.keyCode === 40 || e.keyCode === 20) {
           if (!document.body.classList.contains('hud-hidden')) {
             e.preventDefault();
             e.stopPropagation();
@@ -3720,7 +3691,7 @@
           }
         }
 
-        // 5. Toggle HUD Header & Footer dengan Ctrl + Spasi (Keyboard PC / Mac)
+        // 4. Toggle HUD Header & Footer dengan Ctrl + Spasi (Keyboard PC / Mac)
         if ((e.ctrlKey || e.metaKey) && (e.key === ' ' || e.code === 'Space')) {
           e.preventDefault();
           e.stopPropagation();
@@ -3728,9 +3699,7 @@
           return;
         }
 
-        if (isInputFocused) return;
-
-        // Navigasi Slide Kartu via Remote TV / Keyboard
+        // 5. Navigasi Slide Kartu via Remote TV / Keyboard (Panah Kiri & Kanan)
         if (e.key === 'ArrowRight' || e.key === 'Right' || e.keyCode === 22) {
           nextCard();
         } else if (e.key === 'ArrowLeft' || e.key === 'Left' || e.keyCode === 21) {
@@ -3769,8 +3738,6 @@
           State.isAutoplay = !State.isAutoplay;
           UI.updateAutoplayUI();
           showToast(State.isAutoplay ? "Rotasi otomatis aktif" : "Rotasi otomatis dijeda");
-        } else if (e.key.toLowerCase() === 'f') {
-          toggleFullScreen();
         }
       });
 
