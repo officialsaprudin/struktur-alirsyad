@@ -1765,6 +1765,11 @@
             const currentTiers = (State.orgTiers && State.orgTiers.length > 0) ? State.orgTiers : DEFAULT_ORG_TIERS;
 
             const renderBaganNode = (p, borderClass, roleTextClass) => {
+              const depts = (p.departments && p.departments.length > 0) ? p.departments : [p.department || 'Umum'];
+              const deptBadges = depts.map(d => `
+                <span class="px-1.5 py-0.2 sm:py-0.5 rounded bg-teal-100 text-teal-950 text-[8px] sm:text-[9px] font-bold border border-teal-300 font-mono">${d}</span>
+              `).join('');
+
               if (p.is_hidden) {
                 return `
                   <div class="bagan-node-card ${State.isAdminMode ? 'cursor-pointer hover:scale-105' : 'cursor-default'} flex items-center gap-2 sm:gap-2.5 p-1.5 sm:p-2.5 rounded-2xl bg-white/95 border-2 border-dashed ${borderClass} shadow-md transition select-none w-full max-w-[165px] sm:max-w-[255px]" ${State.isAdminMode ? `data-goto-id="${p.id}" title="Kartu profil disembunyikan (Klik untuk kelola)"` : `title="${p.role}"`}>
@@ -1775,7 +1780,7 @@
                       <p class="text-[8px] sm:text-[9px] uppercase tracking-wider text-teal-700 font-extrabold font-mono leading-none">Jabatan / Amanah</p>
                       <p class="text-[11px] sm:text-sm font-black text-slate-900 tracking-tight leading-snug mt-0.5 break-words">${p.role}</p>
                       <div class="flex items-center gap-1 mt-0.5 sm:mt-1 flex-wrap">
-                        <span class="px-1.5 py-0.2 rounded bg-teal-100 text-teal-950 text-[8px] sm:text-[9px] font-bold border border-teal-300 font-mono">${p.department}</span>
+                        ${deptBadges}
                         ${State.isAdminMode ? '<span class="px-1.5 py-0.2 rounded bg-amber-100 text-amber-900 text-[8px] font-bold border border-amber-300">Sembunyi</span>' : ''}
                       </div>
                     </div>
@@ -1792,7 +1797,7 @@
                     <p class="text-[11px] sm:text-sm font-black text-slate-950 tracking-tight leading-snug break-words">${p.name}</p>
                     <p class="text-[9px] sm:text-[11px] font-extrabold ${roleTextClass} leading-snug mt-0.5 break-words">${p.role}</p>
                     <div class="flex items-center gap-1 mt-0.5 sm:mt-1 flex-wrap">
-                      <span class="px-1.5 py-0.2 sm:py-0.5 rounded bg-teal-100 text-teal-950 text-[8px] sm:text-[9px] font-bold border border-teal-300 font-mono">${p.department}</span>
+                      ${deptBadges}
                     </div>
                   </div>
                 </div>
@@ -1971,6 +1976,9 @@
                 <div class="flex-1 flex flex-col justify-between p-3 sm:p-3.5 rounded-2xl bg-white/95 border border-teal-200/90 shadow-sm relative group hover:border-teal-400 transition-colors min-h-0 gap-2">
                   <div class="admin-control flex items-center justify-end pb-1 border-b border-teal-100 text-[10px] font-mono flex-shrink-0">
                     <div class="flex items-center gap-0.5">
+                      <button class="btn-duplicate-card p-1 rounded text-slate-500 hover:text-emerald-700 hover:bg-emerald-100 transition" data-id="${item.id}" title="Duplikasi untuk Tugas/Amanah Rangkap">
+                        <i data-lucide="copy" class="w-3 h-3"></i>
+                      </button>
                       <button class="btn-toggle-hide-card p-1 rounded text-slate-500 hover:text-amber-600 hover:bg-amber-100 transition" data-id="${item.id}" title="${item.is_hidden ? 'Tampilkan Kartu' : 'Sembunyikan Kartu'}">
                         <i data-lucide="${item.is_hidden ? 'eye-off' : 'eye'}" class="w-3 h-3 ${item.is_hidden ? 'text-amber-600' : ''}"></i>
                       </button>
@@ -2153,6 +2161,9 @@
 
                 <div class="flex items-center gap-2">
                   <div class="admin-control flex items-center gap-1">
+                    <button class="btn-duplicate-card p-1.5 rounded-lg text-slate-500 hover:text-emerald-700 hover:bg-emerald-100 transition" data-id="${item.id}" title="Duplikasi untuk Tugas/Amanah Rangkap">
+                      <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                    </button>
                     <button class="btn-toggle-hide-card p-1.5 rounded-lg text-slate-500 hover:text-amber-600 hover:bg-amber-100 transition" data-id="${item.id}" title="${item.is_hidden ? 'Tampilkan Kartu' : 'Sembunyikan Kartu'}">
                       <i data-lucide="${item.is_hidden ? 'eye-off' : 'eye'}" class="w-3.5 h-3.5 ${item.is_hidden ? 'text-amber-600' : ''}"></i>
                     </button>
@@ -2347,7 +2358,7 @@
         lucide.createIcons();
       },
 
-      openModal(isEdit = false, profile = null, preselectedTier = null) {
+      openModal(isEdit = false, profile = null, preselectedTier = null, isDuplicate = false) {
         const modal = document.getElementById('profileModal');
         const title = document.getElementById('modalTitle');
         const form = document.getElementById('profileForm');
@@ -2370,7 +2381,46 @@
         State.isReorderDeptMode = false;
         this.resetPhotoUploadUI();
 
-        if (isEdit && profile) {
+        if (isDuplicate && profile) {
+          title.innerHTML = `<i data-lucide="copy" class="w-5 h-5 text-emerald-400"></i> <span>Amanah Rangkap (Duplikasi Profil)</span>`;
+          document.getElementById('formProfileId').value = ''; // ID kosong agar tersimpan sebagai entri baru
+          document.getElementById('formOrderPriority').value = (State.profiles.length || 0) + 1;
+          if (selectOrgTier) selectOrgTier.value = profile.org_tier || 'guru';
+          document.getElementById('formName').value = profile.name;
+          document.getElementById('formRole').value = ''; // Dikosongkan agar admin mengisi amanah kedua
+          
+          if (checkIsHidden) checkIsHidden.checked = false;
+          if (checkIsLowered) checkIsLowered.checked = false;
+
+          if (profile.nickname) {
+            checkNickname.checked = true;
+            secNickname.classList.remove('hidden');
+            document.getElementById('formNickname').value = profile.nickname;
+          } else {
+            checkNickname.checked = false;
+            secNickname.classList.add('hidden');
+            document.getElementById('formNickname').value = '';
+          }
+
+          State.selectedFormDepartments = State.departments.length > 0 ? [State.departments[0]] : ['Umum'];
+          document.getElementById('formNip').value = profile.nip_nuptk || '';
+          document.getElementById('formEducation').value = profile.education || '';
+          document.getElementById('formAddress').value = profile.address || '';
+          
+          const durInput = document.getElementById('formDisplayDuration');
+          if (durInput) durInput.value = '';
+
+          document.getElementById('formAvatar').value = profile.avatar_url || '';
+          document.getElementById('formBio').value = profile.bio || '';
+          document.getElementById('formSkills').value = (profile.skills || []).join(', ');
+          document.getElementById('formEmail').value = profile.email || '';
+          document.getElementById('formPhone').value = profile.phone || '';
+
+          if (profile.avatar_url) this.setPhotoInputMode('url');
+          else this.setPhotoInputMode('upload');
+
+          showToast(`Data ${profile.name} berhasil disalin! Silakan tentukan amanah kedua dan unitnya.`);
+        } else if (isEdit && profile) {
           title.innerHTML = `<i data-lucide="edit-3" class="w-5 h-5 text-emerald-400"></i> <span>Edit Data Aparatur</span>`;
           document.getElementById('formProfileId').value = profile.id;
           document.getElementById('formOrderPriority').value = profile.order_priority || 0;
@@ -2577,6 +2627,9 @@
                       </div>
                     </div>
                     <div class="flex items-center gap-0.5 flex-shrink-0 ml-1.5">
+                      <button type="button" class="btn-tier-member-duplicate p-1 hover:bg-emerald-800 rounded text-emerald-300 hover:text-white transition" data-id="${p.id}" title="Duplikasi untuk Tugas/Amanah Rangkap">
+                        <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                      </button>
                       <button type="button" class="btn-tier-member-toggle-lowered px-1.5 py-0.5 text-[9px] font-mono font-bold rounded border transition ${
                         p.is_lowered ? 'bg-teal-700 text-white border-teal-400' : 'bg-black/60 text-slate-400 border-white/10 hover:text-white'
                       }" data-id="${p.id}" title="${p.is_lowered ? 'Kembalikan ke Baris Atas' : 'Turunkan ke Baris Bawah'}">
@@ -3206,6 +3259,16 @@
             return;
           }
 
+          const duplicateMember = e.target.closest('.btn-tier-member-duplicate');
+          if (duplicateMember) {
+            e.stopPropagation();
+            const target = State.profiles.find(p => p.id === duplicateMember.dataset.id);
+            if (target) {
+              UI.openModal(false, target, null, true);
+            }
+            return;
+          }
+
           const editMember = e.target.closest('.btn-tier-member-edit') || e.target.closest('.btn-tier-member-edit-trigger');
           if (editMember) {
             e.stopPropagation();
@@ -3568,6 +3631,14 @@
         if (emailBtn) {
           e.stopPropagation();
           copyTextToClipboard(emailBtn.dataset.email);
+          return;
+        }
+
+        const duplicateBtn = e.target.closest('.btn-duplicate-card');
+        if (duplicateBtn) {
+          e.stopPropagation();
+          const target = State.profiles.find(p => p.id === duplicateBtn.dataset.id);
+          if (target) UI.openModal(false, target, null, true);
           return;
         }
 
